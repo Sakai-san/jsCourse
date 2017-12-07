@@ -1,19 +1,14 @@
 # Chapitre 1 : Introduction
 
 ## Qu’est-ce que JavaScript ?
-JS est un langage de programmation crée dans les années 1990 par [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich) pour Nescape, le navigateur phare de l'époque. Selon l'anectode il fut concu en 10 jours.
+JS est un langage de programmation crée dans les années 1990 par [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich) pour Nescape, le navigateur phare de l'époque. Selon l'anectode il fut conçu en [10 jours](https://brendaneich.com/tag/javascript/).
 
 ## Comment marche JavaScript ?
-Les navigateurs sont des programmes installés sur un ordinateur. On parle de desktop application. Ils intègrent un interpréteur JavaScript ainsi qu'un environnement d'exécution isolé du programme principal. En appelle cela une machine virtuelle.
+Les navigateurs sont des programmes installés sur un ordinateur. On parle de **desktop application**. Ils intègrent un interpréteur JavaScript ainsi qu'un environnement d'exécution isolé du programme principal. En appelle cela une **machine virtuelle**.
 
-Il faut se rappeller qu'on script JavaScript n'est qu'un simple fichier de texte. Quand un site web envoyé du HTML, CSS et JS au client sous forme de simple texte. Le client analyser ces informations, et transforme (compilation) ce texte en de véritables instructions compréhensible par la machine virtulle (appelé byte code).
+Il faut se rappeller qu'un script JavaScript (ceci est vrai pour n'importe quel autre language) n'est qu'un simple **fichier de texte**. Lorsqu'un internaute tappe une adresse **url** dans son navigateur, il fait ce qu'on appelle une **requête HTTP**. Le site web répond et envoie des resources (script JS, HTML, CSS, images, etc.) au client.  Le client analyse le JS transforme (compilation) ce texte en byte code compréhensible (interprétée) par le moteur de [machine virtuelle](http://creativejs.com/2013/06/the-race-for-speed-part-2-how-javascript-compilers-work/index.html). Le fait que le byte code n'est pas interprété par votre ordinateur directement est pour des raisons de sécurité.
 
-## Norme
-SQL est normalisé par ANSI depuis 1986 et par ISO depuis 1987. Plusieurs versions ont été
-publiées depuis lors. Certains SGDBR’s existaient déjà avant la normalisation, ce qui explique
-pourquoi certaines fonctionnalités de SQL sont encore implémentées de façon différente
-parmi les différents SGDBR’s.
-
+JavaScript peut aussi être également exécuté côté serveur. Nous nous concentrerons dans ce cours de JS exécuté côté client, c'est-à-dire le navigateur.
 
 ## Contexte
 
@@ -30,3 +25,13 @@ La sortie du navigateur [Google Chrome](https://en.wikipedia.org/wiki/Google_Chr
 En *2009*, sortent [AngularJS](https://angularjs.org/) et [Node.js](https://nodejs.org/en/) exploitant les performances du moteur V8.
 
 Les frameworks JS ont beaucoup changé la façon de développer des applications web. Le traitement pour afficher les divers éléments de la page HTML (rendu) se fait principalement du côté client. A la suite d'un événement, seule une partie de la page est mise à jour ce qui, d'une part, améliore la UX, et d'autre part, allège la communication entre client et serveur. En effet, le serveur se limite à fournir les données nécessaires à l'application. L'accès aux données par une interface [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) est particulièrement bien adaptée à ce type d'application.
+
+
+## Standard
+
+Tout comme HTML et CSS, JS fait partie de ce qu'on appelle les [standard ouvert](https://fr.wikipedia.org/wiki/Format_ouvert) (open standard).
+
+JavaScript est standardisé depuis 1997 par un organisme appelé <a class="external-link" href="https://www.ecma-international.org/default.htm"  target="_blank">Ecma International</a>.
+
+
+Question 1 : comment s'apelle la machine virtuelle de google Chrome
