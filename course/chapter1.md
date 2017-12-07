@@ -6,7 +6,7 @@ JS est un langage de programmation crée dans les années 1990 par [Brendan Eich
 ## Comment marche JavaScript ?
 Les navigateurs sont des programmes installés sur un ordinateur. On parle de **desktop application**. Ils intègrent un interpréteur JavaScript ainsi qu'un environnement d'exécution isolé du programme principal. En appelle cela une **machine virtuelle**.
 
-Il faut se rappeller qu'un script JavaScript (ceci est vrai pour n'importe quel autre language) n'est qu'un simple **fichier de texte**. Lorsqu'un internaute tappe une adresse **url** dans son navigateur, il fait ce qu'on appelle une **requête HTTP**. Le site web répond et envoie des resources (script JS, HTML, CSS, images, etc.) au client.  Le client analyse le JS transforme (compilation) ce texte en byte code compréhensible (interprétée) par le moteur de [machine virtuelle](http://creativejs.com/2013/06/the-race-for-speed-part-2-how-javascript-compilers-work/index.html). Le fait que le byte code n'est pas interprété par votre ordinateur directement est pour des raisons de sécurité.
+Il faut se rappeller qu'un script JavaScript (ceci est vrai pour n'importe quel autre language) n'est qu'un simple **fichier de texte**. Lorsqu'un internaute tappe une adresse **url** dans son navigateur, il fait ce qu'on appelle une **requête HTTP**. Le site web répond et envoie des resources (script JS, HTML, CSS, images, etc.) au client.  Le client analyse le JS transforme (compilation) ce texte en byte code compréhensible (interprétée) par la [machine virtuelle](http://creativejs.com/2013/06/the-race-for-speed-part-2-how-javascript-compilers-work/index.html). Le fait que le byte code n'est pas interprété par votre ordinateur directement est pour des raisons de sécurité.
 
 JavaScript peut aussi être également exécuté côté serveur. Nous nous concentrerons dans ce cours de JS exécuté côté client, c'est-à-dire le navigateur.
 
@@ -24,8 +24,9 @@ La sortie du navigateur [Google Chrome](https://en.wikipedia.org/wiki/Google_Chr
 
 En *2009*, sortent [AngularJS](https://angularjs.org/) et [Node.js](https://nodejs.org/en/) exploitant les performances du moteur V8.
 
-Les frameworks JS ont beaucoup changé la façon de développer des applications web. Le traitement pour afficher les divers éléments de la page HTML (rendu) se fait principalement du côté client. A la suite d'un événement, seule une partie de la page est mise à jour ce qui, d'une part, améliore la UX, et d'autre part, allège la communication entre client et serveur. En effet, le serveur se limite à fournir les données nécessaires à l'application. L'accès aux données par une interface [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) est particulièrement bien adaptée à ce type d'application.
+Le montée en puissance de JS a apporté beaucoup de changement dans la façon de de développer des applications web.
 
+Le traitement pour afficher les divers éléments de la page HTML (rendu) se fait principalement du côté client. A la suite d'un événement, seule une partie de la page est mise à jour ce qui, d'une part, améliore la UX, et d'autre part, allège la communication entre client et serveur. En effet, le serveur se limite à fournir les données nécessaires à l'application. L'accès aux données par une interface [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) est particulièrement bien adaptée à ce type d'application.
 
 ## Standard
 
