@@ -4,12 +4,13 @@
 JS est un langage de programmation crée dans les années 1990 par [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich) pour Nescape, le navigateur phare de l'époque. Selon l'anectode il fut conçu en [10 jours](https://brendaneich.com/tag/javascript/).
 
 ## Comment marche JavaScript ?
-Les navigateurs sont des programmes installés sur un ordinateur. On parle de **desktop application**. Ils intègrent un interpréteur JavaScript ainsi qu'un environnement d'exécution isolé du programme principal. En appelle cela une **machine virtuelle**.
+Les navigateurs sont des programmes installés sur un ordinateur (machine hôte). Un navigateur une **application bureaau** (desktop application) qui intègre un interpréteur JavaScript ainsi qu'un environnement d'exécution (runtime execution) isolé de la machine hôte. En appelle cela une **machine virtuelle**.
 
-Il faut se rappeller qu'un script JavaScript (ceci est vrai pour n'importe quel autre language) n'est qu'un simple **fichier de texte**. Lorsqu'un internaute tappe une adresse **url** dans son navigateur, il fait ce qu'on appelle une **requête HTTP**. Le site web répond et envoie des resources (script JS, HTML, CSS, images, etc.) au client.  Le client analyse le JS transforme (compilation) ce texte en byte code compréhensible (interprétée) par la [machine virtuelle](http://creativejs.com/2013/06/the-race-for-speed-part-2-how-javascript-compilers-work/index.html). Le fait que le byte code n'est pas interprété par votre ordinateur directement est pour des raisons de sécurité.
+Il faut se rappeller qu'un script JavaScript (ceci est vrai pour n'importe quel autre language) n'est qu'un simple **fichier de texte**, appelé code source. Lorsqu'un internaute tappe une adresse **url** dans son navigateur, il fait ce qu'on appelle une **requête HTTP**. Le site web répond et envoie des resources (code source, images, etc.) au client.  Le client analyse le code source JS, transforme (compilation) celui-ci en byte code compréhensible (interprétée) par la [machine virtuelle](http://creativejs.com/2013/06/the-race-for-speed-part-2-how-javascript-compilers-work/index.html). Le fait que le byte code n'est pas interprété par votre ordinateur directement est pour des raisons de sécurité.
 
 JavaScript peut aussi être également exécuté côté serveur. Nous nous concentrerons dans ce cours de JS exécuté côté client, c'est-à-dire le navigateur.
 
+https://stackoverflow.com/questions/15395347/does-a-browser-truly-read-javascript-line-by-line-or-does-it-make-multiple-passe
 ## Contexte
 
 L'utilisation de JS fut d'abord limitée à faire des interactions du côté client lors de la survenance d'événements (click, touche clavier, etc.). Ceci est possible grâce au [DOM](https://en.wikipedia.org/wiki/Document_Object_Model). Le DOM est une [API](https://en.wikipedia.org/wiki/Application_programming_interface) permettant d'accéder et de modifier les éléments de la page HTML. Celle-ci est un document structuré en hiérarchie (arborescence).
