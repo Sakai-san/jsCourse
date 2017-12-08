@@ -30,7 +30,9 @@ présent cours étant principalement destiné à des apprenants et apprenantes i
 ainsi uniquement dans un souci de lisibilité et de simplicité.
 
 ## Chapitres
-* variable Type de données
+* Environment
+* variable
+* Type de données
 * tableau
 * objet littéral
 * condition
