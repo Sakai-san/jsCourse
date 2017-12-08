@@ -21,19 +21,15 @@ Au début du [web dynamique](http://royal.pingdom.com/2007/12/07/a-history-of-th
 
 Avec l'arrivée d'[Ajax](https://en.wikipedia.org/wiki/Ajax_(programming) vers *2005* et des libraires telles que [jQuery](https://jquery.com/) permettant entre autres de mettre en oeuvre Ajax facilement, JS a vu son champ d'utilisation étendu.
 
-La sortie du navigateur [Google Chrome](https://en.wikipedia.org/wiki/Google_Chrome) en *2008* avec son moteur JS appelé [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) fut une véritable révolution. Les performances du moteur ont été énormément ameliorée grâce à des techniques avancées ([JIT](https://en.wikipedia.org/wiki/Just-in-time_compilation)). JS a alors pris une nouvelle dimension.
+La sortie du navigateur [Google Chrome](https://en.wikipedia.org/wiki/Google_Chrome) en *2008* avec sa machtine virtuelle JS appelée [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) fut une véritable révolution. Les performances de JS ont été énormément ameliorée grâce à des techniques avancées ([JIT](https://en.wikipedia.org/wiki/Just-in-time_compilation)). JS a alors pris une nouvelle dimension.
 
-En *2009*, sortent [AngularJS](https://angularjs.org/) et [Node.js](https://nodejs.org/en/) exploitant les performances du moteur V8.
-
-Le montée en puissance de JS a apporté beaucoup de changement dans la façon de de développer des applications web.
-
-Le traitement pour afficher les divers éléments de la page HTML (rendu) se fait principalement du côté client. A la suite d'un événement, seule une partie de la page est mise à jour ce qui, d'une part, améliore la UX, et d'autre part, allège la communication entre client et serveur. En effet, le serveur se limite à fournir les données nécessaires à l'application. L'accès aux données par une interface [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) est particulièrement bien adaptée à ce type d'application.
+Le montée en puissance de JS a apporté beaucoup de changement dans la façon de de développer des applications web. Vers 2009, les framework et librairie cliente exploitent les performances JS tel que Backbone, Angular et React, le rendu de la page html se fait du côté client. En effet, le serveur se limite à fournir les données nécessaires à l'application. A titre différentes interfaces exitent, tels que [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) et GraphQL.
 
 ## Standard
 
-Tout comme HTML et CSS, JS fait partie de ce qu'on appelle les [standard ouvert](https://fr.wikipedia.org/wiki/Format_ouvert) (open standard).
+Tout comme HTML et CSS, JS est un [standard ouvert](https://fr.wikipedia.org/wiki/Format_ouvert) (open standard).
 
-JavaScript est standardisé depuis 1997 par un organisme appelé <a class="external-link" href="https://www.ecma-international.org/default.htm"  target="_blank">Ecma International</a>.
+JavaScript est standardisé depuis 1997 par un organisme appelé [Ecma International](https://www.ecma-international.org/default.htm).
 
 
 Question 1 : comment s'apelle la machine virtuelle de google Chrome
