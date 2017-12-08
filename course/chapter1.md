@@ -1,7 +1,7 @@
 # Chapitre 1 : Introduction
 
 ## Qu’est-ce que JavaScript ?
-JS est un langage de programmation crée dans les années 1990 par [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich) pour Nescape, le navigateur phare de l'époque. Selon l'anectode il fut conçu en [10 jours](https://brendaneich.com/tag/javascript/).
+JS est un langage de programmation crée en 1995 par [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich) pour Nescape, le navigateur phare de l'époque. Selon l'anectode il fut conçu en [10 jours](https://brendaneich.com/tag/javascript/).
 
 ## Comment marche JavaScript ?
 Les navigateurs sont des programmes installés sur un ordinateur (machine hôte). Un navigateur une **application bureaau** (desktop application) qui intègre un interpréteur JavaScript ainsi qu'un environnement d'exécution (runtime execution) isolé de la machine hôte. En appelle cela une **machine virtuelle**.
@@ -26,10 +26,9 @@ La sortie du navigateur [Google Chrome](https://en.wikipedia.org/wiki/Google_Chr
 Le montée en puissance de JS a apporté beaucoup de changement dans la façon de de développer des applications web. Vers 2009, les framework et librairie cliente exploitent les performances JS tel que Backbone, Angular et React, le rendu de la page html se fait du côté client. En effet, le serveur se limite à fournir les données nécessaires à l'application. A titre différentes interfaces exitent, tels que [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) et GraphQL.
 
 ## Standard
-
 Tout comme HTML et CSS, JS est un [standard ouvert](https://fr.wikipedia.org/wiki/Format_ouvert) (open standard).
 
-JavaScript est standardisé depuis 1997 par un organisme appelé [Ecma International](https://www.ecma-international.org/default.htm).
+JavaScript est standardisé depuis 1997 par un organisme appelé [Ecma International](https://www.ecma-international.org/default.htm). La standard de JavaScript a été appelé ECMAScript, car JavaScript une marque déposée.
 
 
 Question 1 : comment s'apelle la machine virtuelle de google Chrome

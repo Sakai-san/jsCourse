@@ -2,7 +2,9 @@
 
 ## Vue d'ensemble
 
-JavaScript est un language de programmation crée en 1990. Initialement crée pour faire de petite interaction avec l'utilisateur d'un client web, communément appelé navigateur, il est devenu un language incontournable. [Stack Overflow](https://insights.stackoverflow.com/survey/2017) le classait comme le lanague le plus populaire en 2017.
+JavaScript est un language de programmation crée en 1995. Initialement crée pour faire de petite interaction avec l'utilisateur d'un client web, communément appelé navigateur, il est devenu un language généraliste. [Stack Overflow](https://insights.stackoverflow.com/survey/2017) le classait comme le lanague le plus populaire en 2017.
+
+Ce cours traite les concepts de base ainsi que les concepts plus spécifiques tel que le prototype, la callback, le hoisting, le spread, le desconstructing, les closures, etc.
 
 ## Audience
 Ce cours s’adresse essentiellement aux étudiants et étudiantes qui débutent avec JavaScript.
@@ -77,14 +79,7 @@ ainsi uniquement dans un souci de lisibilité et de simplicité.
 * [JavaScript for kids](http://scuolamaputo.org/wp-content/uploads/2016/05/jsfkids.pdf)
 * [Eric Elliot practices in JS](https://github.com/ericelliott/class-free-javascript-style)
 
-## Types de données
-En JS, il existe six types de données `number`, `string`, `boolean`, `null`, `undefined` et `object`, etc.
-
-On peut classifier ces types des données en deux groupes. Les **valeurs** et les **références**.
-
-Les variables de type `number`, `string`, `boolean`, `null`, `undefined` contiennent en fait des **valeurs** alors qu'`object` contient une **référence**, à savoir l'adresse où l'information est stockée dans la mémoire de l'ordinateur.
-
-
+M
 ```js
 var chrisAge = 46;
 var tomaAge = chrisAge;
