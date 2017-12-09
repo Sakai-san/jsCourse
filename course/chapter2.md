@@ -13,6 +13,6 @@ Dans le cadre des exercices, nous utiliserons le panneau appelé `Snippet` de Go
 
 Pour accéder à ce dernier, allez dans `Outil dévelopeur` (devTools), ensuite sous l'onglet `Sources`. A droite, seléctionnez `Snippets`.
 
-Dans le grand bloc, vous pouvez entrer du code. L'exétion du code s'affiche dans la console.
+Dans le grand bloc, vous pouvez entrer du code. L'exécution du code s'affiche dans la console.
 
 ![Minion](https://cdn-images-1.medium.com/max/780/1*wuEXGEtTklRzgf5UmXyueg.png)
