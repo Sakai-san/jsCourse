@@ -72,6 +72,10 @@ html,body {
 * interpretor
 */
 
-#interpretor{
-  background-color: black;
+#interpretor {
+  background-color: white;
+}
+
+#interpretor > body {
+/*  color: white;*/
 }

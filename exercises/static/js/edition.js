@@ -24,8 +24,8 @@ const solutions = [
 let currentExercise = 0;
 
 $(function(){
-  const jsEditor         = $("#jsEditor");
-  const interpretor       = $("#interpretor");
+  const jsEditor        = $("#jsEditor");
+  const interpretor     = $("#interpretor");
 
   const interprete = () => {
     interpretor

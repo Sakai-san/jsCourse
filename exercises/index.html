@@ -64,6 +64,20 @@
     <script src="static/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="static/js/edition.js"></script>
+    <!-- script src="static/js/edition.js"></script  -->
+    <script>
+      var former = console.log;
+      console.log = function(msg){
+        former(msg);  //maintains existing logging via the console.
+        $("#interpretor")
+        .contents()
+        .find("body")
+        .append(msg);
+      }
+
+      eval(
+        "var name='thomas'; console.log(name);"
+      );
+    </script>
   </body>
 </html>
