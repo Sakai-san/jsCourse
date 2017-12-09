@@ -2,21 +2,17 @@
 
 ## Navigateur
 
-Les ordinateurs actuels sont très souvent équipé par défaut d'un client web, plus connu sous le nom de navigateur.
+Dans le cadre ce cours, si vous desirer reproduire les exemples du cours ou faire les exercices proposés, nous utiliserons [Google Chrome](https://www.google.com/chrome/browser/desktop/index.html).
 
-Pour créer des petits scripts ou reproduire les exemples du cours, vous pouvez par exemple utiliser [Google Chrome]().
+En effet, certains fonctionnalités présentées dans le cours font partie d'une nouvelle version JavaScript, appelée EMCAScript 2015 (aussi appelée ES 6). Or, celle-ci est mieux supportée par Google Chrome que par les autres navigateurs.
 
 
 ## Google Chrome Snippet
 
-Dans chrome commencer par ouvrir une page vierge en tappant dans la bar d'adresse : `about:blank`.
+Dans le cadre des exercices, nous utiliserons le panneau appelé `Snippet` de Google Chrome. Dans ce panneau on peut éditer et exécuter du JavaScript.
 
-Google Chrome possède un paneau appelé `Snippet` dans lequel on peut éditer et exécuter du JavasScript.
+Pour accéder à ce dernier, allez dans `Outil dévelopeur` (devTools), ensuite sous l'onglet `Sources`. A droite, seléctionnez `Snippets`.
 
-Pour accèder à ce dernier, allez dans `Outil dévelopeur` (devTools), ensuite sous l'onglet `Sources`.
-
-Dans les outils devélopeur nous aller sous source, ensuite `Snippets`. Vous pouvez entrer le code dans le panel prévu à ce effet. L'exétion du code s'affiche dans la console.
-
-Chrome supporte les fonnctionnalité ECMAScript 2015, raison pour laquelle nous vous conseiller des faire des tests sur ce navigateur.
+Dans le grand bloc, vous pouvez entrer du code. L'exétion du code s'affiche dans la console.
 
 ![Minion](https://cdn-images-1.medium.com/max/780/1*wuEXGEtTklRzgf5UmXyueg.png)
