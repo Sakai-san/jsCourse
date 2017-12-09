@@ -74,13 +74,18 @@
     <script>
       var former = console.log;
       console.log = function(){
+        former.apply(console, arguments); // call the original logging
         var args = Array.prototype.slice.call( arguments );
+        text = '';
         var placeholder = $("#interpretor").contents().find("body");
-         for(var i = 0; i < args.length; i++){
-           former( args[i] );  //maintains existing logging via the console.
-           placeholder.append(`<div>${args[i]}</div>`);
-         }
-       }
+        for(var i = 0; i < args.length; i++){
+          text += `<span>${args[i]}</span>`;
+          if( i < args.length -1 ){
+            text += ' ';
+          }
+        }
+        placeholder.append(`<div>${text}</div>`);
+      }
       eval(
         "var name='thomas'; console.log('toto', 'patrice'); console.log(name);"
       );
