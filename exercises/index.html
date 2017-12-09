@@ -10,6 +10,12 @@
     <link href="static/css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
     <link rel="stylesheet" href="static/css/font-awesome.min.css" />
     <link rel="stylesheet" href="static/css/styles.css" />
+    <script>
+      window.onerror = function(message, url, linenumber) {
+          console.log("JavaScript error: " + message + " on line " +
+                  linenumber + " for " + url);
+      }
+    </script>
   </head>
   <body>
     <div class="container-fluid fill">
@@ -67,16 +73,16 @@
     <!-- script src="static/js/edition.js"></script  -->
     <script>
       var former = console.log;
-      console.log = function(msg){
-        former(msg);  //maintains existing logging via the console.
-        $("#interpretor")
-        .contents()
-        .find("body")
-        .append(msg);
-      }
-
+      console.log = function(){
+        var args = Array.prototype.slice.call( arguments );
+        var placeholder = $("#interpretor").contents().find("body");
+         for(var i = 0; i < args.length; i++){
+           former( args[i] );  //maintains existing logging via the console.
+           placeholder.append(`<div>${args[i]}</div>`);
+         }
+       }
       eval(
-        "var name='thomas'; console.log(name);"
+        "var name='thomas'; console.log('toto'); console.log(name);"
       );
     </script>
   </body>
