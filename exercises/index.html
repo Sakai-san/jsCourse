@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="row fill-half">
-            <iframe id="interpretor" class="col-xs-12 fill"></iframe>
+            <div id="interpretor" class="col-xs-12 fill"></div>
           </div>
         </div> <!-- .col-xs-6 -->
 
@@ -74,15 +74,16 @@
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
     <!-- script src="static/js/edition.js"></script  -->
     <script>
+
       var formerLog = console.log;
       console.log = function(){
         formerLog.apply(console, arguments); // call the original logging
         var args = Array.prototype.slice.call( arguments );
         var log = '', i=0;
-        var placeholder = $("#interpretor").contents().find("body");
+        var placeholder = $("#interpretor");
         for(i; i < args.length; i++){
           if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
-            log += `<span class="log-${typeof args[i]}">${JSON.stringify(args[i], undefined, 2)}</span>`;
+            log += `<span class="log-${typeof args[i]}">${ JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')}</span>`;
           }
           else{
             log += `<span class="log-${typeof args[i]}">${args[i]}</span>`;
@@ -94,8 +95,9 @@
         placeholder.append(`<div>${log}</div>`);
       }
       eval(
-        "var student={fist:'toma', last:'sakai'}; console.log('toto', 'marcel', 'teo'); console.log(student);"
+        "var student={fist:'toma', last:'sakai'}; console.log('toto', 'marcel', 'teo', false); console.log(student);"
       );
+      console.log(merde);
     </script>
   </body>
 </html>

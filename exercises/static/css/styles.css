@@ -76,11 +76,7 @@ html,body {
   background-color: white;
 }
 
-#interpretor > body {
-/*  color: white;*/
-}
-
-#interpretor > body {
+#interpretor {
   background: #333;
 }
 .log-boolean,
