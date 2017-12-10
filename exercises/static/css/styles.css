@@ -79,3 +79,12 @@ html,body {
 #interpretor > body {
 /*  color: white;*/
 }
+
+#interpretor > body {
+  background: #333;
+}
+.log-boolean,
+.log-undefined {color: magenta;}
+.log-object,
+.log-string {color: orange;}
+.log-number {color: cyan;}

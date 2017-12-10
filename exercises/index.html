@@ -15,6 +15,8 @@
           console.log("JavaScript error: " + message + " on line " +
                   linenumber + " for " + url);
       }
+
+//      JavaScript error: Uncaught ReferenceError: arg is not defined on line 82 for file:///opt/lampp/htdocs/jsCourse/exercises/index.html
     </script>
   </head>
   <body>
@@ -72,22 +74,27 @@
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
     <!-- script src="static/js/edition.js"></script  -->
     <script>
-      var former = console.log;
+      var formerLog = console.log;
       console.log = function(){
-        former.apply(console, arguments); // call the original logging
+        formerLog.apply(console, arguments); // call the original logging
         var args = Array.prototype.slice.call( arguments );
-        text = '';
+        var log = '', i=0;
         var placeholder = $("#interpretor").contents().find("body");
-        for(var i = 0; i < args.length; i++){
-          text += `<span>${args[i]}</span>`;
+        for(i; i < args.length; i++){
+          if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
+            log += `<span class="log-${typeof args[i]}">${JSON.stringify(args[i], undefined, 2)}</span>`;
+          }
+          else{
+            log += `<span class="log-${typeof args[i]}">${args[i]}</span>`;
+          }
           if( i < args.length -1 ){
-            text += ' ';
+            log += '&nbsp;';
           }
         }
-        placeholder.append(`<div>${text}</div>`);
+        placeholder.append(`<div>${log}</div>`);
       }
       eval(
-        "var name='thomas'; console.log('toto', 'patrice'); console.log(name);"
+        "var student={fist:'toma', last:'sakai'}; console.log('toto', 'marcel', 'teo'); console.log(student);"
       );
     </script>
   </body>
