@@ -10,14 +10,6 @@
     <link href="static/css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
     <link rel="stylesheet" href="static/css/font-awesome.min.css" />
     <link rel="stylesheet" href="static/css/styles.css" />
-    <script>
-      window.onerror = function(message, url, linenumber) {
-          console.log("JavaScript error: " + message + " on line " +
-                  linenumber + " for " + url);
-      }
-
-//      JavaScript error: Uncaught ReferenceError: arg is not defined on line 82 for file:///opt/lampp/htdocs/jsCourse/exercises/index.html
-    </script>
   </head>
   <body>
     <div class="container-fluid fill">
@@ -30,6 +22,7 @@
               exercise.
               Nous allons realiser un exercice de programmation.
             </div>
+            <textarea id="jsEditor0"></textarea>
           </div>
           <div class="row fill-half">
             <div id="interpretor" class="col-xs-12 fill"></div>
@@ -60,7 +53,7 @@
             </div>
             <div role="tabpanel" class="tab-pane fade fill" id="javascript">
               <div id="jsEditorWrapper" class="col-xs-12 fill">
-                <textarea id="jsEditor" class="col-xs-12 fill"></textarea>
+                <textarea id="jsEditor" class="col-xs-12 fill"> </textarea>
               </div>
             </div>
           </div>
@@ -75,29 +68,45 @@
     <!-- script src="static/js/edition.js"></script  -->
     <script>
 
-      var formerLog = console.log;
-      console.log = function(){
-        formerLog.apply(console, arguments); // call the original logging
-        var args = Array.prototype.slice.call( arguments );
-        var log = '', i=0;
-        var placeholder = $("#interpretor");
-        for(i; i < args.length; i++){
-          if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
-            log += `<span class="log-${typeof args[i]}">${ JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')}</span>`;
-          }
-          else{
-            log += `<span class="log-${typeof args[i]}">${args[i]}</span>`;
-          }
-          if( i < args.length -1 ){
-            log += '&nbsp;';
-          }
-        }
-        placeholder.append(`<div>${log}</div>`);
+      window.onerror = function(message, url, linenumber) {
+          console.log("JavaScript error: " + message + " on line " +
+                  linenumber + " for " + url);
       }
-      eval(
-        "var student={fist:'toma', last:'sakai'}; console.log('toto', 'marcel', 'teo', false); console.log(student);"
-      );
-      console.log(merde);
+
+//      JavaScript error: Uncaught ReferenceError: arg is not defined on line 82 for file:///opt/lampp/htdocs/jsCourse/exercises/index.html
+/*
+      (function( $source, $target ){
+        var formerLog = console.log;
+        console.log = function(){
+          formerLog.apply(console, arguments); // call the original logging
+          var args = Array.prototype.slice.call( arguments );
+          var log = '', i=0;
+          for( i; i < args.length; i++ ){
+            if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
+              log += `<span class="log-${typeof args[i]}">${ JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')}</span>`;
+            }
+            else {
+              log += `<span class="log-${typeof args[i]}">${args[i]}</span>`;
+            }
+            if ( i < args.length -1 ){
+              log += '&nbsp;';
+            }
+          }
+
+          eval(
+            "var student={fist:'toma', last:'sakai'}; console.log('toto', 'marcel', 'teo', false); console.log(student);"
+          );
+
+          $target.append(`<div>${log}</div>`);
+        };
+      })($("#interpretor"));
+      */
+
+
+      $('#run').on( 'click', function(){
+        console.log( $('#jsEditor0').val() );
+      });
+
     </script>
   </body>
 </html>
