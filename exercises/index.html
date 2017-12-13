@@ -7,27 +7,27 @@
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="static/css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
     <link rel="stylesheet" href="static/fonts/fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome.min.css" />
     <link rel="stylesheet" href="static/css/styles.css" />
   </head>
   <body>
     <div class="container-fluid fill">
       <div class="row fill">
-        <div class="col-xs-6 fill">
+        <div class="col-sm-6 fill">
           <div class="row fill-half">
-            <div class="col-xs-12">
-              <textarea class="fill" id="jsEditor0"></textarea>
-              <button id="run"> exécuter </button>
-            </div>
+            <div class="col-sm-12">
+              <textarea id="jsEditor"></textarea>
+              <div>
+                <button id="run">exécuter</button>
+              </div>
+             </div>
           </div>
           <div class="row fill-half">
-            <div id="interpretor" class="col-xs-12 fill"></div>
+            <div id="interpretor" class="col-sm-12 fill"></div>
           </div>
         </div> <!-- .col-xs-6 -->
 
-        <div class="col-xs-6 fill">
+        <div class="col-sm-6 fill" id="assignment">
           Trouver la somme de tous les entiers de 1 a 100000, à savoir 1 + 2 + .... + 100000
         </div>
 
@@ -36,8 +36,6 @@
     <script src="static/js/jquery.min.js"></script>
     <script src="static/js/popper.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="static/js/ie10-viewport-bug-workaround.js"></script>
     <!-- script src="static/js/edition.js"></script  -->
     <script>
 
@@ -68,7 +66,7 @@
 //      JavaScript error: Uncaught ReferenceError: arg is not defined on line 82 for file:///opt/lampp/htdocs/jsCourse/exercises/index.html
 
       $('#run').on( 'click', function(){
-        eval( $('#jsEditor0').val() );
+        eval( $('#jsEditor').val() );
       });
 
     </script>

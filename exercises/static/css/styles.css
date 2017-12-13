@@ -63,11 +63,12 @@ html, body {
 * editor
 */
 
-#jsEditorWrapper{
+#jsEditor {
+  width: 100%;
+  height: calc(100% - 40px);
   padding-left: 0px;
   padding-right: 0px;
 }
-
 /*
 * interpretor
 */
@@ -84,3 +85,12 @@ html, body {
 .log-object,
 .log-string {color: orange;}
 .log-number {color: cyan;}
+
+
+/*
+* assignment
+*/
+
+#assignment {
+  border: 1px silver solid;
+}
