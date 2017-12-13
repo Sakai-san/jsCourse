@@ -17,41 +17,18 @@
       <div class="row fill">
         <div class="col-xs-6 fill">
           <div class="row fill-half">
-            <textarea class="col-xs-12 fill" id="jsEditor0"></textarea>
+            <div class="col-xs-12">
+              <textarea class="fill" id="jsEditor0"></textarea>
+              <button id="run"> exécuter </button>
+            </div>
           </div>
           <div class="row fill-half">
             <div id="interpretor" class="col-xs-12 fill"></div>
           </div>
         </div> <!-- .col-xs-6 -->
 
-
-        <div class="col-xs-6 fill no-padding">
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation"><a href="#html" aria-controls="html" role="tab" data-toggle="tab">HTML</a></li>
-            <li role="presentation"><a href="#css" aria-controls="css" role="tab" data-toggle="tab">CSS</a></li>
-            <li role="presentation" class="active"><a href="#javascript" aria-controls="javascript" role="tab" data-toggle="tab">JavaScript</a></li>
-            <li><button id="run"> exécuter </button></li>
-          </ul>
-
-          <!-- Tab panes -->
-          <div class="tab-content fill">
-            <div role="tabpanel" class="tab-pane fade in active fill" id="html">
-              <div id="htmlEditorWrapper" class="col-xs-12 fill">
-                <textarea id="htmlEditor" class="col-xs-12 fill"></textarea>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane fade fill" id="css">
-              <div id="cssEditorWrapper" class="col-xs-12 fill">
-                <textarea id="cssEditor" class="col-xs-12 fill"></textarea>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane fade fill" id="javascript">
-              <div id="jsEditorWrapper" class="col-xs-12 fill">
-                <textarea id="jsEditor" class="col-xs-12 fill"> </textarea>
-              </div>
-            </div>
-          </div>
+        <div class="col-xs-6 fill">
+          Trouver la somme de tous les entiers de 1 a 100000, à savoir 1 + 2 + .... + 100000
         </div>
 
       </div><!-- .row -->
