@@ -20,13 +20,13 @@
               <div>
                 <button id="run">exécuter</button>
               </div>
-             </div>
-          </div>
+            </div>
+          </div> <!-- .row -->
           <div class="row fill-half">
             <div class="col-sm-12">
               <div id="interpretor" class="fill"></div>
             </div>
-          </div>
+          </div> <!-- .row -->
         </div> <!-- .col-sm-6 -->
         <div class="col-sm-6 fill">
           <div class="fill" id="assignment">
@@ -41,7 +41,9 @@
     <script>
 
       window.onerror = function(message, url, linenumber) {
-          console.log("JavaScript error: " + message + " on line " +
+
+        // faire une regex ici pour capture la ligne
+          console.log(message.replace("Uncaught", '') + " on line " +
                   linenumber + " for " + url);
       }
 
@@ -67,7 +69,13 @@
 //      JavaScript error: Uncaught ReferenceError: arg is not defined on line 82 for file:///opt/lampp/htdocs/jsCourse/exercises/index.html
 
       $('#run').on( 'click', function(){
-        eval( $('#jsEditor').val() );
+        try{
+          eval( $('#jsEditor').val() );
+        }
+        catch(e){
+          formerLog("avant " +e.stack+" apres");
+          throw e.stack;
+        }
       });
 
     </script>
