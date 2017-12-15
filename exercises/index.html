@@ -40,6 +40,18 @@
     <script src="static/js/bootstrap.min.js"></script>
     <script>
 
+    const error = 'ReferenceError: e is not defined at eval (eval at <anonymous> (file:///opt/lampp/htdocs/jsCourse/exercises/index.html:45:11), <anonymous>:2:13) at HTMLButtonElement.<anonymous> (file:///opt/lampp/htdocs/jsCourse/exercises/index.html:85:11) at HTMLButtonElement.dispatch (file:///opt/lampp/htdocs/jsCourse/exercises/static/js/jquery.min.js:3:10316) at HTMLButtonElement.q.handle (file:///opt/lampp/htdocs/jsCourse/exercises/static/js/jquery.min.js:3:8343)';
+    const regex1 = /^(.*) at eval \(eval at[^\)]+\)[^:]+:(\d+):\d+\).+$/;
+    var match = regex1.exec(error);
+    if(match){
+      console.log("-----"+match[1] + " on line " +match[2]+"-----");
+    }
+    else{
+      console.log("empty array");
+    }
+
+
+
       window.onerror = function(message, url, linenumber) {
 
         // faire une regex ici pour capture la ligne
@@ -73,7 +85,15 @@
           eval( $('#jsEditor').val() );
         }
         catch(e){
+          const regex = /^(.*) at eval \(eval at .*,.+:(\d+):\d+\).+/;
           formerLog("avant " +e.stack+" apres");
+          var match = regex.exec(e.stack);
+          if(match && match[0]){
+            formerLog("-----"+match[0] + "on line "+ match[1] +"-----");
+          }
+          else{
+            formerLog( e.stack.split(/ at /)[0] );
+          }
           throw e.stack;
         }
       });
