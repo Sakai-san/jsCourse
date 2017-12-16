@@ -40,6 +40,19 @@
     <script src="static/js/bootstrap.min.js"></script>
     <script>
 
+    function getLineError( codeLines ){
+      const nbCall = codeLines.length;
+      let i = 1;
+      for (i ; i<= nbCall; i++){
+        try {
+          eval( codeLines.slice( 0, i ).join("") );
+        }
+        catch(e){
+          return i;
+        }
+      }
+    }
+
 // beginn some test with regex
 const error  = `ReferenceError: lmffda is not defined
 at eval (eval at <anonymous> (file:///opt/lampp/htdocs/jsCourse/exercises/index.html:45:11), <anonymous>:1:1)
@@ -68,7 +81,7 @@ at HTMLButtonElement.q.handle (file:///opt/lampp/htdocs/jsCourse/exercises/stati
             log += '&nbsp;';
           }
         }
-        $("#interpretor").append(`<div>${log}</div>`);
+        $("#interpretor").empty().append(`<div>${log}</div>`);
       }
 
       $('#run').on( 'click', function(){
@@ -80,11 +93,14 @@ at HTMLButtonElement.q.handle (file:///opt/lampp/htdocs/jsCourse/exercises/stati
           const match = regex.exec( e.stack.replace(/[\n\r]/g, ' ') );
 
           formerLog("avant " +e.stack+" apres");
+
           if( match && match[1] && match[2]  ){
             console.log( match[1] + "on line "+ match[2] );
           }
           else{
-            console.log( e.stack.split(/ at /)[0] + "on line 1" );
+            // execute code untill reach an exception
+            const source = $('#jsEditor').val();
+            console.log( "proble on line " + getLineError( source.split(/[\n\r]/) ) );
           }
         }
       });
