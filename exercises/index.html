@@ -100,7 +100,7 @@ at HTMLButtonElement.q.handle (file:///opt/lampp/htdocs/jsCourse/exercises/stati
           else{
             // execute code untill reach an exception
             const source = $('#jsEditor').val();
-            console.log( "proble on line " + getLineError( source.split(/[\n\r]/) ) );
+            console.log( e.stack.split(/ at /)[0]  + "on line " + getLineError( source.split(/[\n\r]/) ) );
           }
         }
       });
