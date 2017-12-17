@@ -21,8 +21,7 @@ d’exerices [en ligne](www.studybyyourself.com) permettant de valider l’acqui
 
 ## Auteur
 Toma a obtenu un BSc en computer science et un MSc en systèmes d’information. Durant
-son master à HEC Lausanne, il a occupé un poste d’étudiant-assistant dans le cadre
-d’enseignements relatifs aux bases de données et à la programmation. Il a ensuite travaillé
+son master à HEC Lausanne, il a occupé un poste d’étudiant-assistant. Dans cette activité il a encadré des étudiants dans le cadre d’enseignements relatifs aux bases de données et à la programmation. Il a ensuite travaillé
 comme software ingénieur dans diverses institutions au Japon (Université des Nations Unies,
 Université de Tokyo).
 
@@ -79,7 +78,7 @@ ainsi uniquement dans un souci de lisibilité et de simplicité.
 * [JavaScript for kids](http://scuolamaputo.org/wp-content/uploads/2016/05/jsfkids.pdf)
 * [Eric Elliot practices in JS](https://github.com/ericelliott/class-free-javascript-style)
 
-M
+
 ```js
 var chrisAge = 46;
 var tomaAge = chrisAge;
