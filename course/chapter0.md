@@ -4,7 +4,7 @@
 
 JavaScript est un language de programmation crée en 1995. Initialement crée pour faire de petite interaction avec l'utilisateur d'un client web, communément appelé navigateur, il est devenu un language généraliste. [Stack Overflow](https://insights.stackoverflow.com/survey/2017) le classait comme le lanague le plus populaire en 2017.
 
-Ce cours traite les concepts de base ainsi que les concepts plus spécifiques tel que le prototype, la callback, le hoisting, le spread, le desconstructing, les closures, etc.
+Ce cours traite les concepts de base ainsi que des concepts plus spécifiques tel que le prototype, le callback, le hoisting, le spread, le desconstructing, les closures, etc.
 
 ## Audience
 Ce cours s’adresse essentiellement aux étudiants et étudiantes qui débutent avec JavaScript.

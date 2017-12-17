@@ -4,9 +4,9 @@
 JS est un langage de programmation crée en 1995 par [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich) pour Nescape, le navigateur phare de l'époque. Selon l'anectode il fut conçu en [10 jours](https://brendaneich.com/tag/javascript/).
 
 ## Comment marche JavaScript ?
-Les navigateurs sont des programmes installés sur un ordinateur (machine hôte). Un navigateur une **application bureaau** (desktop application) qui intègre un interpréteur JavaScript ainsi qu'un environnement d'exécution (runtime execution) isolé de la machine hôte. En appelle cela une **machine virtuelle**.
+Les navigateurs sont des programmes installés sur un ordinateur (machine hôte). Un navigateur est une **application bureaau** (desktop application) qui intègre un interpréteur JavaScript ainsi qu'un environnement d'exécution (runtime execution) isolé de la machine hôte. En appelle cela une **machine virtuelle**.
 
-Il faut se rappeller qu'un script JavaScript (ceci est vrai pour n'importe quel autre language) n'est qu'un simple **fichier de texte**, appelé code source. Lorsqu'un internaute tappe une adresse **url** dans son navigateur, il fait ce qu'on appelle une **requête HTTP**. Le site web répond et envoie des resources (code source, images, etc.) au client.  Le client analyse le code source JS, transforme (compilation) celui-ci en byte code compréhensible (interprétée) par la [machine virtuelle](http://creativejs.com/2013/06/the-race-for-speed-part-2-how-javascript-compilers-work/index.html). Le fait que le byte code n'est pas interprété par votre ordinateur directement est pour des raisons de sécurité.
+Il faut se rappeller qu'un script JavaScript (ceci est vrai pour n'importe quel autre language) n'est qu'un simple **fichier de texte**, appelé code source. Lorsqu'un internaute tappe une adresse **url** dans son navigateur, il fait ce qu'on appelle une **requête HTTP**. Le site web répond et envoie des resources (code source, images, etc.) au client.  Le client analyse le code source JS, transforme (compilation) celui-ci en byte code compréhensible par la [machine virtuelle] (http://creativejs.com/2013/06/the-race-for-speed-part-2-how-javascript-compilers-work/index.html) qui donc peut l'interpréter. Le fait que le byte code n'est pas interprété par ordinateur hôte directement est pour des raisons de sécurité.
 
 JavaScript peut aussi être également exécuté côté serveur. Nous nous concentrerons dans ce cours de JS exécuté côté client, c'est-à-dire le navigateur.
 
@@ -28,7 +28,7 @@ Le montée en puissance de JS a apporté beaucoup de changement dans la façon d
 ## Standard
 Tout comme HTML et CSS, JS est un [standard ouvert](https://fr.wikipedia.org/wiki/Format_ouvert) (open standard).
 
-JavaScript est standardisé depuis 1997 par un organisme appelé [Ecma International](https://www.ecma-international.org/default.htm). La standard de JavaScript a été appelé ECMAScript, car JavaScript une marque déposée.
+JavaScript est standardisé depuis 1997 par un organisme appelé [Ecma International](https://www.ecma-international.org/default.htm). Le standard de JavaScript a été appelé ECMAScript, car JavaScript une marque déposée.
 
 
 Question 1 : comment s'apelle la machine virtuelle de google Chrome
