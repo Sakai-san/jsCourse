@@ -88,7 +88,7 @@
             console.log( match[1] + "on line "+ match[2] );
           }
           else{
-            const source = jsEditor.val();
+            const source = $jsEditor.val();
             console.log( e.stack.split(/ at /)[0]  + "on line " + getLineError( source.split(/[\n\r]/) ) );
           }
         }
