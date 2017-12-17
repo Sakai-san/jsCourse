@@ -40,7 +40,8 @@
     <script src="static/js/bootstrap.min.js"></script>
     <script>
 
-    function getLineError( codeLines ){
+    // execute source code untill reach an exception
+    var getLineError = ( codeLines ) => {
       const nbCall = codeLines.length;
       let i = 1;
       for (i ; i<= nbCall; i++){
@@ -52,18 +53,6 @@
         }
       }
     }
-
-// beginn some test with regex
-const error  = `ReferenceError: lmffda is not defined
-at eval (eval at <anonymous> (file:///opt/lampp/htdocs/jsCourse/exercises/index.html:45:11), <anonymous>:1:1)
-at HTMLButtonElement.<anonymous> (file:///opt/lampp/htdocs/jsCourse/exercises/index.html:85:11)
-at HTMLButtonElement.dispatch (file:///opt/lampp/htdocs/jsCourse/exercises/static/js/jquery.min.js:3:10316)
-at HTMLButtonElement.q.handle (file:///opt/lampp/htdocs/jsCourse/exercises/static/js/jquery.min.js:3:8343)`;
-
-    const regex = /^(.*) at eval \(eval at[^\)]+\)[^:]+:(\d+):\d+\).+$/;
-    var match = regex.exec( error.replace(/[\n\r]/g, ' ') );
-    console.log( "^"+match[1]+"$", "^"+match[2] +"$");
-// end some test with regex
 
       var formerLog = console.log;
       console.log = function(){ // override console.log
@@ -85,12 +74,13 @@ at HTMLButtonElement.q.handle (file:///opt/lampp/htdocs/jsCourse/exercises/stati
       }
 
       $('#run').on( 'click', function(){
+        const $jsEditor = $('#jsEditor');
         try{
-          eval( $('#jsEditor').val() );
+          eval( $jsEditor.val() );
         }
         catch(e){
-          const regex = /^(.*) at eval \(eval at[^\)]+\)[^:]+:(\d+):\d+\).+$/;
-          const match = regex.exec( e.stack.replace(/[\n\r]/g, ' ') );
+          const regex = /^(.*) at eval \(eval at[^\)]+\)[^:]+:(\d+):\d+\).+$/; // regex for getting the error type and the concerned line code
+          const match = regex.exec( e.stack.replace(/[\n\r]/g, ' ') ); // replace return cariage by blany and execute previous regex
 
           formerLog("avant " +e.stack+" apres");
 
@@ -98,8 +88,7 @@ at HTMLButtonElement.q.handle (file:///opt/lampp/htdocs/jsCourse/exercises/stati
             console.log( match[1] + "on line "+ match[2] );
           }
           else{
-            // execute code untill reach an exception
-            const source = $('#jsEditor').val();
+            const source = jsEditor.val();
             console.log( e.stack.split(/ at /)[0]  + "on line " + getLineError( source.split(/[\n\r]/) ) );
           }
         }
