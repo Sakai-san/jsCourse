@@ -61,19 +61,20 @@
         var log = '', i=0;
         for( i; i < args.length; i++ ){
           if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
-            log += `<span class="log-${typeof args[i]}">${ JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')}</span>`;
+            log += `<span class="log-${typeof args[i]}">${ JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')}</span>`; // object without "" on keys
           }
           else {
-            log += `<span class="log-${typeof args[i]}">${args[i]}</span>`;
+            log += `<span class="log-${typeof args[i]}">${args[i]}</span>`; // atom type of variable
           }
-          if ( i < args.length -1 ){
+          if ( i < args.length -1 ){ // do not add a blank to the last parameter to be printed
             log += '&nbsp;';
           }
         }
-        $("#interpretor").empty().append(`<div>${log}</div>`);
+        $("#interpretor").append(`<div>${log}</div>`);
       }
 
       $('#run').on( 'click', function(){
+        $("#interpretor").empty(); // clean up the homemade console
         const $jsEditor = $('#jsEditor');
         try{
           eval( $jsEditor.val() );
