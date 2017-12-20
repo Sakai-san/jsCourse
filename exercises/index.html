@@ -49,19 +49,19 @@
     </script>
     <script>
 
-    // execute source code untill reach an exception
-    var getLineError = ( codeLines ) => {
-      const nbCall = codeLines.length;
-      let i = 1;
-      for (i ; i<= nbCall; i++){
-        try {
-          eval( codeLines.slice( 0, i ).join("") );
-        }
-        catch(e){
-          return i;
+      // execute source code untill reach an exception
+      var getLineError = ( codeLines ) => {
+        const nbCall = codeLines.length;
+        let i = 1;
+        for (i ; i<= nbCall; i++){
+          try {
+            eval( codeLines.slice( 0, i ).join("") );
+          }
+          catch(e){
+            return i;
+          }
         }
       }
-    }
 
       var formerLog = console.log;
       console.log = function(){ // override console.log
