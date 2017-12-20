@@ -86,7 +86,6 @@
         var editor = ace.edit("jsEditor");
         $("#interpretor").empty(); // clean up the homemade console
         const $jsEditor = $('#jsEditor');
-        formerLog( "code source",  editor.getValue() );
         try{
           eval( editor.getValue() );
         }
