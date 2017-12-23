@@ -49,7 +49,77 @@
     </script>
     <script>
 
-      // execute source code untill reach an exception
+
+var formerLog = console.log;
+console.log = function(){ // override console.log
+  formerLog.apply(console, arguments); // call the original logging
+  var args = Array.prototype.slice.call( arguments );
+  var log = '', i=0;
+  for( i; i < args.length; i++ ){
+    if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
+      log += `<span class="log-${typeof args[i]}">${ JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')}</span>`; // object without "" on keys
+    }
+    else {
+      log += `<span class="log-${typeof args[i]}">${args[i]}</span>`; // atom type of variable
+    }
+    if ( i < args.length -1 ){ // do not add a blank to the last parameter to be printed
+      log += '&nbsp;';
+    }
+  }
+  $("#interpretor").append(`<div>${log}</div>`);
+};
+
+function limitEval(code, fnOnStop, opt_timeoutInMS) {
+  var id = Math.random() + 1,
+    blob = new Blob(
+      ['onmessage=function(a){a=a.data;postMessage({i:a.i+1});postMessage({r:eval.call(this,a.c),i:a.i})};'],
+      { type:'text/javascript' }
+    ),
+    myWorker = new Worker(URL.createObjectURL(blob));
+
+  function onDone() {
+    URL.revokeObjectURL(blob);
+    fnOnStop.apply(this, arguments);
+  }
+
+  myWorker.onmessage = function (data) {
+    data = data.data;
+    if (data) {
+      if (data.i === id) {
+        id = 0;
+        onDone(true, data.r);
+      }
+      else if (data.i === id + 1) {
+        setTimeout(function() {
+          if (id) {
+            myWorker.terminate();
+            onDone(false);
+          }
+        }, opt_timeoutInMS || 1000);
+      }
+    }
+  };
+
+  myWorker.postMessage({ c: code, i: id });
+}
+
+$('#run').on( 'click', function(){
+  var editor  = ace.edit("jsEditor");
+  var code    = editor.getValue();
+  limitEval(code, function(success, returnValue) {
+    if (success) {
+      // do whatever you want with the return value (returnValue)
+    }
+    else {
+      alert('The code takes too long to run.  Is there is an infinite loop?');
+    }
+  }, 3000);
+});
+
+
+
+
+/*
       var getLineError = ( codeLines ) => {
         const nbCall = codeLines.length;
         let i = 1;
@@ -104,7 +174,7 @@
           }
         }
       });
-
+*/
 
 /*
 const insertInOrder = function( element, arr ){
