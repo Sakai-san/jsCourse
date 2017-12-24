@@ -1,3 +1,25 @@
+
+
+const code = `const insertInOrder = function( element, arr ){
+    if( arr.length === 0){
+        return [element];
+    }
+    else if( element <= arr[0] ){
+        return [element].concat(arr);
+    }
+    else{
+        return arr.slice(1).concat( insertInOrder() );
+    }
+};
+console.log( insertInOrder(80, [8,10,111,1111] ) );
+`;
+try{
+    eval ( code );
+}
+catch(e){
+    self.postMessage(e.stack);
+}
+
 var window = {};
 window.alert = function(){
     console.log.apply(console, ["Alert: "].concat(Array.prototype.slice.call(arguments)));
@@ -20,23 +42,3 @@ var console = {
         console.log.apply(console, ["WARNING: "].concat(Array.prototype.slice.call(arguments)));
     }
 };
-
-const code = `const insertInOrder = function( element, arr ){
-    if( arr.length === 0){
-        return [element];
-    }
-    else if( element <= arr[0] ){
-        return [element].concat(arr);
-    }
-    else{
-        return arr.slice(1).concat( insertInOrder() );
-    }
-};
-console.log( insertInOrder(80, [8,10,111,1111] ) );
-`;
-try{
-    eval ( code );
-}
-catch(e){
-    self.postMessage(e.stack);
-}
