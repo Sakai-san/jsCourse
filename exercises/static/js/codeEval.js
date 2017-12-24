@@ -1,4 +1,8 @@
-
+  self.onmessage = function (event) { try{ eval ( event.data.code ); }
+    catch(e){
+        self.postMessage(e.stack);
+    }
+};
 
 const code = `const insertInOrder = function( element, arr ){
     if( arr.length === 0){

@@ -51,8 +51,9 @@
       $('#run').on( 'click', function(){
         var worker = new Worker('static/js/codeEval.js');
         worker.onmessage = function (event) {
-            document.getElementById('interpretor').textContent = event.data;
+          $("#interpretor").empty().append(`<div>${event.data}</div>`);
         };
+        worker.postMessage( {code : editor.getValue() } );
       });
 
 
