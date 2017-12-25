@@ -24,7 +24,7 @@ catch(e){
     self.postMessage(e.stack);
 }
 
-var window = {};
+var window = {}; // polyfill since web worder do not have window and console
 window.alert = function(){
     console.log.apply(console, ["Alert: "].concat(Array.prototype.slice.call(arguments)));
 };
@@ -46,3 +46,27 @@ var console = {
         console.log.apply(console, ["WARNING: "].concat(Array.prototype.slice.call(arguments)));
     }
 };
+
+
+/*
+      var formerLog = console.log;
+      console.log = function(){ // override console.log
+        formerLog.apply(console, arguments); // call the original logging
+        var args = Array.prototype.slice.call( arguments );
+        var log = '', i=0;
+        for( i; i < args.length; i++ ){
+          if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
+            log += `<span class="log-${typeof args[i]}">${ JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')}</span>`; // object without "" on keys
+          }
+          else {
+            log += `<span class="log-${typeof args[i]}">${args[i]}</span>`; // atom type of variable
+          }
+          if ( i < args.length -1 ){ // do not add a blank to the last parameter to be printed
+            log += '&nbsp;';
+          }
+        }
+        $("#interpretor").append(`<div>${log}</div>`);
+      };
+
+
+*/

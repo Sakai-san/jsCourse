@@ -74,12 +74,9 @@ html, body {
 */
 
 #interpretor {
-  background-color: white;
-  padding: 10px;
-}
-
-#interpretor {
   background: #333;
+  color: white;
+  padding: 10px;
 }
 .log-boolean,
 .log-undefined {color: magenta;}
