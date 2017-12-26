@@ -57,11 +57,16 @@ console.log(first + ' '+ last);`
 
 
       $('#run').on( 'click', function(){
-        var worker = new Worker('static/js/codeEval.js');
-        worker.onmessage = function (event) {
-          $("#interpretor").empty().append(`<div>${event.data}</div>`);
-        };
-        worker.postMessage( {code : editor.getValue() } );
+        if( window.Worker){
+          var worker = new Worker('static/js/codeEval.js');
+          worker.onmessage = function (event) {
+            $("#interpretor").empty().append(`<div>${event.data}</div>`);
+          };
+          worker.postMessage( {code : editor.getValue() } );
+        }
+        else{
+          $("#interpretor").empty().append("<div>Can't work with your current browser</div>");
+        }
       });
 
 
