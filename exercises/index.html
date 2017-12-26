@@ -48,6 +48,13 @@
       editor.setShowPrintMargin(false);
       editor.getSession().setTabSize(2);
 
+      // on test purpose
+      editor.insert(
+`const first='thomas';
+const last='sakai';
+console.log(first + ' '+ last);`
+      );
+
 
       $('#run').on( 'click', function(){
         var worker = new Worker('static/js/codeEval.js');
@@ -58,31 +65,6 @@
       });
 
 
-
-
-/*
-      var formerLog = console.log;
-      console.log = function(){ // override console.log
-        formerLog.apply(console, arguments); // call the original logging
-        var args = Array.prototype.slice.call( arguments );
-        var log = '', i=0;
-        for( i; i < args.length; i++ ){
-          if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
-            log += `<span class="log-${typeof args[i]}">${ JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')}</span>`; // object without "" on keys
-          }
-          else {
-            log += `<span class="log-${typeof args[i]}">${args[i]}</span>`; // atom type of variable
-          }
-          if ( i < args.length -1 ){ // do not add a blank to the last parameter to be printed
-            log += '&nbsp;';
-          }
-        }
-        $("#interpretor").append(`<div>${log}</div>`);
-      };
-
-
-*/
-
 /*
 const insertInOrder = function( element, arr ){
     if( arr.length === 0){
@@ -92,7 +74,7 @@ const insertInOrder = function( element, arr ){
         return [element].concat(arr);
     }
     else{
-        return arr.slice(1).concat( insertInOrder() );
+        return [arr[0]].concat( insertInOrder() );
     }
 };
 console.log( insertInOrder(80, [8,10,111,1111] ) );
