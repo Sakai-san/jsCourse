@@ -52,15 +52,19 @@
       editor.insert(
 `const first='thomas';
 const last='sakai';
-console.log(first + ' '+ last);`
+console.log(first + ' '+ last);
+console.log( [1, 222, 5, 122, 144] );
+`
       );
 
 
       $('#run').on( 'click', function(){
+        $("#interpretor").empty();
         if( window.Worker){
           var worker = new Worker('static/js/codeEval.js');
           worker.onmessage = function (event) {
-            $("#interpretor").empty().append(`<div>${event.data}</div>`);
+            console.log(event.data);
+            $("#interpretor").append(`<div>${event.data}</div>`);
           };
           worker.postMessage( {code : editor.getValue() } );
         }
