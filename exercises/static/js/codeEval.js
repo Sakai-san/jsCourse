@@ -1,6 +1,6 @@
-self.onmessage = function (event) { try{ eval ( event.data.code ); }
+self.onmessage = function (event) { try{ const log = eval ( event.data.code ); const solution = eval ( event.data.solution ); self.postMessage({log,solution}); }
     catch(e){
-        self.postMessage(e.stack);
+        self.postMessage({log : e.stack, error : true});
     }
 };
 
@@ -20,12 +20,11 @@ var console = {
             else {
                 log += `<span class="log-${typeof args[i]}">${args[i]}</span>`; // atom type of variable
             }
-            if ( i < args.length -1 ){ // do not add a blank to the last parameter to be printed
+            if ( i < args.length -1 ){ // do not add a blank to the last parameter of console.log() to be printed
                 log += '&nbsp;';
             }
         }
-        // send the message back to the main thread
-        self.postMessage(log);
+        return log;
     },
     error: function(){
         console.log.apply(console, ["ERROR: "].concat(Array.prototype.slice.call(arguments)));

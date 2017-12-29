@@ -20,6 +20,7 @@
               <div id="jsEditor"></div>
               <div>
                 <button id="run">run</button>
+                <span id="feedback"></span>
               </div>
             </div>
           </div> <!-- .row -->
@@ -48,28 +49,40 @@
       editor.setShowPrintMargin(false);
       editor.getSession().setTabSize(2);
 
-      // on test purpose
-      editor.insert(
-`const first='thomas';
+
+const solution = `const first='thomas';
 const last='sakai';
-console.log(first + ' '+ last);
-console.log( [1, 222, 5, 122, 144] );
-`
-      );
+const fullName = first + ' ' +last;
+console.log(fullName);
+`;
+      // on test purpose
+      editor.insert(  solution );
 
 
       $('#run').on( 'click', function(){
-        $("#interpretor").empty();
+        const $interpretor = $("#interpretor");
+        const $feedback    = $("#feedback");
+        $interpretor.empty();
+        $feedback.empty();
         if( window.Worker){
           var worker = new Worker('static/js/codeEval.js');
           worker.onmessage = function (event) {
             console.log(event.data);
-            $("#interpretor").append(`<div>${event.data}</div>`);
+            if( event.data.error ){
+              $feedback.text(`Your code is buggy ;-(`);
+            }
+            else if ( event.data.log === event.data.solution){
+              $feedback.text(`WHAHAAAA you are the best.`);
+            }
+            else{
+              $feedback.text(`exercicse is not correct.`);
+            }
+            $("#interpretor").append(`<div>${event.data.log}</div>`);
           };
-          worker.postMessage( {code : editor.getValue() } );
+          worker.postMessage( {code : editor.getValue(), solution :  solution} );
         }
         else{
-          $("#interpretor").empty().append("<div>Can't work with your current browser</div>");
+          $("#feedback").empty().append("<div>Can't work with your current browser</div>");
         }
       });
 
