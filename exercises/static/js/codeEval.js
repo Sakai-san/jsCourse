@@ -1,4 +1,10 @@
-self.onmessage = function (event) { try{ const log = eval ( event.data.code ); const solution = eval ( event.data.solution ); self.postMessage({log,solution}); }
+self.onmessage = function (event) { try{ let log = eval ( event.data );
+
+    for (var name in this){
+        log += name + " | ";
+    }
+    self.postMessage({log});
+    }
     catch(e){
         self.postMessage({log : e.stack, error : true});
     }

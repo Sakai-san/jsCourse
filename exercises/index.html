@@ -56,22 +56,33 @@ const fullName = first + ' ' +last;
 console.log(fullName);
 `;
       // on test purpose
-      editor.insert(  solution );
+      editor.insert( solution );
+      const $feedback    = $("#feedback");
 
+      const parsedSolution = '';
+      if( window.Worker ){
+        var solutionWorker = new Worker('static/js/codeEval.js');
+        solutionWorker.onmessage = function (event) {
+          console.log(event.data);
+          parsedSolution = event.data.log;
+        }
+      }
+      else{
+          $("#feedback").empty().append("<div>Can't work with your current browser</div>");
+      }
 
       $('#run').on( 'click', function(){
         const $interpretor = $("#interpretor");
-        const $feedback    = $("#feedback");
         $interpretor.empty();
         $feedback.empty();
-        if( window.Worker){
-          var worker = new Worker('static/js/codeEval.js');
-          worker.onmessage = function (event) {
+        if( window.Worker ){
+          var studentWorker  = new Worker('static/js/codeEval.js');
+          studentWorker.onmessage = function (event) {
             console.log(event.data);
             if( event.data.error ){
               $feedback.text(`Your code is buggy ;-(`);
             }
-            else if ( event.data.log === event.data.solution){
+            else if ( event.data === event.data){
               $feedback.text(`WHAHAAAA you are the best.`);
             }
             else{
@@ -79,7 +90,7 @@ console.log(fullName);
             }
             $("#interpretor").append(`<div>${event.data.log}</div>`);
           };
-          worker.postMessage( {code : editor.getValue(), solution :  solution} );
+          studentWorker.postMessage( editor.getValue() );
         }
         else{
           $("#feedback").empty().append("<div>Can't work with your current browser</div>");
