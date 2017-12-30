@@ -1,9 +1,5 @@
-self.onmessage = function (event) { try{ let log = eval ( event.data );
-
-    for (var name in this){
-        log += name + " | ";
-    }
-    self.postMessage({log});
+let accConsoles=''; self.onmessage = function (event) { try{ let parsing=''; parsing = eval ( event.data );
+    self.postMessage( {log:accConsoles} );
     }
     catch(e){
         self.postMessage({log : e.stack, error : true});
@@ -30,6 +26,7 @@ var console = {
                 log += '&nbsp;';
             }
         }
+        accConsoles += `<div>${log}</div>`;
         return log;
     },
     error: function(){
