@@ -50,11 +50,15 @@
       editor.getSession().setTabSize(2);
 
 
-const solution = `const first='thomas';
-const last='sakai';
-const fullName = first + ' ' +last;
+const solution = `const tomy='thomas';
+const amour ='sakai';
+const nothing= 'for';
+const fullName = tomy + ' ' + amour;
 console.log(fullName);
 `;
+
+const regex = ".+\\b(for)\\b|\\b(map)\\bb|\\b(filter)\\b|\\b(reduce)\\b|\\b(forEach)\\b.+";
+
       // on test purpose
       editor.insert( solution );
       const $feedback    = $("#feedback");
@@ -75,25 +79,30 @@ console.log(fullName);
         const $interpretor = $("#interpretor");
         $interpretor.empty();
         $feedback.empty();
-        if( window.Worker ){
-          var studentWorker  = new Worker('static/js/codeEval.js');
-          studentWorker.onmessage = function (event) {
-            console.log(event.data);
-            if( event.data.error ){
-              $feedback.text(`Your code is buggy ;-(`);
-            }
-            else if ( event.data === event.data){
-              $feedback.text(`WHAHAAAA you are the best.`);
-            }
-            else{
-              $feedback.text(`exercicse is not correct.`);
-            }
-            $("#interpretor").append(`<div>${event.data.log}</div>`);
-          };
-          studentWorker.postMessage( editor.getValue() );
+        if( editor.getValue().match(regex) ){ // user try to fool me
+          if( window.Worker ){
+            var studentWorker  = new Worker('static/js/codeEval.js');
+            studentWorker.onmessage = function (event) {
+              console.log(event.data);
+              if( event.data.error ){
+                $feedback.text(`Your code is buggy ;-(`);
+              }
+              else if ( event.data === event.data){
+                $feedback.text(`WHAHAAAA you are the best.`);
+              }
+              else{
+                $feedback.text(`exercicse is not correct.`);
+              }
+              $("#interpretor").append(`<div>${event.data.log}</div>`);
+            };
+            studentWorker.postMessage( editor.getValue() );
+          }
+          else{
+            $("#feedback").empty().append("<div>Can't work with your current browser</div>");
+          }
         }
         else{
-          $("#feedback").empty().append("<div>Can't work with your current browser</div>");
+          $feedback.text(`exercicse is not correct.`);
         }
       });
 

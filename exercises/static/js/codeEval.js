@@ -1,7 +1,7 @@
 let accConsoles=''; self.onmessage = function (event) {
     try{
         eval ( event.data );
-        self.postMessage( {log:accConsoles} );
+        self.postMessage( {log : accConsoles} );
     }
     catch(e){
         self.postMessage( {log : e.stack, error : true} );

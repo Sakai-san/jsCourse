@@ -30,5 +30,6 @@
             for (var name in this)
                 variables += name + "\n";
             ",
+        antiRegex : ".+\\b(for)\\b|\\b(map)\\bb|\\b(filter)\\b|\\b(reduce)\\b|\\b(forEach)\\b.+",
     }
 }
