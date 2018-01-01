@@ -1,4 +1,4 @@
-let accConsoles=''; self.onmessage = function (event) {
+self.onmessage = function (event) {
     try{
         eval ( event.data );
         self.postMessage( {log : accConsoles} );
@@ -8,6 +8,7 @@ let accConsoles=''; self.onmessage = function (event) {
     }
 };
 
+let accConsoles='';
 var window = {}; // polyfill since web worder do not have window and console
 window.alert = function(){
     console.log.apply(console, ["Alert: "].concat(Array.prototype.slice.call(arguments)));
