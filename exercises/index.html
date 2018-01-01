@@ -49,7 +49,7 @@
       editor.setShowPrintMargin(false);
       editor.getSession().setTabSize(2);
 
-const solution1 = `var names = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];
+const solution = `var names = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];
 var names_no_a = [];
 const temp = 'beflre';
 for( var i = 0; i < names.length; i++ ){
@@ -59,19 +59,6 @@ for( var i = 0; i < names.length; i++ ){
 }
 console.log(names_no_a);
 `;
-
-
-const solution = `var names = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];
-var names_no_a = [];
-const temp = 'beflr';
-names.forEach( (el) => {
-  if( el.indexOf("a") === -1)  {
-    names_no_a.push( el );
-  }
-});
-
-console.log(names_no_a);
-`
 
 const regex = /(\b(for)\b|\b(map)\b|\b(filter)\b|\b(reduce)\b|\b(forEach)\b)/;
 
