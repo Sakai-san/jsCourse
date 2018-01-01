@@ -50,53 +50,6 @@
       editor.getSession().setTabSize(2);
 
 
-      function run(fn) {
-        return new Worker(URL.createObjectURL(new Blob(['('+fn+')()'])));
-      }
-
-      const inlineWorker = run(function() {
-
-        const polyfillConsole = `
-let accConsoles='';
-var window = {}; // polyfill since web worder do not have window and console
-window.alert = function(){
-    console.log.apply(console, ["Alert: "].concat(Array.prototype.slice.call(arguments)));
-};
-var alert = window.alert;
-var console = {
-    log: function(){
-        var args = Array.prototype.slice.call( arguments );
-        var logging = "";
-        for(var i = 0; i < args.length; i++){
-            if ( typeof args[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
-              logging += JSON.stringify(args[i], undefined, 2).replace(/"([^"]*)":/g, '$1:');
-            }
-            else {
-              logging += args[i]; // atom type of variable
-            }
-            if ( i < args.length -1 ){ // do not add a blank to the last parameter of console.log() to be printed
-              logging += '&nbsp;';
-            }
-        }
-        accConsoles += lologging;
-        return logging;
-    },
-    error: function(){
-        console.log.apply(console, ["ERROR: "].concat(Array.prototype.slice.call(arguments)));
-    },
-    warn: function(){
-        console.log.apply(console, ["WARNING: "].concat(Array.prototype.slice.call(arguments)));
-    }
-};
-`;
-        postMessage( eval('const firstName="toma"; const lastName="sakai"; console.log(firstName + " " +lastName); ' + polyfillConsole));
-        self.close();
-      });
-
-      inlineWorker.onmessage = (event) => console.log(event.data);
-
-
-
 const solution = `var names = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];
 var names_no_a = [];
 const temp = 'beflre';
