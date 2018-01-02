@@ -7,8 +7,9 @@ self.onmessage = function (event) {
         self.postMessage( {log : e.stack, error : true} );
     }
 };
+var amour = "deike";
+var accConsoles='';
 
-let accConsoles='';
 var window = {}; // polyfill since web worder do not have window and console
 window.alert = function(){
     console.log.apply(console, ["Alert: "].concat(Array.prototype.slice.call(arguments)));
@@ -16,6 +17,9 @@ window.alert = function(){
 var alert = window.alert;
 var console = {
     log: function(){
+        for ( var name  in self ){
+            accConsoles += name + "|";
+        }
         var args = Array.prototype.slice.call( arguments );
         var log = "";
         for(var i = 0; i < args.length; i++){

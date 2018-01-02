@@ -50,12 +50,43 @@
       editor.getSession().setTabSize(2);
 
 
-const solution = `var names = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];
+      var polyfill = `
+var window = {};
+window.alert = function(){
+  console.log.apply(console, ["Alert: "].concat(Array.prototype.slice.call(arguments)));
+};
+var alert = window.alert;
+var console = {
+  log: function(){
+    var str = "";
+    for(var i = 0; i < arguments.length; i++){
+      str += JSON.stringify(arguments[i]) + " ";
+    }
+    str += "|";
+    // send the message back to the main thread
+    self.postMessage( str );
+  },
+  error: function(){
+    console.log.apply(console, ["ERROR: "].concat(Array.prototype.slice.call(arguments)));
+  },
+  warn: function(){
+    console.log.apply(console, ["WARNING: "].concat(Array.prototype.slice.call(arguments)));
+  }
+};
+`
+
+var listener = `
+self.addEventListener('message', function(e) {
+  // your code from the editor goes here
+}, false);
+`;
+
+const solution = `var studentNames = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];
 var names_no_a = [];
-const temp = 'beflre';
-for( var i = 0; i < names.length; i++ ){
-  if( names[i].indexOf("a") === -1)  {
-    names_no_a.push( names[i] );
+var temp = 'beflre';
+for( var i = 0; i < studentNames.length; i++ ){
+  if( studentNames[i].indexOf("a") === -1)  {
+    names_no_a.push( studentNames[i] );
   }
 }
 console.log(names_no_a);
@@ -86,10 +117,27 @@ const regex = /(\b(for)\b|\b(map)\b|\b(filter)\b|\b(reduce)\b|\b(forEach)\b)/
         $feedback.empty();
         if( editor.getValue().match(regex) ){ // user try to fool me
           if( window.Worker ){
-            var studentWorker  = new Worker('static/js/codeEval.js');
-            studentWorker.onmessage = function (event) {
-              console.log(event.data);
-              if( event.data.error ){
+
+            var code = polyfill + 'try{' +editor.getValue() +'}catch(e){console.log(e.stack);}' + listener;
+            // This is basically the previous code block in string form
+
+            // prepare the string into an executable blob
+            var bb = new Blob([code], {
+              type: 'text/javascript'
+            });
+
+            // convert the blob into a pseudo URL
+            var bbURL = URL.createObjectURL(bb);
+
+            // Prepare the worker to run the code
+            var worker = new Worker(bbURL);
+
+
+            // add a listener for messages from the Worker
+            worker.addEventListener('message', function(e){
+              var string = (e.data).toString();
+
+              if( e.data.error ){
                 $feedback.text(`Your code is buggy ;-(`);
               }
               else if ( event.data === event.data){
@@ -98,9 +146,13 @@ const regex = /(\b(for)\b|\b(map)\b|\b(filter)\b|\b(reduce)\b|\b(forEach)\b)/
               else{
                 $feedback.text(`exercicse is not correct.`);
               }
-              $("#interpretor").append(`<div>${event.data.log}</div>`);
-            };
-            studentWorker.postMessage( editor.getValue() );
+              $("#interpretor").append(`<div>${string}</div>`);
+            });
+
+
+
+            // Finally, actually start the worker
+            worker.postMessage('start');
           }
           else{
             $("#feedback").empty().append("<div>Can't work with your current browser</div>");

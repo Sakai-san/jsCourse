@@ -1,5 +1,5 @@
 {
-    assignment_1 :{
+    assignment_1 : {
         task : "
             The array `names` contains various names.
 
@@ -23,6 +23,34 @@
               }
             }
             console.log(names_no_a);
+            "
+        ,
+        antiCheat : "
+            var variables = ""
+            for (var name in this)
+                variables += name + "\n";
+            ",
+        antiRegex : ".+\\b(for)\\b|\\b(map)\\bb|\\b(filter)\\b|\\b(reduce)\\b|\\b(forEach)\\b.+",
+    },
+
+    assignment_2 :{
+        task : "
+            Complete the function <code>getAge</code> in order that function to return the age of an individual.
+
+            Then call the function with parameter <code>1984</code> and log the result.
+            "
+        ,
+        skeleton : "
+            funciton getAge ( birthYear ){
+
+            }
+            "
+        ,
+        solution :  "
+            function getAge( birthYear ){
+                return Math.max( new Date().getFullYear() - birthYear, 0);
+            }
+            console.log( getAge( 1984 ) );
             "
         ,
         antiCheat : "
