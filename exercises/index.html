@@ -51,6 +51,7 @@
 
 
       var polyfill = `
+var accConsoles='';
 var window = {};
 window.alert = function(){
   console.log.apply(console, ["Alert: "].concat(Array.prototype.slice.call(arguments)));
@@ -58,13 +59,19 @@ window.alert = function(){
 var alert = window.alert;
 var console = {
   log: function(){
-    var str = "";
+    var log = "";
     for(var i = 0; i < arguments.length; i++){
-      str += JSON.stringify(arguments[i]) + " ";
+      if ( typeof arguments[i] === "object" && typeof JSON === "object" && typeof JSON.stringify === "function" ) {
+        log += '<span class="log-'+typeof arguments[i]+'">'+JSON.stringify(arguments[i], undefined, 2).replace(/"([^"]*)":/g, '$1:')+'</span>'; // object without "" on keys
+      }
+      else {
+        log += '<span class="log-"'+typeof arguments[i]+'">'+arguments[i]+'</span>'; // atom type of variable
+      }
+      if ( i < arguments.length -1 ){ // do not add a blank to the last parameter of console.log() to be printed
+        log += '&nbsp;';
+      }
     }
-    str += "|";
-    // send the message back to the main thread
-    self.postMessage( {eval : str, variables : getAllVariables()} );
+    accConsoles += '<div>'+log+'</div>';
   },
   error: function(){
     console.log.apply(console, ["ERROR: "].concat(Array.prototype.slice.call(arguments)));
@@ -98,14 +105,22 @@ const regex = /(\b(for)\b|\b(map)\b|\b(filter)\b|\b(reduce)\b|\b(forEach)\b)/
       // on test purpose
       editor.insert( solution );
       const $feedback    = $("#feedback");
+      let parsedSolution = '';
 
-      const parsedSolution = '';
       if( window.Worker ){
-        var solutionWorker = new Worker('static/js/codeEval.js');
-        solutionWorker.onmessage = function (event) {
-          console.log(event.data);
-          parsedSolution = event.data.log;
-        }
+        var code = polyfill + 'try{' +solution +'self.postMessage( {eval : accConsoles, error: false} );} catch(e){ self.postMessage( {eval : e.stack, error: true} );}';
+
+        var bb = new Blob([code], {
+          type: 'text/javascript'
+        });
+
+        var bbURL = URL.createObjectURL(bb);
+        var solutionWorker = new Worker(bbURL);
+
+        solutionWorker.addEventListener('message', function(event) {
+          parsedSolution = event.data.eval;
+          solutionWorker.terminate();
+        });
       }
       else{
           $("#feedback").empty().append("<div>Can't work with your current browser</div>");
@@ -118,7 +133,7 @@ const regex = /(\b(for)\b|\b(map)\b|\b(filter)\b|\b(reduce)\b|\b(forEach)\b)/
         if( editor.getValue().match(regex) ){ // user try to fool me
           if( window.Worker ){
 
-            var code = polyfill + 'try{' +editor.getValue() +'}catch(e){console.log(e.stack);}' + listener;
+            var code = polyfill + 'try{' +editor.getValue() +'self.postMessage( {eval : accConsoles, error: false} );} catch(e){ self.postMessage( {eval : e.stack, error: true} );}';
             // This is basically the previous code block in string form
 
             // prepare the string into an executable blob
@@ -136,11 +151,14 @@ const regex = /(\b(for)\b|\b(map)\b|\b(filter)\b|\b(reduce)\b|\b(forEach)\b)/
             // add a listener for messages from the Worker
             worker.addEventListener('message', function(e){
               var string = (e.data.eval).toString();
+              console.log("compare both");
+              console.log(parsedSolution);
+              console.log(e.data.eval);
 
               if( e.data.error ){
                 $feedback.text(`Your code is buggy ;-(`);
               }
-              else if ( event.data.eval === event.data.eval){
+              else if ( event.data.eval === parsedSolution){
                 $feedback.text(`WHAHAAAA you are the best.`);
               }
               else{
@@ -149,11 +167,6 @@ const regex = /(\b(for)\b|\b(map)\b|\b(filter)\b|\b(reduce)\b|\b(forEach)\b)/
               worker.terminate();
               $("#interpretor").append(`<div>${string}</div>`);
             });
-
-
-
-            // Finally, actually start the worker
-            worker.postMessage('start');
           }
           else{
             $("#feedback").empty().append("<div>Can't work with your current browser</div>");
