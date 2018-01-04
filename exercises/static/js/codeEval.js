@@ -7,7 +7,7 @@ self.onmessage = function (event) {
         self.postMessage( {log : e.stack, error : true} );
     }
 };
-var amour = "deike";
+
 var accConsoles='';
 
 var window = {}; // polyfill since web worder do not have window and console

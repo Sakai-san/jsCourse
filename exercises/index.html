@@ -64,7 +64,7 @@ var console = {
     }
     str += "|";
     // send the message back to the main thread
-    self.postMessage( str );
+    self.postMessage( {eval : str, variables : getAllVariables()} );
   },
   error: function(){
     console.log.apply(console, ["ERROR: "].concat(Array.prototype.slice.call(arguments)));
@@ -135,17 +135,18 @@ const regex = /(\b(for)\b|\b(map)\b|\b(filter)\b|\b(reduce)\b|\b(forEach)\b)/
 
             // add a listener for messages from the Worker
             worker.addEventListener('message', function(e){
-              var string = (e.data).toString();
+              var string = (e.data.eval).toString();
 
               if( e.data.error ){
                 $feedback.text(`Your code is buggy ;-(`);
               }
-              else if ( event.data === event.data){
+              else if ( event.data.eval === event.data.eval){
                 $feedback.text(`WHAHAAAA you are the best.`);
               }
               else{
                 $feedback.text(`exercicse is not correct.`);
               }
+              worker.terminate();
               $("#interpretor").append(`<div>${string}</div>`);
             });
 
