@@ -25,12 +25,15 @@
             console.log(names_no_a);
             "
         ,
-        antiCheat : "
-            var variables = ""
-            for (var name in this)
-                variables += name + "\n";
-            ",
-        antiRegex : ".+\\b(for)\\b|\\b(map)\\bb|\\b(filter)\\b|\\b(reduce)\\b|\\b(forEach)\\b.+",
+        dynamic : {
+            '[]' : 'names',
+        },
+        base : {
+            'names' : [
+                'elke', 'asako', 'stefano', 'isaak', 'helen', 'elisabeth', 'siegfried', 'samuel', 'rie',
+                'gottfried', 'lia', kyoko
+            ],
+        },
     },
 
     assignment_2 :{
