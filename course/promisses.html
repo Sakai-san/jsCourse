@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Example</title>
+  </head>
+  <body>
+    <h2>Test promisses</h2>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+    	var get_trends = function(wikis){
+    		var that = this;
+    		var scores = [];
+    		var deferred_scores = function(){
+    			var promises = [];
+    			$.each( wikis, function(index, item){
+    				promises.push(
+							$.ajax({
+								crossOrigin: true,
+	    					url: "asiatrendmap.jp/service_nocache/Contents/get_trends/"+item.wiki_id,
+	    					dataType: "json",
+	    					method: "GET",
+	    					success: function(data){
+	    						if( data != null ){
+	    							scores.push({
+	    								wiki_id : item.wiki_id,
+	    								title : item.title,
+	    								scores: data
+	    							});
+	    						}
+	    					}
+	    				}));
+	    			});
+    			return promises;
+    		};
+    		// do ajax request in parallel and sync them
+    		$.when.apply($, deferred_scores()).then(function(){
+    			console.log("coucou", scores)
+    		});
+    	}
+      get_trends([11091028, 232190, 360759]);
+    </script>
+  </body>
+</html>

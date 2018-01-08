@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Example promisses</title>
+  </head>
+  <body>
+    <h2>Test promisses</h2>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+
+       $.ajax({
+           url: 'http://localhost/studybyyourself/wp-admin/admin-ajax.php?action=get_pictures',
+           dataType: "json",
+					crossDomain : true,
+       }).then( function(response){
+					console.log(response);
+					//store.dispatch( {type: "INITIALIZATION", payload: response.data} );
+       });
+    </script>
+  </body>
+</html>

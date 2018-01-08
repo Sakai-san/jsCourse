@@ -41,6 +41,7 @@
     <script src="static/js/popper.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="static/js/underscore-min.js"></script>
     <script>
       var editor = ace.edit("jsEditor");
       editor.setTheme("ace/theme/chrome");
@@ -90,6 +91,15 @@ var console = {
   }
 };
 `
+var assignmentLabel = "assignment_" + _.random(1, 1);
+console.log("toma", assignmentLabel)
+var assignment = "";
+$.getJSON('assignments.json', function(data) {
+  console.log(data);
+  assignment = data[assignmentLabel];
+  console.log("toma", data, assignment);
+});
+
 
 var solution = `var studentNames = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];
 var names_no_a = [];
@@ -161,6 +171,42 @@ const insertInOrder = function( element, arr ){
 };
 console.log( insertInOrder(80, [8,10,111,1111] ) );
 */
+
+
+/*
+
+    "assignment_2" :{
+        "task" : "
+            Complete the function <code>getAge</code> in order that function to return the age of an individual.
+
+            Then call the function with parameter <code>1984</code> and log the result.
+            "
+        ,
+        "skeleton" : "
+            funciton getAge ( birthYear ){
+
+            }
+            "
+        ,
+        "solution" :  "
+            function getAge( birthYear ){
+                return Math.max( new Date().getFullYear() - birthYear, 0);
+            }
+            console.log( getAge( 1984 ) );
+            "
+        ,
+        "antiCheat" : "
+            var variables = ""
+            for (var name in this)
+                variables += name + "\n";
+            ",
+        "antiRegex" : ".+\\b(for)\\b|\\b(map)\\bb|\\b(filter)\\b|\\b(reduce)\\b|\\b(forEach)\\b.+",
+    }
+
+    */
+
     </script>
   </body>
 </html>
+
+
