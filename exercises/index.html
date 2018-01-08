@@ -91,71 +91,53 @@ var console = {
   }
 };
 `
+var $feedback       = $("#feedback");
+var $interpretor    = $("#interpretor");
+var parsedSolution  = '';
 var assignmentLabel = "assignment_" + _.random(1, 1);
-console.log("toma", assignmentLabel)
-var assignment = "";
+var assignment      = '';
+
 $.getJSON('assignments.json', function(data) {
-  console.log(data);
   assignment = data[assignmentLabel];
-  console.log("toma", data, assignment);
+  editor.insert( assignment.skeleton );
+
+  if( window.Worker ){
+    var solutionWorker = workerFactoy( assignment.solution, consolePolyfill );
+    solutionWorker.addEventListener('message', function(event) {
+      parsedSolution = event.data.eval;
+      solutionWorker.terminate();
+    });
+  }
+  else{
+      $("#feedback").empty().append("<div>Can't work with your current browser</div>");
+  }
 });
 
 
-var solution = `var studentNames = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];
-var names_no_a = [];
-var temp = 'beflre';
-for( var i = 0; i < studentNames.length; i++ ){
-  if( studentNames[i].indexOf("a") === -1)  {
-    names_no_a.push( studentNames[i] );
-  }
-}
-console.log(names_no_a);
-`;
-
-
-      // on test purpose
-      editor.insert( solution );
-      var $feedback    = $("#feedback");
-      var $interpretor = $("#interpretor");
-      var parsedSolution = '';
-
-      if( window.Worker ){
-        var solutionWorker = workerFactoy( solution, consolePolyfill );
-        solutionWorker.addEventListener('message', function(event) {
-          parsedSolution = event.data.eval;
-          solutionWorker.terminate();
-        });
-      }
-      else{
-          $("#feedback").empty().append("<div>Can't work with your current browser</div>");
-      }
-
-
-
-      $('#run').on( 'click', function(){
-        $interpretor.empty();
-        $feedback.empty();
-          if( window.Worker ){
-            var studentWorker = workerFactoy( editor.getValue(), consolePolyfill );
-            // add a listener for messages from the Worker
-            studentWorker.addEventListener('message', function(e){
-              if( e.data.error ){
-                $feedback.text(`Your code is buggy ;-(`);
-              }
-              else if ( e.data.eval === parsedSolution){
-                $feedback.text(`WHAHAAAA you are the best.`);
-              }
-              else{
-                $feedback.text(`exercicse is not correct.`);
-              }
-              studentWorker.terminate();
-              $("#interpretor").append(`<div>${e.data.eval}</div>`);
-            });
-          }
-          else{
-            $("#feedback").empty().append("<div>Can't work with your current browser</div>");
-          }
+$('#run').on( 'click', function(){
+  $interpretor.empty();
+  $feedback.empty();
+    if( window.Worker ){
+      var studentWorker = workerFactoy( editor.getValue(), consolePolyfill );
+      // add a listener for messages from the Worker
+      studentWorker.addEventListener('message', function(e){
+        if( e.data.error ){
+          $feedback.text(`Your code is buggy ;-(`);
+        }
+        else if ( e.data.eval === parsedSolution){
+          $feedback.text(`WHAHAAAA you are the best.`);
+        }
+        else{
+          $feedback.text(`exercicse is not correct.`);
+        }
+        studentWorker.terminate();
+        $("#interpretor").append(`<div>${e.data.eval}</div>`);
       });
+    }
+    else{
+      $("#feedback").empty().append("<div>Can't work with your current browser</div>");
+    }
+});
 
 /*
 const insertInOrder = function( element, arr ){
@@ -173,7 +155,7 @@ console.log( insertInOrder(80, [8,10,111,1111] ) );
 */
 
 
-/*  
+/*
 
     "assignment_2" :{
         "task" : "
