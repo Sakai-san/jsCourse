@@ -98,20 +98,20 @@ var assignmentLabel = "assignment_" + _.random(1, 1);
 var assignment      = '';
 
 var replaceVariable = function( code, variable, variableType, comprehensiveVariable) {
-
-  if( variableType === '[]' ){
-    var sample = _.sample(comprehensiveVariable, Math.ceil(comprehensiveVariable.length/2));
+  if( variableType === 'Array' ){
+    var comprehensiveParsed = eval( comprehensiveVariable );
+    var sample = _.sample(comprehensiveParsed, Math.ceil(comprehensiveParsed.length/2));
     var reg = "(\\[[^\\]]*])";
     var re = new RegExp(reg);
-    return code.replace( re , comprehensiveVariable);
+    return code.replace( re, JSON.stringify(sample));
   }
 };
 
 $.getJSON('assignments.json', function(data) {
-  assignment = data[assignmentLabel];
+  var assignment = data[assignmentLabel];
   editor.insert( assignment.skeleton );
 
-  console.log( replaceVariable(assignment.solution, "names", '[]', assignment.comprehensiveVariable) );
+  console.log( replaceVariable(assignment.solution, assignment.variableName, assignment.variableType, assignment.comprehensiveVariable) );
 
   if( window.Worker ){
     var solutionWorker = workerFactoy( assignment.solution, consolePolyfill );
