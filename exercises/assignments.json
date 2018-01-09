@@ -9,8 +9,6 @@
         "variable" : {
             "[]" : "names"
         },
-        "comprehensiveVariable" : {
-            "names" : ["elke", "asako", "stefano", "isaak", "helen", "elisabeth", "siegfried", "samuel", "rie", "gottfried", "lia", "kyoko"]
-        }
+        "comprehensiveVariable" : "['elke', 'asako', 'stefano', 'isaak', 'helen', 'elisabeth', 'siegfried', 'samuel', 'rie', 'gottfried', 'lia', 'kyoko']"
     }
 }
