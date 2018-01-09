@@ -93,9 +93,9 @@ var console = {
 `
 var $feedback       = $("#feedback");
 var $interpretor    = $("#interpretor");
-var parsedSolution  = '';
+var $runButton      = $('#run');
 var assignmentLabel = "assignment_" + _.random(1, 1);
-var assignment      = '';
+var assignment      = null;
 
 var replaceVariable = function( code, variable, variableType, comprehensiveVariable) {
   if( variableType === 'Array' ){
@@ -108,42 +108,56 @@ var replaceVariable = function( code, variable, variableType, comprehensiveVaria
 };
 
 $.getJSON('assignments.json', function(data) {
-  var assignment = data[assignmentLabel];
+  assignment = data[assignmentLabel];
   editor.insert( assignment.skeleton );
 
-  console.log( replaceVariable(assignment.solution, assignment.variableName, assignment.variableType, assignment.comprehensiveVariable) );
-
-  if( window.Worker ){
-    var solutionWorker = workerFactoy( assignment.solution, consolePolyfill );
-    solutionWorker.addEventListener('message', function(event) {
-      parsedSolution = event.data.eval;
-      solutionWorker.terminate();
-    });
-  }
-  else{
-    $("#feedback").empty().append("<div>Can't work with your current browser</div>");
+  if( !window.Worker ){
+    feedback.empty().append("<div>Can't work with your current browser</div>");
   }
 });
 
 
-$('#run').on( 'click', function(){
+$runButton.on( 'click', function(){
   $interpretor.empty();
   $feedback.empty();
     if( window.Worker ){
-      var studentWorker = workerFactoy( editor.getValue(), consolePolyfill );
-      // add a listener for messages from the Worker
+      var submittedCode       = editor.getValue();
+      var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableName, assignment.variableType, assignment.comprehensiveVariable );
+      var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableName, assignment.variableType, assignment.comprehensiveVariable );
+      var studentWorker       = workerFactoy( submittedCode, consolePolyfill );
+
       studentWorker.addEventListener('message', function(e){
+
+        // parsing error
         if( e.data.error ){
           $feedback.text(`Your code is buggy ;-(`);
         }
-        else if ( e.data.eval === parsedSolution){
-          $feedback.text(`WHAHAAAA you are the best.`);
-        }
         else{
-          $feedback.text(`exercicse is not correct.`);
-        }
-        studentWorker.terminate();
-        $("#interpretor").append(`<div>${e.data.eval}</div>`);
+          var studentCodeParsed = e.data.eval;
+          studentWorker.terminate();
+          var studentValidationWorker = workerFactoy( submittedCodeNewVar, consolePolyfill );
+          studentValidationWorker.addEventListener('message', function(e){
+            var studentValidatorParsed = e.data.eval;
+            console.log("studentValidatorParsed", studentValidatorParsed);
+            studentValidationWorker.terminate();
+
+            var solutionWorker = workerFactoy( solutionCodeNewVar, consolePolyfill );
+            solutionWorker.addEventListener('message', function(e){
+              var solutionParsed = e.data.eval;
+              console.log("solutionParsed", solutionParsed);
+              solutionWorker.terminate();
+
+              if ( studentValidatorParsed === solutionParsed){
+                $feedback.text(`WHAHAAAA you are the best.`);
+              }
+              else{
+                $feedback.text(`exercicse is not correct.`);
+              }
+              $("#interpretor").append(`<div>${studentCodeParsed}</div>`);
+            });
+          });
+
+        } // end of else
       });
     }
     else{
@@ -202,5 +216,6 @@ console.log( insertInOrder(80, [8,10,111,1111] ) );
     </script>
   </body>
 </html>
+
 
 
