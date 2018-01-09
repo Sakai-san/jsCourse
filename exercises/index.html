@@ -101,9 +101,9 @@ var replaceVariable = function( code, variable, variableType, comprehensiveVaria
   if( variableType === 'Array' ){
     var comprehensiveParsed = eval( comprehensiveVariable );
     var sample = _.sample(comprehensiveParsed, Math.ceil(comprehensiveParsed.length/2));
-    var reg = "(\\[[^\\]]*])";
+    var reg = `var ${variable} = \\[[^\\]]*]`;
     var re = new RegExp(reg);
-    return code.replace( re, JSON.stringify(sample));
+    return code.replace( re, `var ${variable} = ${JSON.stringify(sample)}`);
   }
 };
 
