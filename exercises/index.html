@@ -97,10 +97,16 @@ var $runButton      = $('#run');
 var assignmentLabel = "assignment_" + _.random(1, 1);
 var assignment      = null;
 
-var replaceVariable = function( code, variable, variableType, comprehensiveVariable) {
+
+/**
+ * replace variable
+ *
+ * @desc    replace a dynamic part in a source code (for autocorrection sake)
+ * @param   {string}  - code
+ * @returns {Array<string>} - newcode
+ */
+var replaceVariable = function( code, variable, variableType, sample) {
   if( variableType === 'Array' ){
-    var comprehensiveParsed = eval( comprehensiveVariable );
-    var sample = _.sample(comprehensiveParsed, Math.ceil(comprehensiveParsed.length/2));
     var reg = `var ${variable} = \\[[^\\]]*]`;
     var re = new RegExp(reg);
     return code.replace( re, `var ${variable} = ${JSON.stringify(sample)}`);
@@ -122,10 +128,12 @@ $runButton.on( 'click', function(){
   $feedback.empty();
     if( window.Worker ){
       var submittedCode       = editor.getValue();
-      var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableName, assignment.variableType, assignment.comprehensiveVariable );
-      var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableName, assignment.variableType, assignment.comprehensiveVariable );
-      var studentWorker       = workerFactoy( submittedCode, consolePolyfill );
+      var comprehensiveParsed = eval( assignment.comprehensiveVariable );
+      var sampleForComparison = assignment.variableType === 'Array' ? _.sample( comprehensiveParsed, Math.ceil(comprehensiveParsed.length/2) ) : '';
+      var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableName, assignment.variableType, sampleForComparison );
+      var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableName, assignment.variableType, sampleForComparison );
 
+      var studentWorker       = workerFactoy( submittedCode, consolePolyfill );
       studentWorker.addEventListener('message', function(e){
 
         // parsing error
@@ -216,6 +224,5 @@ console.log( insertInOrder(80, [8,10,111,1111] ) );
     </script>
   </body>
 </html>
-
 
 
