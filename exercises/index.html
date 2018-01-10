@@ -19,7 +19,7 @@
             <div class="col-sm-12">
               <div id="jsEditor"></div>
               <div>
-                <button id="run">run</button>
+                <button id="run" disabled="true">run</button>
                 <span id="feedback"></span>
               </div>
             </div>
@@ -101,25 +101,27 @@ var assignment      = null;
 /**
  * replace variable
  *
- * @desc    replace a dynamic part in a source code (for autocorrection sake)
- * @param   {string}  - code
- * @returns {Array<string>} - newcode
+ * @desc    replace a dynamic part in a source code (for autocorrection and cheat detection sake)
+ * @param   {string}                - code
+ * @param   {string}                - variableName
+ * @param   {string}                - variableType
+ * @param   {string|Array|Object}   - newVariable
+ * @returns {string}
  */
-var replaceVariable = function( code, variable, variableType, newVariable) {
+var replaceVariable = function( code, variableName, variableType, newVariable) {
   if( variableType === 'Array' ){
-    var reg = `var ${variable} = \\[[^\\]]*]`;
+    var reg = `var ${variableName} = \\[[^\\]]*]`;
     var re = new RegExp(reg);
-    return code.replace( re, `var ${variable} = ${JSON.stringify(newVariable)}`);
+    return code.replace( re, `var ${variableName} = ${JSON.stringify(newVariable)}`);
   }
 };
 
+// load the exercise and populate task text
 $.getJSON('assignments.json', function(data) {
   assignment = data[assignmentLabel];
   editor.insert( assignment.skeleton );
   $assignment.html(assignment.task);
-  if( !window.Worker ){
-    feedback.empty().append("<div>Can't work with your current browser</div>");
-  }
+  $runButton.attr('disabled', false);
 });
 
 
@@ -129,37 +131,35 @@ $runButton.on( 'click', function(){
     if( window.Worker ){
       var submittedCode       = editor.getValue();
       var comprehensiveParsed = eval( assignment.comprehensiveVariable );
-      var sampleForComparison = assignment.variableType === 'Array' ? _.sample( comprehensiveParsed, Math.ceil(comprehensiveParsed.length/2) ) : '';
-      var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableName, assignment.variableType, sampleForComparison );
-      var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableName, assignment.variableType, sampleForComparison );
+      var newVariable         = assignment.variableType === 'Array' ? _.sample( comprehensiveParsed, Math.ceil(comprehensiveParsed.length/2) ) : '';
+      var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableName, assignment.variableType, newVariable );
+      var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableName, assignment.variableType, newVariable );
 
       var studentWorker       = workerFactoy( submittedCode, consolePolyfill );
       studentWorker.addEventListener('message', function(e){
 
         // parsing error
         if( e.data.error ){
-          $feedback.text(`Your code is buggy ;-(`);
+          $feedback.html('<span class="bg-danger">Your code contains bugs</span>');
         }
         else{
           var studentCodeParsed = e.data.eval;
           studentWorker.terminate();
-          var studentValidationWorker = workerFactoy( submittedCodeNewVar, consolePolyfill );
+          var studentValidationWorker = workerFactoy( submittedCodeNewVar, consolePolyfill ); // parse the submitted code with dynamical replacement
           studentValidationWorker.addEventListener('message', function(e){
             var studentValidatorParsed = e.data.eval;
-            console.log("studentValidatorParsed", studentValidatorParsed);
             studentValidationWorker.terminate();
 
-            var solutionWorker = workerFactoy( solutionCodeNewVar, consolePolyfill );
+            var solutionWorker = workerFactoy( solutionCodeNewVar, consolePolyfill ); // parse the solution with dynamical replacement
             solutionWorker.addEventListener('message', function(e){
               var solutionParsed = e.data.eval;
-              console.log("solutionParsed", solutionParsed);
               solutionWorker.terminate();
 
               if ( studentValidatorParsed === solutionParsed){
-                $feedback.text(`WHAHAAAA you are the best.`);
+                $feedback.html('<span class="bg-success">Exercise correct</span>');
               }
               else{
-                $feedback.text(`exercicse is not correct.`);
+                $feedback.html('<span class="bg-warning">Exercise incorrect</span>');
               }
               $("#interpretor").append(`<div>${studentCodeParsed}</div>`);
             });
