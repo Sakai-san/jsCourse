@@ -32,7 +32,6 @@
         </div> <!-- .col-sm-6 -->
         <div class="col-sm-6 fill">
           <div class="fill" id="assignment">
-            Trouver la somme de tous les entiers de 1 a 100000, à savoir 1 + 2 + .... + 100000
           </div>
         </div><!-- .col-sm-6 -->
       </div><!-- .row -->
@@ -94,6 +93,7 @@ var console = {
 var $feedback       = $("#feedback");
 var $interpretor    = $("#interpretor");
 var $runButton      = $('#run');
+var $assignment     = $('#assignment');
 var assignmentLabel = "assignment_" + _.random(1, 1);
 var assignment      = null;
 
@@ -105,18 +105,18 @@ var assignment      = null;
  * @param   {string}  - code
  * @returns {Array<string>} - newcode
  */
-var replaceVariable = function( code, variable, variableType, sample) {
+var replaceVariable = function( code, variable, variableType, newVariable) {
   if( variableType === 'Array' ){
     var reg = `var ${variable} = \\[[^\\]]*]`;
     var re = new RegExp(reg);
-    return code.replace( re, `var ${variable} = ${JSON.stringify(sample)}`);
+    return code.replace( re, `var ${variable} = ${JSON.stringify(newVariable)}`);
   }
 };
 
 $.getJSON('assignments.json', function(data) {
   assignment = data[assignmentLabel];
   editor.insert( assignment.skeleton );
-
+  $assignment.html(assignment.task);
   if( !window.Worker ){
     feedback.empty().append("<div>Can't work with your current browser</div>");
   }

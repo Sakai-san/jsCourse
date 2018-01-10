@@ -1,6 +1,6 @@
 {
     "assignment_1" : {
-        "task" : " The array names contains various names. \nPlease complete in order that the array names_without_voyal contains the names wich does not conain the letter a and then log the new array.",
+        "task" : " <p>The array <code>names</code> contains various names.</p> <p>Please complete the code in order the array <code>names_without_a</code> to contain the names which do not have the letter <code>a</code> in it and then log that array.</p>",
         "skeleton" : "var names = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];\nvar names_no_a = [];\n// write your code here \nconsole.log(names_no_a);",
         "solution" : "var names = ['rie' , 'asako', 'stefano', 'kyoko', 'lia'];\nvar names_no_a = [];\nfor( var i = 0; i < names.length; i++ ){\n\tif( names[i].indexOf('a') === -1){\n\t\tnames_no_a.push(names[i]);\n\t}\n}\nconsole.log(names_no_a);",
         "variableName" : "names",
