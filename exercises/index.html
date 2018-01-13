@@ -109,10 +109,11 @@ var assignment      = null;
  * @returns {string}
  */
 var replaceVariable = function( code, variableName, variableType, newVariable) {
+  var stringified = JSON.stringify(newVariable);
   if( variableType === 'Array' ){
-    var reg = `var ${variableName} = \\[[^\\]]*]`;
+    var reg = `var ${stringified} = \\[[^\\]]*]`;
     var re = new RegExp(reg);
-    return code.replace( re, `var ${variableName} = ${JSON.stringify(newVariable)}`);
+    return code.replace( re, `var ${variableName} = ${stringified}`);
   }
 };
 
@@ -130,8 +131,7 @@ $runButton.on( 'click', function(){
   $feedback.empty();
     if( window.Worker ){
       var submittedCode       = editor.getValue();
-      var comprehensiveParsed = eval( assignment.comprehensiveVariable );
-      var newVariable         = assignment.variableType === 'Array' ? _.sample( comprehensiveParsed, Math.ceil(comprehensiveParsed.length/2) ) : '';
+      var newVariable         = assignment.variableType === 'Array' ? _.sample( assignment.comprehensiveVariable, Math.ceil(assignment.comprehensiveVariable.length/2) ) : '';
       var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableName, assignment.variableType, newVariable );
       var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableName, assignment.variableType, newVariable );
 
