@@ -55,6 +55,11 @@ html, body {
   min-height: calc(50% - 2px);
 }
 
+.fill-quarter{
+  height: calc(25% - 2px);
+  min-height: calc(25% - 2px);
+}
+
 #prev, #next{
     cursor: pointer;
 }
@@ -93,4 +98,12 @@ html, body {
 #assignment {
   border: 1px silver solid;
   padding: 10px 20px;
+}
+
+.one-fourth {
+  max-height: 25%;
+}
+
+.one-half {
+  max-height: 50%;
 }
