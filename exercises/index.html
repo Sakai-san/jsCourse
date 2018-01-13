@@ -50,9 +50,7 @@
       editor.getSession().setTabSize(2);
 
       var workerFactoy = function( code,  polyfill ){
-        var sanitizedCode   = code.trim();
-        var syntaxCode      = sanitizedCode.slice(-1) === ';' ? sanitizedCode : sanitizedCode+';';
-        var extendedCode    = polyfill + 'try{' + syntaxCode +'self.postMessage( {eval : accConsoles, error: false} );} catch(e){ self.postMessage( {eval : e.stack, error: true} );}';
+        var extendedCode    = polyfill + 'try{' + code +'self.postMessage( {eval : accConsoles, error: false} );} catch(e){ self.postMessage( {eval : e.stack, error: true} );}';
 
         var bb              = new Blob([extendedCode], { type: 'text/javascript' });  // convert the blob into a pseudo URL
         var bbURL           = URL.createObjectURL(bb);
@@ -111,7 +109,7 @@ var assignment      = null;
 var replaceVariable = function( code, variableName, variableType, newVariable) {
   var stringified = JSON.stringify(newVariable);
   if( variableType === 'Array' ){
-    var reg = `var ${stringified} = \\[[^\\]]*]`;
+    var reg = `var ${variableName} = \\[[^\\]]*]`;
     var re = new RegExp(reg);
     return code.replace( re, `var ${variableName} = ${stringified}`);
   }
@@ -141,6 +139,7 @@ $runButton.on( 'click', function(){
         // parsing error
         if( e.data.error ){
           $feedback.html('<span class="bg-danger">Your code contains bugs</span>');
+          $("#interpretor").append(`<div>${e.data.eval}</div>`);
         }
         else{
           var studentCodeParsed = e.data.eval;
