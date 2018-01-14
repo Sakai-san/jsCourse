@@ -114,10 +114,12 @@ var replaceVariable = function( code, variableName, variableType, newVariable) {
 // load the exercise and populate task text
 $.getJSON('assignments.json', function(data) {
   assignment = data[assignmentLabel];
-  editor.setValue( assignment.skeleton );
+  editor.insert( assignment.skeleton );
   $assignment.html(assignment.task);
   $solutionButton.attr('disabled', false);
   $runButton.attr('disabled', false);
+  var needle = editor.find("write your code here"); // place the cursor at the place user needs to start writting code
+  editor.gotoLine( needle.start.row + 1 );
 });
 
 $solutionButton.on( 'click', function(){
