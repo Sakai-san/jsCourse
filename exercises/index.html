@@ -88,7 +88,8 @@ var $interpretor    = $("#interpretor");
 var $solutionButton = $('#solution');
 var $runButton      = $('#run');
 var $assignment     = $('#assignment');
-var assignmentLabel = "assignment_" + _.random(1, 1);
+var random          =  _.random(1, 1)
+var assignmentLabel = "assignment_" + random;
 var assignment      = null;
 
 
@@ -115,7 +116,7 @@ var replaceVariable = function( code, variableName, variableType, newVariable) {
 $.getJSON('assignments.json', function(data) {
   assignment = data[assignmentLabel];
   editor.insert( assignment.skeleton );
-  $assignment.html(assignment.task);
+  $assignment.html(`<h2>Exercise ${random}</h2> ${assignment.task}`);
   $solutionButton.attr('disabled', false);
   $runButton.attr('disabled', false);
   var needle = editor.find("write your code here"); // place the cursor at the place user needs to start writting code
