@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> Intepretor HTML CSS</title>
+    <title>Intepretor HTML CSS</title>
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -92,9 +92,9 @@ var $interpretor    = $("#interpretor");
 var $solutionButton = $('#solution');
 var $runButton      = $('#run');
 var $assignment     = $('#assignment');
-var random          =  _.random(1, 1)
-var assignmentLabel = "assignment_" + random;
-var assignment      = null;
+var random          =  _.random(1, 2)
+var exerciseLabel   = "exercise_" + random;
+var exercise        = null;
 
 
 /**
@@ -102,29 +102,66 @@ var assignment      = null;
  *
  * @desc    replace a dynamic part in a source code (for autocorrection and cheat detection sake)
  * @param   {string}                - code
- * @param   {string}                - variableName
+ * @param   {string|Array}          - variableNames
  * @param   {string}                - variableType
  * @param   {string|Array|Object}   - newVariable
  * @returns {string}
  */
-var replaceVariable = function( code, variableName, variableType, newVariable) {
-  var stringified = JSON.stringify(newVariable);
-  if( variableType === 'Array' ){
-    var reg = `var ${variableName} = \\[[^\\]]*]`;
-    var re = new RegExp(reg);
-    return code.replace( re, `var ${variableName} = ${stringified}`);
+var replaceVariable = function( code, variableNames, variableType, newVariable) {
+  if( typeof variableNames === "string" ){
+
+    if( variableType === 'Array' ){
+      var stringified = JSON.stringify(newVariable);
+      var reg = `var ${variableNames} = \\[[^\\]]*]`;
+      var re = new RegExp(reg);
+      return code.replace( re, `var ${variableNames} = ${stringified}`);
+    }
+  }
+  else{
+    return;
   }
 };
 
+var replaceVariable1 = function( code, variable, newValue ) {
+    if( variable.type === 'Array' ){
+      var stringified = JSON.stringify(newValue);
+      var reg = `var ${variable.name} = \\[[^\\]]*]`;
+      var re = new RegExp(reg);
+      return code.replace( re, `var ${variable.name} = ${stringified};`);
+  }
+  else if(variable.type === 'number') {
+    var reg = `var ${variable.name} = [^;]+;`;
+    var re = new RegExp(reg);
+    return code.replace( re, `var ${variable.name} = ${newValue};`);
+  }
+  else { // string
+    var reg = `var ${variable.name} = "[^;]+";`;
+    var re = new RegExp(reg);
+    return code.replace( re, `var ${variable.name} = "${newValue}";`);
+  }
+};
+
+
 // load the exercise and populate task text
-$.getJSON('assignments.json', function(data) {
-  assignment = data[assignmentLabel];
-  editor.insert( assignment.skeleton );
-  $assignment.html(`<h2>Exercise ${random}</h2> ${assignment.task}`);
+$.getJSON('exercises.json', function(data) {
+  exercise = data[exerciseLabel];
+  editor.insert( exercise.skeleton );
+  $assignment.html(`<h2>Exercise ${random}</h2> ${exercise.assignment}`);
   $solutionButton.attr('disabled', false);
   $runButton.attr('disabled', false);
   var needle = editor.find("write your code here"); // place the cursor at the place user needs to start writting code
   editor.gotoLine( needle.start.row + 1 );
+
+
+
+  var code = "var number1 = 28;\nvar number2 = 18;\nvar biggestValue; // write your code here\nnumber1 >= number2 ? number1 : number2;\nconsole.log( biggestValue );"
+  var variables = [ {name : 'number1', type: 'number', values : [59, -10, 1984, 504, 1993, 309, 3, -1]}, {name : 'number2', type: 'number', values : [59, -10, 1984, 504, 1993, 309, 3, -1]} ];
+  var newCode = variables.reduce( function( memo, current ){
+    var newValue = current.type === 'number' ? _.sample( current.values) : '';
+    return replaceVariable1( memo, current, newValue);
+  }, code);
+
+  console.log( "code remplacé", newCode );
 });
 
 $solutionButton.on( 'click', function(){
@@ -136,9 +173,9 @@ $runButton.on( 'click', function(){
   $feedback.empty();
     if( window.Worker ){
       var submittedCode       = editor.getValue();
-      var newVariable         = assignment.variableType === 'Array' ? _.sample( assignment.comprehensiveVariable, Math.ceil(assignment.comprehensiveVariable.length/2) ) : '';
-      var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableName, assignment.variableType, newVariable );
-      var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableName, assignment.variableType, newVariable );
+      var newVariable         = assignment.variableType === 'Array' ? _.sample( assignment.comprehensiveVariables, Math.ceil(assignment.comprehensiveVariables.length/2) ) : '';
+      var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableNames, assignment.variableTypes, newVariable );
+      var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableNames, assignment.variableTypes, newVariable );
 
       var studentWorker       = workerFactoy( submittedCode, consolePolyfill );
       studentWorker.addEventListener('message', function(e){
