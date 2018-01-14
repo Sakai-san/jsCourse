@@ -70,7 +70,8 @@ html, body {
 
 #jsEditor {
   width: 100%;
-  height: calc(100% - 40px);
+  height: calc(100% - 50px);
+  padding-top: 30px;
   padding-left: 0px;
   padding-right: 0px;
 }
@@ -96,7 +97,6 @@ html, body {
 */
 
 #assignment {
-  border: 1px silver solid;
   padding: 10px 20px;
 }
 
