@@ -101,33 +101,17 @@ var exercise        = null;
  * replace variable
  *
  * @desc    replace a dynamic part in a source code (for autocorrection and cheat detection sake)
- * @param   {string}                - code
- * @param   {string|Array}          - variableNames
- * @param   {string}                - variableType
- * @param   {string|Array|Object}   - newVariable
- * @returns {string}
+ * @param   {string}                                      - source code
+ * @param   {object}                                      - variable
+ * @param   {Array<number|string|Array<string|number>>}   - newValue
+ * @returns {string}                                      - parsed source code
  */
-var replaceVariable = function( code, variableNames, variableType, newVariable) {
-  if( typeof variableNames === "string" ){
-
-    if( variableType === 'Array' ){
-      var stringified = JSON.stringify(newVariable);
-      var reg = `var ${variableNames} = \\[[^\\]]*]`;
-      var re = new RegExp(reg);
-      return code.replace( re, `var ${variableNames} = ${stringified}`);
-    }
-  }
-  else{
-    return;
-  }
-};
-
-var replaceVariable1 = function( code, variable, newValue ) {
-    if( variable.type === 'Array' ){
-      var stringified = JSON.stringify(newValue);
-      var reg = `var ${variable.name} = \\[[^\\]]*]`;
-      var re = new RegExp(reg);
-      return code.replace( re, `var ${variable.name} = ${stringified};`);
+var replaceVariable = function( code, variable, newValue ) {
+  if( variable.type === 'Array' ){
+    var stringified = JSON.stringify(newValue);
+    var reg = `var ${variable.name} = \\[[^\\]]*]`;
+    var re = new RegExp(reg);
+    return code.replace( re, `var ${variable.name} = ${stringified};`);
   }
   else if(variable.type === 'number') {
     var reg = `var ${variable.name} = [^;]+;`;
@@ -141,20 +125,28 @@ var replaceVariable1 = function( code, variable, newValue ) {
   }
 };
 
-// return new code and new values
-// variables : Array<Object>
-function replaceVariblesBatch( code, variables, randomize=true ){
+/**
+ * replace varibles batch
+ *
+ * @desc    replace all dynamic parts in a source code (for autocorrection and cheat detection sake)
+ * @param   {string}                                                    - source code
+ * @param   {Array<Object>}                                             - variables
+ * @param   {boolean}                                                   - randomize
+ * @returns {Array<string, Array<number|string|Array<string|number>>>}  - <parsed source code, new values>
+ */
+function replaceVariblesBatch( code, variables, randomize ){
   const newValues = [];
-  var newCode = variables.reduce( function( memo, current ){
-    if( current.type === 'number' || current.type === 'string'){
-      var randElement = randomize ? _.sample( current.values) : current.values;
+  var newCode = variables.reduce( function( memo, currentVariable ){
+    if( currentVariable.type === 'number' || currentVariable.type === 'string'){
+      var randElement = randomize ? _.sample( currentVariable.values) : currentVariable.values;
+
       newValues.push( randElement );
-      return replaceVariable1( memo, current, randElement);
+      return replaceVariable( memo, currentVariable, randElement);
     }
     else{  // array
-      var randRange = randomize ? _.sample( current.values, Math.ceil(current.values.length/2) ) : current.values;
+      var randRange = randomize ? _.sample( currentVariable.values, Math.ceil(currentVariable.values.length/2) ) : currentVariable.values;
       newValues.push( randRange );
-      return replaceVariable1( memo, current, randRange);
+      return replaceVariable( memo, currentVariable, randRange);
     }
   }, code);
 
@@ -162,10 +154,20 @@ function replaceVariblesBatch( code, variables, randomize=true ){
 }
 
 // replace values in the whole object
-// Array<Object>
-// Array<Object>
+// exerciseVariables : Array<Object>
+// newValues : Array<number|string|Array<number|string>>
+// return Array<Object>
+
+/**
+ * replace varibles batch
+ *
+ * @desc    modify the potential values that a variable can originally have (against what we get Backend)  (for autocorrection and cheat detection sake)
+ * @param   {Array<Object>}                                             - exerciseVariables
+ * @param   Array<number|string|Array<number|string>>                   - newValues
+ * @returns {Array<Object>}                                             - array containing NEW variables object
+ */
 function replaceDefaultValues( exerciseVariables, newValues ){
-  var copy = _.clone( exerciseVariables );
+  var copy = exerciseVariables.map( function(currentVariable){ return _.clone(currentVariable); }  );
   copy.forEach( function( variable, index ){
     variable.values = newValues[index];
   });
@@ -192,10 +194,10 @@ $runButton.on( 'click', function(){
   $feedback.empty();
     if( window.Worker ){
       var submittedCode       = editor.getValue();
-      var newVariable         = assignment.variableType === 'Array' ? _.sample( assignment.comprehensiveVariables, Math.ceil(assignment.comprehensiveVariables.length/2) ) : '';
-      var submittedCodeNew    = replaceVariblesBatch( submittedCode, exercise.variables );
-      console.log("new var", submittedCodeNew);
-      var solutionCodeNew     = replaceVariblesBatch( assignment.solution, replaceDefaultValues( exercise.variables, submittedCodeNew[1] ), false );
+      var submittedCodeNew    = replaceVariblesBatch( submittedCode, exercise.variables, true );
+      var solutionCodeNew     = replaceVariblesBatch( exercise.solution, replaceDefaultValues( exercise.variables, submittedCodeNew[1] ), false );
+      console.log("replaced submitted code", submittedCodeNew[0]);
+      console.log("replaced solution code", solutionCodeNew[0]);
 
       var studentWorker       = workerFactoy( submittedCode, consolePolyfill );
       studentWorker.addEventListener('message', function(e){
