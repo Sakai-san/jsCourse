@@ -142,6 +142,7 @@ var replaceVariable1 = function( code, variable, newValue ) {
 };
 
 // return new code and new values
+// variables : Array<Object>
 function replaceVariblesBatch( code, variables, randomize=true ){
   const newValues = [];
   var newCode = variables.reduce( function( memo, current ){
@@ -161,10 +162,14 @@ function replaceVariblesBatch( code, variables, randomize=true ){
 }
 
 // replace values in the whole object
-// object
-// array
+// Array<Object>
+// Array<Object>
 function replaceDefaultValues( exerciseVariables, newValues ){
-
+  var copy = _.clone( exerciseVariables );
+  copy.forEach( function( variable, index ){
+    variable.values = newValues[index];
+  });
+  return copy;
 }
 
 // load the exercise and populate task text
@@ -176,23 +181,6 @@ $.getJSON('exercises.json', function(data) {
   $runButton.attr('disabled', false);
   var needle = editor.find("write your code here"); // place the cursor at the place user needs to start writting code
   editor.gotoLine( needle.start.row + 1 );
-
-
-
-  var code = "var number1 = 28;\nvar number2 = 18;\nvar biggestValue; // write your code here\nnumber1 >= number2 ? number1 : number2;\nconsole.log( biggestValue );"
-  var variables = [ {name : 'number1', type: 'number', values : [59, -10, 1984, 504, 1993, 309, 3, -1]}, {name : 'number2', type: 'number', values : [59, -10, 1984, 504, 1993, 309, 3, -1]} ];
-  var newCode = variables.reduce( function( memo, current ){
-    if( current.type === 'number' || current.type === 'string'){
-      var randElement = _.sample( current.values);
-      return replaceVariable1( memo, current, randElement);
-    }
-    else{  // array
-      var randRange = _.sample( current.values, Math.ceil(current.values.length/2) );
-      return replaceVariable1( memo, current, randRange);
-    }
-  }, code);
-
-  console.log( "code remplacé", newCode );
 });
 
 $solutionButton.on( 'click', function(){
@@ -206,7 +194,8 @@ $runButton.on( 'click', function(){
       var submittedCode       = editor.getValue();
       var newVariable         = assignment.variableType === 'Array' ? _.sample( assignment.comprehensiveVariables, Math.ceil(assignment.comprehensiveVariables.length/2) ) : '';
       var submittedCodeNew    = replaceVariblesBatch( submittedCode, exercise.variables );
-      var solutionCodeNew     = replaceVariblesBatch( assignment.solution, replaceDefaultValues( exercise.variables, values ), false );
+      console.log("new var", submittedCodeNew);
+      var solutionCodeNew     = replaceVariblesBatch( assignment.solution, replaceDefaultValues( exercise.variables, submittedCodeNew[1] ), false );
 
       var studentWorker       = workerFactoy( submittedCode, consolePolyfill );
       studentWorker.addEventListener('message', function(e){
