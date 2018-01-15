@@ -2,7 +2,7 @@
 
     "exercise_1" : {
         "assignment" : "<p>Both <code>number1</code> and <code>number2</code> contains a number as value.</p><p>Please complete the code in order the varialbe <code>biggestValue</code> to contain the biggest value among the two variables mentioned above.</p>",
-        "skeleton" : "var number1 = 28;\nvar number2 = 18;\nvar biggestValue; // write your code here\nnumber1 >= number2 ? number1 : number2;\nconsole.log( biggestValue );",
+        "skeleton" : "var number1 = 28;\nvar number2 = 18;\nvar biggestValue; // write your code here\nconsole.log( biggestValue );",
         "solution" : "var number1 = 28;\nvar number2 = 18;\nvar biggestValue = number1 >= number2 ? number1 : number2;\nconsole.log( biggestValue );",
         "variableNames" : ["number1", "number2"],
         "variableTypes" : ["number", "number"],
