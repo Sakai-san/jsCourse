@@ -141,6 +141,31 @@ var replaceVariable1 = function( code, variable, newValue ) {
   }
 };
 
+// return new code and new values
+function replaceVariblesBatch( code, variables, randomize=true ){
+  const newValues = [];
+  var newCode = variables.reduce( function( memo, current ){
+    if( current.type === 'number' || current.type === 'string'){
+      var randElement = randomize ? _.sample( current.values) : current.values;
+      newValues.push( randElement );
+      return replaceVariable1( memo, current, randElement);
+    }
+    else{  // array
+      var randRange = randomize ? _.sample( current.values, Math.ceil(current.values.length/2) ) : current.values;
+      newValues.push( randRange );
+      return replaceVariable1( memo, current, randRange);
+    }
+  }, code);
+
+  return [newCode, newValues];
+}
+
+// replace values in the whole object
+// object
+// array
+function replaceDefaultValues( exerciseVariables, newValues ){
+
+}
 
 // load the exercise and populate task text
 $.getJSON('exercises.json', function(data) {
@@ -157,8 +182,14 @@ $.getJSON('exercises.json', function(data) {
   var code = "var number1 = 28;\nvar number2 = 18;\nvar biggestValue; // write your code here\nnumber1 >= number2 ? number1 : number2;\nconsole.log( biggestValue );"
   var variables = [ {name : 'number1', type: 'number', values : [59, -10, 1984, 504, 1993, 309, 3, -1]}, {name : 'number2', type: 'number', values : [59, -10, 1984, 504, 1993, 309, 3, -1]} ];
   var newCode = variables.reduce( function( memo, current ){
-    var newValue = current.type === 'number' ? _.sample( current.values) : '';
-    return replaceVariable1( memo, current, newValue);
+    if( current.type === 'number' || current.type === 'string'){
+      var randElement = _.sample( current.values);
+      return replaceVariable1( memo, current, randElement);
+    }
+    else{  // array
+      var randRange = _.sample( current.values, Math.ceil(current.values.length/2) );
+      return replaceVariable1( memo, current, randRange);
+    }
   }, code);
 
   console.log( "code remplacé", newCode );
@@ -174,8 +205,8 @@ $runButton.on( 'click', function(){
     if( window.Worker ){
       var submittedCode       = editor.getValue();
       var newVariable         = assignment.variableType === 'Array' ? _.sample( assignment.comprehensiveVariables, Math.ceil(assignment.comprehensiveVariables.length/2) ) : '';
-      var submittedCodeNewVar = replaceVariable( submittedCode, assignment.variableNames, assignment.variableTypes, newVariable );
-      var solutionCodeNewVar  = replaceVariable( assignment.solution, assignment.variableNames, assignment.variableTypes, newVariable );
+      var submittedCodeNew    = replaceVariblesBatch( submittedCode, exercise.variables );
+      var solutionCodeNew     = replaceVariblesBatch( assignment.solution, replaceDefaultValues( exercise.variables, values ), false );
 
       var studentWorker       = workerFactoy( submittedCode, consolePolyfill );
       studentWorker.addEventListener('message', function(e){
@@ -188,12 +219,12 @@ $runButton.on( 'click', function(){
         else{
           var studentCodeParsed = e.data.eval;
           studentWorker.terminate();
-          var studentValidationWorker = workerFactoy( submittedCodeNewVar, consolePolyfill ); // parse the submitted code with dynamical replacement
+          var studentValidationWorker = workerFactoy( submittedCodeNew[0], consolePolyfill ); // parse the submitted code with dynamical replacement
           studentValidationWorker.addEventListener('message', function(e){
             var studentValidatorParsed = e.data.eval;
             studentValidationWorker.terminate();
 
-            var solutionWorker = workerFactoy( solutionCodeNewVar, consolePolyfill ); // parse the solution with dynamical replacement
+            var solutionWorker = workerFactoy( solutionCodeNew[0], consolePolyfill ); // parse the solution with dynamical replacement
             solutionWorker.addEventListener('message', function(e){
               var solutionParsed = e.data.eval;
               solutionWorker.terminate();
