@@ -100,7 +100,7 @@ var exercise        = null;
 /**
  * replace variable
  *
- * @desc    replace a dynamic part in a source code (for autocorrection and cheat detection sake)
+ * @desc    replace a dynamic part in a source code (for cheat detection sake in the autocorrection process)
  * @param   {string}                                      - source code
  * @param   {object}                                      - variable
  * @param   {Array<number|string|Array<string|number>>}   - newValue
@@ -128,7 +128,7 @@ var replaceVariable = function( code, variable, newValue ) {
 /**
  * replace varibles batch
  *
- * @desc    replace all dynamic parts in a source code (for autocorrection and cheat detection sake)
+ * @desc    replace all dynamic parts in a source code (for cheat detection sake in the autocorrection process)
  * @param   {string}                                                    - source code
  * @param   {Array<Object>}                                             - variables
  * @param   {boolean}                                                   - randomize
@@ -153,25 +153,16 @@ function replaceVariblesBatch( code, variables, randomize ){
   return [newCode, newValues];
 }
 
-// replace values in the whole object
-// exerciseVariables : Array<Object>
-// newValues : Array<number|string|Array<number|string>>
-// return Array<Object>
-
 /**
- * replace varibles batch
+ * replace default values
  *
- * @desc    modify the potential values that a variable can originally have (against what we get Backend)  (for autocorrection and cheat detection sake)
+ * @desc    modify the values that a variable can originally have (against what we get Backend) (for cheat detection sake in the autocorrection process)
  * @param   {Array<Object>}                                             - exerciseVariables
  * @param   Array<number|string|Array<number|string>>                   - newValues
  * @returns {Array<Object>}                                             - array containing NEW variables object
  */
 function replaceDefaultValues( exerciseVariables, newValues ){
-  var copy = exerciseVariables.map( function(currentVariable){ return _.clone(currentVariable); }  );
-  copy.forEach( function( variable, index ){
-    variable.values = newValues[index];
-  });
-  return copy;
+  return exerciseVariables.map( function(current, index) { return Object.assign( {}, current, {values : newValues[index]} ); });
 }
 
 // load the exercise and populate task text
