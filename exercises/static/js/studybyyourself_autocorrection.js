@@ -107,7 +107,7 @@ function replaceVariblesBatch( code, variables, randomize ){
         }
     }, code);
 
-return [newCode, newValues];
+    return [newCode, newValues];
 }
 
 /**
