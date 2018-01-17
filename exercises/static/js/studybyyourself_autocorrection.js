@@ -1,7 +1,7 @@
 var editor = ace.edit("jsEditor");
 editor.setTheme("ace/theme/chrome");
 editor.getSession().setMode("ace/mode/javascript");
-editor.setFontSize("15px");
+editor.setFontSize("16px");
 editor.setShowPrintMargin(false);
 editor.getSession().setTabSize(2);
 
