@@ -19,7 +19,23 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
-console.log(getUrlParameter('exercise') );
+
+var getCurrentExerciseNumber = function(){
+    var exerciseFromQueryString = getUrlParameter('exercise');
+    return exerciseFromQueryString ? parseInt(exerciseFromQueryString) : 1;
+};
+
+$("#previous").on( 'click', function(){
+    var currentExerciseNumber  = getCurrentExerciseNumber();
+    var previousExerciseNumber = currentExerciseNumber > 1 ? currentExerciseNumber-1 : 1 ;
+    window.location.replace( window.location.href.split('?')[0] + "?exercise="+previousExerciseNumber);
+});
+
+$("#next").on( 'click', function(){
+    var currentExerciseNumber = getCurrentExerciseNumber();
+    var nextExerciseNumber    = currentExerciseNumber+1;
+    window.location.replace( window.location.href.split('?')[0] + "?exercise="+nextExerciseNumber);
+});
 
 var workerFactoy = function( code,  polyfill ){
   var extendedCode    = polyfill + 'try{' + code +'self.postMessage( {eval : accConsoles, error: false} );} catch(e){ self.postMessage( {eval : e.stack, error: true} );}';
@@ -65,8 +81,8 @@ var $interpretor    = $("#interpretor");
 var $solutionButton = $('#solution');
 var $runButton      = $('#run');
 var $assignment     = $('#assignment');
-var random          =  _.random(1, 2)
-var exerciseLabel   = "exercise_" + random;
+var exerciseNumber  = getCurrentExerciseNumber();
+var exerciseLabel   = "exercise_" + exerciseNumber;
 var exercise        = null;
 
 
@@ -142,7 +158,7 @@ function replaceDefaultValues( exerciseVariables, newValues ){
 $.getJSON('exercises.json', function(data) {
     exercise = data[exerciseLabel];
     editor.insert( exercise.skeleton );
-    $assignment.html(`<h2>Exercise ${random}</h2> ${exercise.assignment}`);
+    $assignment.html(`<h2>Exercise ${exerciseNumber}</h2> ${exercise.assignment}`);
     $solutionButton.attr('disabled', false);
     $runButton.attr('disabled', false);
     var needle = editor.find("write your code here"); // place the cursor at the place user needs to start writting code

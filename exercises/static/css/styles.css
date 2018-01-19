@@ -107,3 +107,13 @@ html, body {
 .one-half {
   max-height: 50%;
 }
+
+/*
+* navigation
+*/
+#previous, #next{
+  font-size:3em;
+  color:Tomato;
+  position: relative;
+  top: -10px;
+}
