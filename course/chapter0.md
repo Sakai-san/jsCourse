@@ -55,7 +55,6 @@ ainsi uniquement dans un souci de lisibilité et de simplicité.
 
 
 * Type de données
-* Prototype
 * Lambda function
 * Callback
 * Asynchrone
@@ -100,10 +99,6 @@ console.log( st2.first ); // samuel
 
 Dans le premier exemple, les deux variables sont physiquement (dans la mémoire de l'ordinateur) stockées à des endroits différents, ce qui n'est pas le cas pour le second exemple.
 
-## Prototype
-Le concept de [classe](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Details_of_the_Object_Model) tel qu'en Java ou en C++ n'existe pas. A la place, JS utilse un système appelé prototype, qui est un concept parfois mal compris.
-
-Pour rappel, un objet JS est une structure de données possédant des propriétés, qui peuvent être a leur tour etre des objets (composition).
 
 ```js
 var tomaStudent = {first: 'Toma', last: 'Sakai', grades: [3.5, 2.0]};
@@ -189,6 +184,7 @@ if ( students.length > 10){
 ce qui pose des problemes de portée et de performances.
 
 ## Héritage (1 niveau)
+
 Prenons deux objets.
 ```js
 var tomaStudent = {
@@ -226,7 +222,21 @@ var masaruStudent = {
 };
 masaruStudent.__proto__ = student;
 ```
-`tomaStudent` et `masaruStudent` partage le **même objet** `student`. Il s'agit d'une [référence](https://en.wikipedia.org/wiki/Reference_(computer_science) sur cet objet pour être précis. On appelle cela héritage par prototype.
+
+En JS, **chaque variable** possède un attribut appelé __proto__. Cet attribut est un objet. `tomaStudent` et `masaruStudent` partage le **même objet** `student`. Il s'agit d'une [référence](https://en.wikipedia.org/wiki/Reference_(computer_science) sur cet objet pour être précis. On appelle cela héritage par prototype.
+
+Le seul problème avec c'est ici qu'on a des objects hardcodé dans notre code. Or, on veut en pour général crée des objects divers en cours de l'application (dynamique). On fera cela à l'aide d'un constructeur :
+
+var Student = function(nom, grade){
+	this.nom = nom;
+	this.grades = grades;
+}
+
+Student.prototype.moyenne = function(){
+
+}
+masaru = new Student('toma', [12,34 ,1]) ;
+toma = new Student('toma', [12,34 ,1]) ;
 
 
 ## Héritage (plusieurs niveaux)
@@ -393,7 +403,7 @@ Cette syntaxe a été ajoutée pour similer les languages qui implémente le con
 Permet d'eclater un object ou un tableau et le mettre dans des nouvelle variables (pattern matching).
 
 simple :
-const { first, last } = tomaStudent; // deconstructing
+const { first, last } = tomaStudent; // destructuring
 
 paramètre d'une function :
 const greetings = function( {first, last} ){
