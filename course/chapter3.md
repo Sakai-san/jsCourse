@@ -19,11 +19,11 @@ Dans le petit script ci-haut 4 variables ont été **déclarées**. La variable 
 La variable `fullName` utilise les c. Dans la dernière ligne on a appelé la fonction `console.log()` pour afficher la valeur de la variable `fullName`.
 
 ## Types de données
-En JS, il existe six types de données `number`, `string`, `boolean`, `null`, `undefined` et `object`.
+En JS, il existe sept types de données `number`, `string`, `boolean`, `null`, `undefined`, `object` et `symbol`.
 
 On peut connaître le type d'une variable avec le fonction ` typeof()`.
 
-```
+```js
 var firstName = 'Asako';
 typeof(firstName);
 ```
@@ -42,13 +42,15 @@ console.log( age );
 ```
 En peut faire des opérations arithmétique sur les varialbes de type `number`, tels que `/`, `*`, `-`, `+`. On peut assembler deux chaîne de charactères (concaténation).
 
-## Hardware
-Sauf en cas exceptionel, les variables sont stockées dans la mémoire vive de votre ordinateur. L'image 1.1 montre une barette 8 GB intégrée dans mon laptop. La mé
 
 ## Système d'exploitation
 
-Le système d'exploitation
+Le système d'exploitation de l'ordinateur gère les programmes en cours d'exécution (appelé processus). Il leur alloue un certain temps d'exécution, qu'on appelle le quantum. Il décide quel programme va pouvoir être exécuté et ainsi avoir accès au processeur (processus élu) grâce à un algorithme mis en oeuvre par l'ordonnanceur (scheduler).
+
+Les variables qu'un programme déclare sont stockée dans la mémoire vive (RAM) de l'ordinateur. Si l'ordinateur n'a momentanément plus de place disponible en RAM, les variables seront stockées sur le disque (lent), par une méthode applée mémoire virtuelle, qui sera organisée par le système d'exploitation.
+
+Le système d'exploitation fait le lien entre le matériel (hardware) et les applications installées sur l'ordinateur.
 
 ## Recapitulation
 
-Le système d'exploitation
+Déclaration de varible et stockage en mémoire.

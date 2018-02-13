@@ -32,8 +32,7 @@ ainsi uniquement dans un souci de lisibilité et de simplicité.
 
 ## Chapitres
 * Environment
-* variable
-* Type de données
+* Variable
 * tableau
 * objet littéral
 * condition
@@ -183,6 +182,7 @@ if ( students.length > 10){
 ```
 ce qui pose des problemes de portée et de performances.
 
+
 ## Héritage
 
 Prenons deux objets.
@@ -230,17 +230,17 @@ En JS, **chaque variable** possède un attribut appelé __proto__. Cet attribut 
 Le seul problème avec c'est ici qu'on a des objets hardcodé dans notre code. Or, on veut en pour général crée des objects divers en cours de l'application (dynamique). On fera cela à l'aide d'un constructeur :
 
 ```js
-var Student = function(first, last, grade){
+var Student = function(first, last, grades){
 	this.first = first;
 	this.last = last;
 	this.grades = grades;
 };
 
-Student.prototype.moyenne = function(){
-
+Student.prototype.getBestGrade = function(){
+  return Math.max( ...this.grades);
 }
-masaru = new Student('toma', [12,34 ,1]) ;
-toma = new Student('toma', [12,34 ,1]) ;
+masaru = new Student('Masaru', 'Segawa', [12,34 ,1]) ;
+toma = new Student('Toma', 'Sakai', [12,34 ,1]) ;
 ```
 
 ## Héritage (multiple)
