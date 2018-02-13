@@ -360,11 +360,11 @@ const getAge = function( birthDate, currentYear ){
 }
 
 const cbkFunction = function(item, index){
-    return { item, age: getAge( item.birthDate, new Date().getFullYear() ) };
+    return getAge( item.birthDate, new Date().getFullYear() );
 };
 
-const studentsWithAge = students.map( cbkFunction );
-console.log( studentsWithAge );
+const ages = students.map( cbkFunction );
+console.log( ages );
 ```
 
 ## Currying
