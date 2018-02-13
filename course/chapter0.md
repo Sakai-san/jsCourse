@@ -88,7 +88,7 @@ console.log(tomaAge); // 46
 ```
 
 ```js
-var st1 = {first : "toma"};
+var st1 = {first: "toma"};
 var st2 = st1;
 console.log( st1 === st2 ) ; // true, type AND value (reference) are same
 st1.first = 'samuel';
@@ -126,8 +126,8 @@ Une callback est une fonction passée comme argument à une autre fonction. Les 
 
 ```js
 var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-students.forEach( function(stu){
-	console.log( stu.first + ' has a ' + stu.grades.length + " grades." );
+students.forEach( function(student){
+	console.log( student.first + ' has a ' + student.grades.length + " grades." );
 });
 /* Toma has a 2 grades.
    Alfredo has a 3 grades.
@@ -141,9 +141,9 @@ Pour certaines opérations qui prennent un peu de temps (requête HTTP, écritur
 
 ```js
 var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-students.forEach( function(elmt, index){
+students.forEach( function(student, index){
   setTimeout( function(){
-    console.log( elmt.firstName + ' has a ' + elmt.grades.length + " grades." );
+    console.log( student.first + ' has a ' + student.grades.length + " grades." );
   }, 10000*index);
 });
 console.log("The number of grades of each student.");
@@ -165,7 +165,7 @@ L'asynchronisme est mis en oeuvre par des événements. Dès qu'une tâche s'est
 Le hoisting est un comportement de l'interpréteur JS qui peut amener à certaines incompréhensions au niveau de la portée.
 
 ```js
-var students = [ {firstName: 'Toma', grades: [3.5, 2.0]}, {firstName: 'Alfredo', grades: [5, 5.5, 6.0]}, {firstName: 'Michael', grades: [4.5, 5.0, 4.5]}];
+var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
 if ( students.length > 10){
   var message = "many student";
 }
@@ -176,70 +176,74 @@ JS en réalité fait cela :
 
 ```js
 var message;
-var students = [ {firstName: 'Toma', grades: [3.5, 2.0]}, {firstName: 'Alfredo', grades: [5, 5.5, 6.0]}, {firstName: 'Michael', grades: [4.5, 5.0, 4.5]}];
+var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
 if ( students.length > 10){
   message = "many student";
 }
 ```
 ce qui pose des problemes de portée et de performances.
 
-## Héritage (1 niveau)
+## Héritage
 
 Prenons deux objets.
 ```js
 var tomaStudent = {
-  first : "Toma",
-  last  : "Sakai",
-  grades : [4.5, 5, 4],
-  getBestGrade : function(){ return Math.max( ...this.grades);}
+  first: "Toma",
+  last: "Sakai",
+  grades: [4.5, 5, 4],
+  getBestGrade: function(){ return Math.max( ...this.grades);}
 };
 
 var masaruStudent = {
-  first : "Masaru",
-  last  : "Segawa",
-  grades : [3.5, 4, 4],
-  getBestGrade : function(){ return Math.max( ...this.grades);}
+  first: "Masaru",
+  last: "Segawa",
+  grades: [3.5, 4, 4],
+  getBestGrade: function(){ return Math.max( ...this.grades);}
 };
 ```
-Comme il faut éviter de dupliquer du code en software, créons un objet qui sera réutilisé par les deux autres objets.
+L'idée de l'hérirage est de ne pas avoir du code dupliqué. Pourquoi ? Car si on modifie ce code, il va falloir le modifier partout. De notre cas, la fonction `getBestGrade` se trouve dans deux objets différents, ce qui n'est pas une bonne pratique.
+
+Créeons un object qui contient ladite fonction.
 
 ```js
 var student = {
-  getBestGrade : function(){ return Math.max( ...this.grades);}
+  getBestGrade: function(){ return Math.max( ...this.grades);}
 }
 
 var tomaStudent = {
-  firstName : "Toma",
-  lastName  : "Sakai",
-  grades : [4.5, 5, 4]
+  first: "Toma",
+  last: "Sakai",
+  grades: [4.5, 5, 4]
 };
 tomaStudent.__proto__ = student;
 
 var masaruStudent = {
-  first : "Masaru",
-  last  : "Segawa",
-  grades : [3.5, 4, 4]
+  first: "Masaru",
+  last: "Segawa",
+  grades: [3.5, 4, 4]
 };
 masaruStudent.__proto__ = student;
 ```
 
-En JS, **chaque variable** possède un attribut appelé __proto__. Cet attribut est un objet. `tomaStudent` et `masaruStudent` partage le **même objet** `student`. Il s'agit d'une [référence](https://en.wikipedia.org/wiki/Reference_(computer_science) sur cet objet pour être précis. On appelle cela héritage par prototype.
+En JS, **chaque variable** possède un attribut appelé __proto__. Cet attribut est un objet. `tomaStudent` et `masaruStudent` partage le **même objet** `student`. Il s'agit d'une [référence](https://en.wikipedia.org/wiki/Reference_(computer_science) sur cet objet pour être précis. Les objets héritent des propriétés de l'objet qui se trouve dans cet attribut `__.proto.__`. On appelle cela héritage par prototype.
 
-Le seul problème avec c'est ici qu'on a des objects hardcodé dans notre code. Or, on veut en pour général crée des objects divers en cours de l'application (dynamique). On fera cela à l'aide d'un constructeur :
+Le seul problème avec c'est ici qu'on a des objets hardcodé dans notre code. Or, on veut en pour général crée des objects divers en cours de l'application (dynamique). On fera cela à l'aide d'un constructeur :
 
-var Student = function(nom, grade){
-	this.nom = nom;
+```js
+var Student = function(first, last, grade){
+	this.first = first;
+	this.last = last;
 	this.grades = grades;
-}
+};
 
 Student.prototype.moyenne = function(){
 
 }
 masaru = new Student('toma', [12,34 ,1]) ;
 toma = new Student('toma', [12,34 ,1]) ;
+```
 
-
-## Héritage (plusieurs niveaux)
+## Héritage (multiple)
 On a vu que chaque objet a une propriété appelée prototype qui est un objet hérité. Cet objet peut lui même hériter des propriétés d'un autre objet (prototype chain).
 
 ```js
@@ -252,9 +256,9 @@ On a vu que chaque objet a une propriété appelée prototype qui est un objet h
     getBestGrade : function(){ return Math.max( ...this.grades);} // ... is the so-called spread operator
   };
   var tomaStudent = {
-    first : "Toma",
-    last  : "Sakai",
-    grades : [4.5, 5, 4]
+    first: "Toma",
+    last: "Sakai",
+    grades: [4.5, 5, 4]
   };
   tomaStudent.__proto__ = student;
   tomaStudent.__proto__.__proto__ = person;
@@ -285,8 +289,8 @@ On a vu que chaque objet a une propriété appelée prototype qui est un objet h
 
   ```js
   var university = {
-    name : "University of Lausanne",
-    students : [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}],
+    name: "University of Lausanne",
+    students: [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}],
 
     displayStudents : function(){
       var self = this;   // this refers the university object
@@ -301,8 +305,8 @@ On a vu que chaque objet a une propriété appelée prototype qui est un objet h
   Lorsque le contexte change, on peut aussi spécifier à quel contexte on fait référence.
   ```js
   var university = {
-    name : "University of Lausanne",
-    students : [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}],
+    name: "University of Lausanne",
+    students: [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}],
 
     displayStudents : function(){
       this.students.forEach( function(s){
@@ -326,6 +330,43 @@ picturesPromise
 */
 ```
 
+## Closure
+
+```js
+const students = [
+  {
+    first: "Masaru",
+    last: "Segawa",
+    grades: [3.5, 4, 4],
+    birthDate: '1980-01-31'
+  },
+  {
+    first: "Toma",
+    last: "Sakai",
+    grades: [4, 5, 5],
+    birthDate: '1979-04-22'
+  },
+  {
+    first: "Asako",
+    last: "Ogiwara",
+    grades: [6, 4, 4.5],
+    birthDate: '1982-02-25'
+  }
+];
+
+
+const getAge = function( birthDate, currentYear ){
+    return currentYear - new Date(birthDate).getFullYear();
+}
+
+const cbkFunction = function(item, index){
+    return { item, age: getAge( item.birthDate, new Date().getFullYear() ) };
+};
+
+const studentsWithAge = students.map( cbkFunction );
+console.log( studentsWithAge );
+```
+
 ## Currying
 
 Le currying est une technique permettant de transformer une fonction prenant n parametres en une fonction prenant une nombre différent de parametres.
@@ -337,7 +378,7 @@ function greetings( first, last ){
   console.log( "Hello " + first + " " + last );
 }
 
-var students = [ {first: 'Toma', last : 'Sakai'}, {first: 'Alfredo', last: 'Castillo'}, {first: 'Michael', last : 'Scettino'}];
+var students = [ {first: 'Toma', last: 'Sakai'}, {first: 'Alfredo', last: 'Castillo'}, {first: 'Michael', last: 'Scettino'}];
 
 function hello(student){
   return greetings( student.first, student.last);
@@ -362,7 +403,7 @@ function compose (function1, function2){
 }
  										// 2 *x * x
 console.log( "compose ", compose(double, square)(2) );
-
+```
 
 # ECMAScript 2015
 
@@ -376,14 +417,14 @@ ECMAScript 2015 apporte un lot de nouveautés. Nous en verrons que quelques-unes
 ECMAScript 2015 permet une manière plus condensée pour écrire des fonctions. Avec cette syntaxe ```function``` est remplacé par ```()```. On peut aussi omettre le ```return``` si la fonction n'a q'une seule instruction (il faut enlever les accolades).
 
 ```js
-var students = [ {firstName: 'Toma', grades: [3.5, 2.0]}, {firstName: 'Alfredo', grades: [5, 5.5, 6.0]}, {firstName: 'Michael', grades: [4.5, 5.0, 4.5]}];
+var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
 
-var gradesQuantity1 = students.map( (elmt) =>{
-  var grades = elmt.grades;
+var gradesQuantity1 = students.map( (student) =>{
+  var grades = student.grades;
   return grades.length;
 });
 // simpler
-var gradesQuantity2 = students.map( (elmt) => elmt.grades.length );
+var gradesQuantity2 = students.map( (student) => student.grades.length );
 console.log(gradesQuantity1);
 console.log(gradesQuantity2);
 // [2, 3, 3]
@@ -403,43 +444,49 @@ Cette syntaxe a été ajoutée pour similer les languages qui implémente le con
 Permet d'eclater un object ou un tableau et le mettre dans des nouvelle variables (pattern matching).
 
 simple :
-const { first, last } = tomaStudent; // destructuring
+
+```const { first, last } = tomaStudent; // destructuring ```
 
 paramètre d'une function :
+
+```js
 const greetings = function( {first, last} ){
     console.log(`Hello ${first}, ${last}`);
 };
 
+```
 
+```js
 const tomaStudent = {
-  first : "Toma",
-  last  : "Sakai",
-  grades : [4.5, 5, 4],
+  first: "Toma",
+  last: "Sakai",
+  grades: [4.5, 5, 4]
 };
 
-
 console.log('testtest', greetings(tomaStudent));
-
+```
 
 ## Spread
-
+```js
 const tomaStudent = {
-  first : "Toma",
-  last  : "Sakai",
-  grades : [4.5, 5, 4],
+  first: "Toma",
+  last: "Sakai",
+  grades: [4.5, 5, 4],
 };
 const newTomaSudent = ...tomaStudent; // spread
 // newTomaSudent !== tomaSudent returns true
+```
 
 ## Object rest/spread properties
 On peut copier des objects et les surcharger en même temps
 
+```js
 const extendedTomaStudent = { ...tomaStudent, grades: [...tomaStudent.grades, 6], age : '38' };
 // create a new object and the original object by adding grade and a new property
 
 console.log('initStore', miniStore);
 console.log('initStore', miniStoreReducer(miniStore, { message  : "message3"} ) );
-
+```
 
 ## computed propert
 
