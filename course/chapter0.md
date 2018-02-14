@@ -183,7 +183,9 @@ if ( students.length > 10){
 ce qui pose des problemes de portée et de performances.
 
 
-## Héritage
+## Héritage prototypal
+
+L'héritage prototypal est une des particulartiés de JS la mal plus comprise. L'héritage prototypal est différent de l'héritage classique implémenté en Java ou C++. En JS, le concept de classe n'existe pas.
 
 Prenons deux objets.
 ```js
@@ -201,12 +203,13 @@ var masaruStudent = {
   getBestGrade: function(){ return Math.max( ...this.grades);}
 };
 ```
-L'idée de l'hérirage est de ne pas avoir du code dupliqué. Pourquoi ? Car si on modifie ce code, il va falloir le modifier partout. De notre cas, la fonction `getBestGrade` se trouve dans deux objets différents, ce qui n'est pas une bonne pratique.
+L'idée de l'héritage en général est de ne pas avoir du code dupliqué. De notre cas, la fonction `getBestGrade` se trouve dans deux objets différents, ce qui n'est pas une bonne pratique. En effet, d'une part un code dupliqué est difficile à maintenir, et, d'autre il prend de la place en mémoire inutilement.
 
 Créeons un object qui contient ladite fonction.
 
 ```js
 var student = {
+  studentsCount: 0;
   getBestGrade: function(){ return Math.max( ...this.grades);}
 }
 
@@ -215,35 +218,49 @@ var tomaStudent = {
   last: "Sakai",
   grades: [4.5, 5, 4]
 };
-tomaStudent.__proto__ = student;
+tomaStudent.__proto__ = student; // don't do that, just for the example
+tomaStudent.__proto__.studentsCount = tomaStudent.__proto__.studentsCount+1;
 
 var masaruStudent = {
   first: "Masaru",
   last: "Segawa",
   grades: [3.5, 4, 4]
 };
-masaruStudent.__proto__ = student;
+masaruStudent.__proto__ = student; // don't do that, just for the example
+tomaStudent.__proto__.studentsCount = tomaStudent.__proto__.studentsCount+1;
+
+console.log(tomaStudent.__proto__.studentsCount); // 2
+console.log(masaruStudent.__proto__.studentsCount); // 2
 ```
 
-En JS, **chaque variable** possède un attribut appelé __proto__. Cet attribut est un objet. `tomaStudent` et `masaruStudent` partage le **même objet** `student`. Il s'agit d'une [référence](https://en.wikipedia.org/wiki/Reference_(computer_science) sur cet objet pour être précis. Les objets héritent des propriétés de l'objet qui se trouve dans cet attribut `__.proto.__`. On appelle cela héritage par prototype.
+En JS, **chaque variable** possède une proprité appelé __proto__. Sa valeur est un **objet**. `tomaStudent` et `masaruStudent` partage le **même objet** `student`. Il s'agit d'une [référence](https://en.wikipedia.org/wiki/Reference_(computer_science) sur cet objet pour être précis. Les objets héritent des propriétés de cet objet. On appelle cela héritage par prototype.
 
-Le seul problème avec c'est ici qu'on a des objets hardcodé dans notre code. Or, on veut en pour général crée des objects divers en cours de l'application (dynamique). On fera cela à l'aide d'un constructeur :
+Evidemment, lrosque l'on mofifie une propriété de l'objet dans le __proto__ cela impacte tous les objets qui en hérite par prototype. studentsCount Le seul problème avec c'est ici qu'on a des objets hardcodé dans notre code. Or, on veut en pour général crée des objects divers en cours de l'application (dynamique). On fera cela à l'aide d'un constructeur :
 
 ```js
-var Student = function(first, last, grades){
-	this.first = first;
-	this.last = last;
-	this.grades = grades;
+var Student = function( first, last, grades ){
+      this.first = first;
+      this.last = last;
+      this.grades = grades;
+      Student.prototype.studentsCount++;
 };
 
 Student.prototype.getBestGrade = function(){
   return Math.max( ...this.grades);
-}
-masaru = new Student('Masaru', 'Segawa', [12,34 ,1]) ;
-toma = new Student('Toma', 'Sakai', [12,34 ,1]) ;
+};
+
+Student.prototype.studentsCount = 0;
+
+
+var tomaStudent = new Student('Toma', 'Sakai', [4.5, 5, 4] );
+var masaruStudent = new Student('Masaru', 'Segawa', [3.5, 4, 4] );
+
+console.log(tomaStudent.__proto__.studentsCount); // 2
+console.log(masaruStudent.__proto__.studentsCount); // 2
+
 ```
 
-## Héritage (multiple)
+## Héritage sur deux niveaux
 On a vu que chaque objet a une propriété appelée prototype qui est un objet hérité. Cet objet peut lui même hériter des propriétés d'un autre objet (prototype chain).
 
 ```js
@@ -434,6 +451,40 @@ console.log(gradesQuantity2);
 ## Classes
 
 Cette syntaxe a été ajoutée pour similer les languages qui implémente le concept de classe tel que Java. Elle a suscité quelques controverses car nativement JS ne supporte pas les classes mais utilise le concept de prototype. Il s'agit que d'une simulation ou en d'autres termes, d'un sucre syntaxique. L'héritage par prototype existe toujours.
+
+
+```js
+class Person {
+  constructor(first, last){
+    this.first = first;
+    this.last = last;
+  }
+  greeting(){
+    console.log(`Hello, ${this.first} ${this.last}`)
+  }
+}
+
+class Student extends Person {
+
+  constructor(first, last, grades){
+    super(first, last);
+    this.grades = grades;
+    this.updateCount();
+  }
+
+  getBestGrade(){
+    return Math.max( ...this.grades);
+  }
+
+  updateCount(){
+    this.studentsCount++;
+  }
+}
+
+var masaru = new Student( 'Masaru', 'Segawa', [3.5, 4, 4] );
+var toma = new Student(  'Toma', 'Sakai', [4, 5, 5] );
+
+```
 
 ## template litteral (interpolation)
 
