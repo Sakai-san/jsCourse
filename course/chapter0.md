@@ -185,14 +185,19 @@ ce qui pose des problemes de portée et de performances.
 
 ## Prototype
 
-Toutes les variables JS possèdent une propriété appelée __proto__.
+Toutes les variables JS possèdent une propriété appelée `__proto__`.
+
+```js
+  const firstName = new String( 'toma' );
+  console.log( firstName.__proto__ );
+```
+
+ `firstName.__proto__` est un **objet**. Cet objet contient plusieurs propriété, tel que que `toUpperCase`.
 
 ```js
   const firstName = new String( 'toma' );
   console.log( firstName.toUpperCase() ); // TOMA
 ```
-
-Cette variable est un objet. On peut remarquer qu'en entrant `firstName.__proto__` affiche un **objet** et que `toUpperCase` y figure comme clé.
 
 On peut redéfinir (override) cette fonction dans notre objet comme ceci.
 
