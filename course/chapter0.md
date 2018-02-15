@@ -185,26 +185,24 @@ ce qui pose des problemes de portée et de performances.
 
 ## Prototype
 
-Toutes les variables JS possède une propriété appelée __proto__.
+Toutes les variables JS possèdent une propriété appelée __proto__.
 
 ```js
   const firstName = new String( 'toma' );
-  console.log( tyopeof firstName ); // object
   console.log( firstName.toUpperCase() ); // TOMA
 ```
 
 Cette variable est un objet. On peut remarquer qu'en entrant `firstName.__proto__` affiche un **objet** et que `toUpperCase` y figure comme clé.
 
-On peut redéfinir (override) cette function dans notre objet comme ceci.
+On peut redéfinir (override) cette fonction dans notre objet comme ceci.
 
 ```js
   const firstName = new String( 'toma' );
   firstName.toUpperCase = function() { return this + " ! " ; };
-
-  console.log( tyopeof firstName ); // object
   console.log( firstName.toUpperCase() ); // toma !
 ```
-On voit maintenant que l'objec firstName possède une propriété direct `toUpperCase` et une propriété `toUpperCase` dans son prototype.
+
+On voit maintenant que l'objet `firstName` possède une propriété directe `toUpperCase` et une propriété `toUpperCase` dans son prototype.
 
 En JS, lorsque l'on veut accéder à une propriété, JS cherche d'abord dans l'objet et s'il ne la trouve pas dans le prototype (fallback). On peut donc rédéfinir une propriété en la définissant sur l'objet lui-même.
 
