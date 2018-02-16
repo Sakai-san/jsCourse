@@ -45,7 +45,7 @@ console.log( fullName ); // toma is 48 years old
 ```
 En peut faire des opérations arithmétiques sur les varialbes de type `number`, tels que `/`, `*`, `-`, `+`. On peut assembler deux chaîne de charactères avec le symbol `+` (concaténation). Le type d'une variable détermine donc quelles opérations on peut faire avec elle.
 
-Dans, certains cas JS **convertit** le type d'une variable. Dans l'exemple ci-dessus, JS ne peut pas faire une opération arithmétique, car certain opérantes ne sont pas des nombres. JS fait une **conversion de type**, ici en string.
+Dans, certains cas JS **convertit** le type d'une variable. Dans l'exemple ci-dessus, JS ne peut pas faire une opération arithmétique, car certains opérandes ne sont pas des nombres. JS fait une **conversion de type**, ici en string.
 
 
 ## Système d'exploitation
