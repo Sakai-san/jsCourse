@@ -77,26 +77,6 @@ ainsi uniquement dans un souci de lisibilité et de simplicité.
 * [Eric Elliot practices in JS](https://github.com/ericelliott/class-free-javascript-style)
 
 
-```js
-var chrisAge = 46;
-var tomaAge = chrisAge;
-console.log( chrisAge === tomaAge ); // true, type AND value are same
-chrisAge++;
-console.log(chrisAge); // 47
-console.log(tomaAge); // 46
-```
-
-```js
-var st1 = {first: "toma"};
-var st2 = st1;
-console.log( st1 === st2 ) ; // true, type AND value (reference) are same
-st1.first = 'samuel';
-console.log( st1.first ); // samuel
-console.log( st2.first ); // samuel
-
-```
-
-Dans le premier exemple, les deux variables sont physiquement (dans la mémoire de l'ordinateur) stockées à des endroits différents, ce qui n'est pas le cas pour le second exemple.
 
 
 ```js
@@ -120,173 +100,16 @@ console.log(
 // Hello, Toma Sakai
 ```
 
-## Callback
-Une callback est une fonction passée comme argument à une autre fonction. Les fonctions anonymes sont très souvent utilisées à ce titre.
-
-```js
-var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-students.forEach( function(student){
-	console.log( student.first + ' has a ' + student.grades.length + " grades." );
-});
-/* Toma has a 2 grades.
-   Alfredo has a 3 grades.
-   Michael has a 3 grades.
-*/
-
-```
-
-## Asynchronisme
-Pour certaines opérations qui prennent un peu de temps (requête HTTP, écriture dans un fichier, etc.), JS ne va pas attendre que l'opération soit terminée et continue l'exécution du programme. Ce comportement s'appelle **asynchrone**.
-
-```js
-var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-students.forEach( function(student, index){
-  setTimeout( function(){
-    console.log( student.first + ' has a ' + student.grades.length + " grades." );
-  }, 10000*index);
-});
-console.log("The number of grades of each student.");
-/*
-  The number of grades of each student.
-  Toma has a 2 grades.
-  Alfredo has a 3 grades. (about 10 seconds later)
-  Michael has a 3 grades. (about 20 seconds later)
-*/
-
-```
-Dans cet exemple, la fonction `setTimeout` est asynchrone, et donc la dernière instruction de l'extrait de code est exécutée en premier. L'avantage de l'asynchronisme est de pouvoir lancer plusieurs tâches **en parallèle**.
-
-L'asynchronisme est mis en oeuvre par des événements. Dès qu'une tâche s'est terminée un événement survient et la callback est appelée.
 
 
-## Hoisting
-
-Le hoisting est un comportement de l'interpréteur JS qui peut amener à certaines incompréhensions au niveau de la portée.
-
-```js
-var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-if ( students.length > 10){
-  var message = "many student";
-}
-console.log(message); // undefined
-
-```
-JS en réalité fait cela :
-
-```js
-var message;
-var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-if ( students.length > 10){
-  message = "many student";
-}
-```
-ce qui pose des problemes de portée et de performances.
 
 
-## Prototype
-
-Toutes les variables JS possèdent une propriété appelée `__proto__`.
-
-```js
-  const firstName = new String( 'toma' );
-  console.log( firstName.__proto__ );
-```
-
- `firstName.__proto__` est un **objet**. Cet objet contient plusieurs propriété, tel que que `toUpperCase`.
-
-```js
-  const firstName = new String( 'toma' );
-  console.log( firstName.toUpperCase() ); // TOMA
-```
-
-On peut redéfinir (override) cette fonction dans notre objet comme ceci.
-
-```js
-  const firstName = new String( 'toma' );
-  firstName.toUpperCase = function() { return this + " ! " ; };
-  console.log( firstName.toUpperCase() ); // toma !
-```
-
-On voit maintenant que l'objet `firstName` possède une propriété directe `toUpperCase` et une propriété `toUpperCase` dans son prototype.
-
-En JS, lorsque l'on veut accéder à une propriété, JS cherche d'abord dans l'objet et s'il ne la trouve pas dans le prototype (fallback). On peut donc rédéfinir une propriété en la définissant sur l'objet lui-même.
-
-## Héritage prototypal
-
-L'héritage prototypal est une des particulartiés de JS la mal plus comprise. L'héritage prototypal est différent de l'héritage classique implémenté en Java ou C++. En JS, le concept de classe n'existe pas.
-
-Prenons deux objets.
-```js
-var tomaStudent = {
-  first: "Toma",
-  last: "Sakai",
-  grades: [4.5, 5, 4],
-  getBestGrade: function(){ return Math.max( ...this.grades);}
-};
-
-var masaruStudent = {
-  first: "Masaru",
-  last: "Segawa",
-  grades: [3.5, 4, 4],
-  getBestGrade: function(){ return Math.max( ...this.grades);}
-};
-```
-L'idée de l'héritage en général est de ne pas avoir du code dupliqué. De notre cas, la fonction `getBestGrade` se trouve dans deux objets différents, ce qui n'est pas une bonne pratique. En effet, d'une part un code dupliqué est difficile à maintenir, et, d'autre il prend de la place en mémoire inutilement.
-
-Créeons un object qui contient ladite fonction.
-
-```js
-var student = {
-  studentsCount: 0;
-  getBestGrade: function(){ return Math.max( ...this.grades);}
-}
-
-var tomaStudent = {
-  first: "Toma",
-  last: "Sakai",
-  grades: [4.5, 5, 4]
-};
-tomaStudent.__proto__ = student; // don't do that, just for the example
-tomaStudent.__proto__.studentsCount = tomaStudent.__proto__.studentsCount+1;
-
-var masaruStudent = {
-  first: "Masaru",
-  last: "Segawa",
-  grades: [3.5, 4, 4]
-};
-masaruStudent.__proto__ = student; // don't do that, just for the example
-tomaStudent.__proto__.studentsCount = tomaStudent.__proto__.studentsCount+1;
-
-console.log(tomaStudent.__proto__.studentsCount); // 2
-console.log(masaruStudent.__proto__.studentsCount); // 2
-```
-
-En JS, **chaque variable** possède une proprité appelé __proto__. Sa valeur est un **objet**. `tomaStudent` et `masaruStudent` partage le **même objet** `student`. Il s'agit d'une [référence](https://en.wikipedia.org/wiki/Reference_(computer_science) sur cet objet pour être précis. Les objets héritent des propriétés de cet objet. On appelle cela héritage par prototype.
-
-Evidemment, lrosque l'on mofifie une propriété de l'objet dans le __proto__ cela impacte tous les objets qui en hérite par prototype. studentsCount Le seul problème avec c'est ici qu'on a des objets hardcodé dans notre code. Or, on veut en pour général crée des objects divers en cours de l'application (dynamique). On fera cela à l'aide d'un constructeur :
-
-```js
-var Student = function( first, last, grades ){
-      this.first = first;
-      this.last = last;
-      this.grades = grades;
-      Student.prototype.studentsCount++;
-};
-
-Student.prototype.getBestGrade = function(){
-  return Math.max( ...this.grades);
-};
-
-Student.prototype.studentsCount = 0;
 
 
-var tomaStudent = new Student('Toma', 'Sakai', [4.5, 5, 4] );
-var masaruStudent = new Student('Masaru', 'Segawa', [3.5, 4, 4] );
 
-console.log(tomaStudent.__proto__.studentsCount); // 2
-console.log(masaruStudent.__proto__.studentsCount); // 2
 
-```
+
+
 
 ## Héritage sur deux niveaux
 On a vu que chaque objet a une propriété appelée prototype qui est un objet hérité. Cet objet peut lui même hériter des propriétés d'un autre objet (prototype chain).
@@ -326,91 +149,6 @@ On a vu que chaque objet a une propriété appelée prototype qui est un objet h
   console.log( tomaStudent.getBestGrade() ); // 6.0
   ```
   Remarque. Dans les exemples nous avons modifié le prototype avec `__proto__` pour mieux visualiser le truc. Il existe une autre manière (recommandée) pour ce faire avec `Object.create()`.
-
-## Contexte
-  Le mot clé *this* est en fait une référence sur l'objet en cours.
-
-  Lorsque le contexte change, on peut sauvegarder le contexte dans une variable.
-
-  ```js
-  var university = {
-    name: "University of Lausanne",
-    students: [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}],
-
-    displayStudents : function(){
-      var self = this;   // this refers the university object
-      self.students.forEach( function(s){
-          console.log( s.first  +" studies at " + this.name  ); // wrong, since this refers to the current student
-          console.log( s.first  +" studies at " + self.name  ); // correct !
-        });
-    }
-  };
-  ```
-
-  Lorsque le contexte change, on peut aussi spécifier à quel contexte on fait référence.
-  ```js
-  var university = {
-    name: "University of Lausanne",
-    students: [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}],
-
-    displayStudents : function(){
-      this.students.forEach( function(s){
-          console.log( s.first  +" studies at " + this.name  ); // this explicitely refers to the university object
-        }.bind(this));
-    }
-  };
-  ```
-
-## Promesses
-
-```js
-var picturesPromise = $.getJSON({ url: "http://studybyyourself.com/wp-admin/admin-ajax.php?action=get_pictures" });
-picturesPromise
-  .then( (response) => {
-        console.log(response);
-    }
-});
-/*
-{"success":true,"data":[{"id":6761,"filename":"miley_cyrus.jpg","url":"http:\/\/studybyyourself.com\/wp-content\/uploads\/2016\/11\/miley_cyrus.jpg","date":1478678648000,"mime":"image\/jpeg","type":"image","subtype":"jpeg","filesizeInBytes":16655,"filesizeHumanReadable":"16 KB"}]
-*/
-```
-
-## Closure
-
-```js
-const students = [
-  {
-    first: "Masaru",
-    last: "Segawa",
-    grades: [3.5, 4, 4],
-    birthDate: '1980-01-31'
-  },
-  {
-    first: "Toma",
-    last: "Sakai",
-    grades: [4, 5, 5],
-    birthDate: '1979-04-22'
-  },
-  {
-    first: "Asako",
-    last: "Ogiwara",
-    grades: [6, 4, 4.5],
-    birthDate: '1982-02-25'
-  }
-];
-
-
-const getAge = function( birthDate, currentYear ){
-    return currentYear - new Date(birthDate).getFullYear();
-}
-
-const cbkFunction = function(item, index){
-    return getAge( item.birthDate, new Date().getFullYear() );
-};
-
-const ages = students.map( cbkFunction );
-console.log( ages );
-```
 
 ## Currying
 
