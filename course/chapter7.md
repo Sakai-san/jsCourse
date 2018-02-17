@@ -1,18 +1,24 @@
-# Chapitre 7 : Callback
+# Chapitre 7 : Valeur vs Reference
 
 ## Concept
 
-## Callback
-Une callback est une fonction passée comme argument à une autre fonction. Les fonctions anonymes sont très souvent utilisées à ce titre.
+```js
+var chrisAge = 46;
+var tomaAge = chrisAge;
+console.log( chrisAge === tomaAge ); // true, type AND value are same
+chrisAge++;
+console.log(chrisAge); // 47
+console.log(tomaAge); // 46
+```
 
 ```js
-var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-students.forEach( function(student){
-	console.log( student.first + ' has a ' + student.grades.length + " grades." );
-});
-/* Toma has a 2 grades.
-   Alfredo has a 3 grades.
-   Michael has a 3 grades.
-*/
+var st1 = {first: "toma"};
+var st2 = st1;
+console.log( st1 === st2 ) ; // true, type AND value (reference) are same
+st1.first = 'samuel';
+console.log( st1.first ); // samuel
+console.log( st2.first ); // samuel
 
 ```
+
+Dans le premier exemple, les deux variables sont physiquement (dans la mémoire de l'ordinateur) stockées à des endroits différents, ce qui n'est pas le cas pour le second exemple.
