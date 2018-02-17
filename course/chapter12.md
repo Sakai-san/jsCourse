@@ -1,29 +1,36 @@
-# Chapitre 12 : Prototype
+# Chapitre 12 : Context
 
 ## Concept
 
-Toutes les variables JS possèdent une propriété appelée `__proto__`.
+  Le mot clé *this* est en fait une référence sur l'objet en cours.
 
-```js
-  const firstName = new String( 'toma' );
-  console.log( firstName.__proto__ );
-```
+  Lorsque le contexte change, on peut sauvegarder le contexte dans une variable.
 
- `firstName.__proto__` est un **objet**. Cet objet contient plusieurs propriété, tel que que `toUpperCase`.
+  ```js
+  var university = {
+    name: "University of Lausanne",
+    students: [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}],
 
-```js
-  const firstName = new String( 'toma' );
-  console.log( firstName.toUpperCase() ); // TOMA
-```
+    displayStudents : function(){
+      var self = this;   // this refers the university object
+      self.students.forEach( function(s){
+          console.log( s.first  +" studies at " + this.name  ); // wrong, since this refers to the current student
+          console.log( s.first  +" studies at " + self.name  ); // correct !
+        });
+    }
+  };
+  ```
 
-On peut redéfinir (override) cette fonction dans notre objet comme ceci.
+  Lorsque le contexte change, on peut aussi spécifier à quel contexte on fait référence.
+  ```js
+  var university = {
+    name: "University of Lausanne",
+    students: [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}],
 
-```js
-  const firstName = new String( 'toma' );
-  firstName.toUpperCase = function() { return this + " ! " ; };
-  console.log( firstName.toUpperCase() ); // toma !
-```
-
-On voit maintenant que l'objet `firstName` possède une propriété directe `toUpperCase` et une propriété `toUpperCase` dans son prototype.
-
-En JS, lorsque l'on veut accéder à une propriété, JS cherche d'abord dans l'objet et s'il ne la trouve pas dans le prototype (fallback). On peut donc rédéfinir une propriété en la définissant sur l'objet lui-même.
+    displayStudents : function(){
+      this.students.forEach( function(s){
+          console.log( s.first  +" studies at " + this.name  ); // this explicitely refers to the university object
+        }.bind(this));
+    }
+  };
+  ```

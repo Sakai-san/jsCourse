@@ -1,12 +1,9 @@
-# Chapitre 5 : Objet
+# Chapitre 5 : Boucle
 
 ## Concept
 
 
-object simple
-correspond au dictionnaire en python au tableau associatif ou au hash (perl).
 
-
-
-object avec fonction
+## Recapitulation
+Nous allons voir plus tard d'autres boucles.
 

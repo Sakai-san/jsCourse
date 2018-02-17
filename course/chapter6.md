@@ -1,6 +1,10 @@
-# Chapitre 6 : Tableau
+# Chapitre 6 : Fonction
 
 ## Concept
 
+On peut groupe le code dans une fonction.
 
-Est une structure de données.
+
+Proch du concept de fonction en mathémaique.
+
+## Fonction anonyme
