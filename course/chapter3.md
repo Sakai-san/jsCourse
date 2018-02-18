@@ -21,19 +21,24 @@ La variable `age` a d'abord été déclarée. Ensuite `10` a été assigné à c
 
 La variable `fullName` utilise les variables déclarées précédemment. Dans la dernière ligne on a appelé la fonction `console.log()` pour afficher la valeur de la variable `fullName`.
 
-## Types de données
+## Type de données
 Les variables ont un type, que l'on appelle **type de données**. En JS, il en existe sept `number`, `string`, `boolean`, `null`, `undefined`, `object` et `symbol`.
 
-On peut connaître le type d'une variable avec la fonction ` typeof()`.
+On peut connaître le type d'une variable avec l'opérateur ` typeof`.
 
 ```js
 var firstName = 'Asako';
-typeof( firstName ); // string
+console.log( typeof firstName ); // string
+
+var isWoman = true;
+console.log( typeof isWoman ); // boolean
+
+var age = 41;
+console.lgo( typeof age ); // number
 ```
 
 ## Opérations
-
-En fonction du type des varaibles on peut faire difféntes opérations sur celles-ci.
+En fonction du type des variables on peut faire difféntes opérations sur celles-ci.
 
 ```js
 var currentYear = 2018;
@@ -49,17 +54,15 @@ Dans, certains cas JS **convertit** le type d'une variable. Dans l'exemple ci-de
 
 
 ## Système d'exploitation
+Le **système d'exploitation** de l'ordinateur gère les applications en cours d'exécution (appelé processus). Il leur alloue un certain temps d'exécution, qu'on appelle le quantum. Il décide quel programme va pouvoir être exécuté et donc avoir accès au processeur (processus élu) grâce à un algorithme mis en oeuvre par l'ordonnanceur (scheduler).
 
-Le système d'exploitation de l'ordinateur gère les applications en cours d'exécution (appelé processus). Il leur alloue un certain temps d'exécution, qu'on appelle le quantum. Il décide quel programme va pouvoir être exécuté et ainsi avoir accès au processeur (processus élu) grâce à un algorithme mis en oeuvre par l'ordonnanceur (scheduler).
-
-Les variables qu'un programme déclare sont stockées dans la mémoire vive (RAM) de l'ordinateur. C'est le système d'exploitation également qui gère l'allocation de la mémoire pour chaque application. Si l'ordinateur n'a momentanément plus de place disponible en RAM, le système d'exploitation créera un espace sur le disque dur, appelé mémoire virtuelle (lent).
+Les variables qu'un programme déclare sont stockées dans la **mémoire vive** (RAM) de l'ordinateur. C'est le système d'exploitation également qui gère l'allocation de la mémoire pour chaque application. Si l'ordinateur n'a momentanément plus de place disponible en RAM, le système d'exploitation crée un espace sur le disque dur, appelé **mémoire virtuelle** (lent en lecture).
 
 Le système d'exploitation fait le lien entre le matériel (hardware) et les applications lancées sur l'ordinateur.
 
 ## Recapitulation
+Chaque variable a un type. Selon le type, la valeur doit avoir un certain format. Par exemple, les strings doivent être formatées entre guillemets (guillement simple ou double).
 
-Les variables possède des types. Selon le type, la valeur doit avoir un certain format. Par exemple, les strings doivent être formatées entre guillemets (guillement simple ou double).
-
-Le type d'une varaible détermine également quelle opération on peut faire avec celle-ci.
+Le type d'une variable détermine également quelle opération on peut faire avec celle-ci.
 
 La déclaration d'une variable et l'assignation sont deux instructions différentes. Il est une bonne pratique de faire ces deux opérations simultanément.
