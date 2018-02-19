@@ -1,4 +1,4 @@
-# Chapitre 6 : Fonction
+# Chapitre 7 : Fonction
 
 ## Concept
 

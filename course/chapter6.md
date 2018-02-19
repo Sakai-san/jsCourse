@@ -1,4 +1,4 @@
-# Chapitre 5 : Boucle
+# Chapitre 6 : Boucle
 
 ## Concept
 

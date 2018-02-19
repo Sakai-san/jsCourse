@@ -1,4 +1,4 @@
-# Chapitre 15 : Héritage prototypal
+# Chapitre 16 : Héritage prototypal
 
 ## Concept
 

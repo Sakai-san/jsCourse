@@ -1,4 +1,4 @@
-# Chapitre 11 : Hoisting
+# Chapitre 12 : Hoisting
 
 ## Concept
 
