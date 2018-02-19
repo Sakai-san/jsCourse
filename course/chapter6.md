@@ -1,10 +1,9 @@
-# Chapitre 6 : Fonction
+# Chapitre 5 : Boucle
 
 ## Concept
 
-On peut groupe le code dans une fonction.
 
 
-Proch du concept de fonction en mathémaique.
+## Recapitulation
+Nous allons voir plus tard d'autres boucles.
 
-## Fonction anonyme

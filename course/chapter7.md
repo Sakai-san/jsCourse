@@ -1,12 +1,10 @@
-# Chapitre 7 : Objet
+# Chapitre 6 : Fonction
 
 ## Concept
 
-
-object simple
-correspond au dictionnaire en python au tableau associatif ou au hash (perl).
+On peut groupe le code dans une fonction.
 
 
+Proch du concept de fonction en mathémaique.
 
-object avec fonction
-
+## Fonction anonyme

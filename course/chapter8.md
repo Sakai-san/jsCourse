@@ -1,6 +1,12 @@
-# Chapitre 8 : Tableau
+# Chapitre 7 : Objet
 
 ## Concept
 
 
-Est une structure de données.
+object simple
+correspond au dictionnaire en python au tableau associatif ou au hash (perl).
+
+
+
+object avec fonction
+

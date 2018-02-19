@@ -1,29 +1,25 @@
-# Chapitre 14 : Prototype
+# Chapitre 13 : Asynchronisme
 
 ## Concept
 
-Toutes les variables JS possèdent une propriété appelée `__proto__`.
+Pour certaines opérations qui prennent un peu de temps (requête HTTP, écriture dans un fichier, etc.), JS ne va pas attendre que l'opération soit terminée et continue l'exécution du programme. Ce comportement s'appelle **asynchrone**.
 
 ```js
-  const firstName = new String( 'toma' );
-  console.log( firstName.__proto__ );
+var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
+students.forEach( function(student, index){
+  setTimeout( function(){
+    console.log( student.first + ' has a ' + student.grades.length + " grades." );
+  }, 10000*index);
+});
+console.log("The number of grades of each student.");
+/*
+  The number of grades of each student.
+  Toma has a 2 grades.
+  Alfredo has a 3 grades. (about 10 seconds later)
+  Michael has a 3 grades. (about 20 seconds later)
+*/
+
 ```
+Dans cet exemple, la fonction `setTimeout` est asynchrone, et donc la dernière instruction de l'extrait de code est exécutée en premier. L'avantage de l'asynchronisme est de pouvoir lancer plusieurs tâches **en parallèle**.
 
- `firstName.__proto__` est un **objet**. Cet objet contient plusieurs propriété, tel que que `toUpperCase`.
-
-```js
-  const firstName = new String( 'toma' );
-  console.log( firstName.toUpperCase() ); // TOMA
-```
-
-On peut redéfinir (override) cette fonction dans notre objet comme ceci.
-
-```js
-  const firstName = new String( 'toma' );
-  firstName.toUpperCase = function() { return this + " ! " ; };
-  console.log( firstName.toUpperCase() ); // toma !
-```
-
-On voit maintenant que l'objet `firstName` possède une propriété directe `toUpperCase` et une propriété `toUpperCase` dans son prototype.
-
-En JS, lorsque l'on veut accéder à une propriété, JS cherche d'abord dans l'objet et s'il ne la trouve pas dans le prototype (fallback). On peut donc rédéfinir une propriété en la définissant sur l'objet lui-même.
+L'asynchronisme est mis en oeuvre par des événements. Dès qu'une tâche s'est terminée un événement survient et la callback est appelée.

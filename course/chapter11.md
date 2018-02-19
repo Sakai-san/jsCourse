@@ -1,24 +1,18 @@
-# Chapitre 11 : Hoisting
+# Chapitre 10 : Callback
 
 ## Concept
 
-Le hoisting est un comportement de l'interpréteur JS qui peut amener à certaines incompréhensions au niveau de la portée.
+## Callback
+Une callback est une fonction passée comme argument à une autre fonction. Les fonctions anonymes sont très souvent utilisées à ce titre.
 
 ```js
 var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-if ( students.length > 10){
-  var message = "many student";
-}
-console.log(message); // undefined
+students.forEach( function(student){
+	console.log( student.first + ' has a ' + student.grades.length + " grades." );
+});
+/* Toma has a 2 grades.
+   Alfredo has a 3 grades.
+   Michael has a 3 grades.
+*/
 
 ```
-JS en réalité fait cela :
-
-```js
-var message;
-var students = [ {first: 'Toma', grades: [3.5, 2.0]}, {first: 'Alfredo', grades: [5, 5.5, 6.0]}, {first: 'Michael', grades: [4.5, 5.0, 4.5]}];
-if ( students.length > 10){
-  message = "many student";
-}
-```
-ce qui pose des problemes de portée et de performances.
