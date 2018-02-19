@@ -37,3 +37,4 @@ const cbkFunction = function(item, index){
 
 const ages = students.map( cbkFunction );
 console.log( ages );
+```
