@@ -1,5 +1,7 @@
 # Chapitre 18 : Closure
 
+Une closure est une fonction dont le corps a accès a un environnement extérieur, par example celui d'une fonction englobante.
+
 ## Concept
 
 
