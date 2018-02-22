@@ -24,7 +24,9 @@ On dit qu'elle sont des **variables locales**, car leur **portée** (scope) est 
 
 ## Appel de fonction
 
-## Immediately Invokable Function Expression
+## fonctions anonymes auto-exécutantes (IIFE)
+
+Les  (ou , selon) permettent donc d’isoler le code sans perturber son exécution :
 
 ## Fonction anonyme
 
