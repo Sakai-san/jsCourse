@@ -1,12 +1,12 @@
 # Chapitre 18 : Closure
 
-Une closure est une fonction dont le corps a accès de manière persistente à des variables qui ne sont pas dans sa portée locale (environnement extérieur), par example celui d'une fonction englobante.
+Une closure est une fonction dont le corps a accès de manière persistente à des variables qui ne sont pas dans sa portée locale (environnement extérieur).
 
 Le concept de closure n'est pas a confondre avec le concept de fonction anonyme.
 
 ## Illustration
 
-Supposons que nous avons un tableau d'étudiants représenté sous forme d'objet et nous aimerions obtenir un tableau contenant l'ages de ces étudiants.
+Supposons que nous avons un tableau d'étudiants représentés sous forme d'objet et que nous aimerions obtenir un tableau contenant l'ages de ces étudiants.
 
 ```js
 var students = [
@@ -40,9 +40,9 @@ console.log(ages); // [38, 39, 36]
 
 ```
 
-Le problème ici, c'est que dans la boucle, on crée à chaque itération, un object Date avec la date courante, soit `Date('2018-01-01')`. Or cette date est constante, il n'est dont pas performant de créer cet object à chaque itération.
+Dans l'approche ci-dessus, on crée à chaque itération, un object Date avec la date courante, soit `new Date('2018-01-01')`. Or cette date est constante, il n'est dont pas performant de créer cet object à chaque itération.
 
-Voyons comment utiliser ici le concept de closure.
+Voyons une autre approche utilisant le concept de closure.
 
 ```js
 const withDate = function(currentDate){
@@ -59,4 +59,4 @@ const ages = students.map(function(student){
 console.log(ages); // [38, 39, 36]
 ```
 
-La fonction `withDate` retourne, lors de son appel, une nouvelle fonction, à savoir une closure. Cette closure a accès à l'environnement local de `withDate`.
+La fonction `withDate` retourne, lors de son appel, une **nouvelle fonction**. Cette dernière a accès de manière persistente à l'environnement de la fonction dans laquelle elle se trouve et donc est une **closure**.

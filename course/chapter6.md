@@ -1,9 +1,14 @@
 # Chapitre 6 : Boucle
 
-Lorsqu'une opération doit être répétée, on peut automatiser cette répétition avec une boucle.
+On utilise les boucles, lorsqu'on veut faire une même opération plusieurs fois.
 
 ## Concept
 
+```js
+for(var i=0; i < 10; i++){
+    console.log("Hello world !");
+}
+```
 
 
 ## Recapitulation
