@@ -40,11 +40,32 @@ console.log(ages); // [38, 39, 36]
 
 ```
 
-Dans l'approche ci-dessus, on crée à chaque itération, un object Date avec la date courante, soit `new Date('2018-01-01')`. Or cette date est constante, il n'est dont pas performant de créer cet object à chaque itération.
+Dans l'approche ci-dessus, l'instruction `new Date('2018-01-01')` crée, à chaque itération, un object Date avec la date courante. Or cette date est constante, il n'est dont pas performant de créer cet object à chaque itération.
 
 Voyons une autre approche utilisant le concept de closure.
 
 ```js
+var students = [
+  {
+    first : "Masaru",
+    last  : "Segawa",
+    grades : [3.5, 4, 4],
+    birthDate: '1980-01-31'
+  },
+  {
+    first : "Toma",
+    last  : "Sakai",
+    grades : [4, 5, 5],
+    birthDate: '1979-04-22'
+  },
+  {
+    first : "Asako",
+    last  : "Ogiwara",
+    grades : [6, 4, 4.5],
+    birthDate: '1982-02-25'
+  }
+];
+
 const withDate = function(currentDate){
   return function(birthDate){
       return currentDate.getFullYear() - new Date(birthDate).getFullYear();
@@ -59,4 +80,4 @@ const ages = students.map(function(student){
 console.log(ages); // [38, 39, 36]
 ```
 
-La fonction `withDate` retourne, lors de son appel, une **nouvelle fonction**. Cette dernière a accès de manière persistente à l'environnement de la fonction dans laquelle elle se trouve et donc est une **closure**.
+La fonction `withDate` retourne, lors de son appel, une **nouvelle fonction**, qui est une **closure**. En effet, cette dernière a accès de manière persistente à l'environnement de la fonction dans laquelle elle se trouve.
