@@ -4,6 +4,26 @@ Nous avons vu préalablement qu'une variable a un **type** et qu'en fonction de 
 
 Nous allons d'abord classer les différents opérateurs en catégorie, et après voir comment les règles de prioriété sont définies.
 
+# Opérateurs arithmétiques
+Ces opérateurs viennent du monde mathématique. Les plus utilisés sont les suivants :
+* `+` addition
+
+	`1 + 8 // 9`
+
+* `-` soustraction
+
+	`1 - 10 // -9`
+
+
+* `/` division
+
+	`9 / 4 // 2.25`
+
+* `*` multiplication
+
+	`4 * 2.25 // 9`
+
+
 # Opérateurs relationnels
 * `>` plus grand que
 
@@ -71,12 +91,12 @@ var isManAndIsOver25 = !isWoman && age > 25; // true
 ```
 
 # Précédence
-Comme en mathématique, les opérateurs mathématiques, relationnels et logiques répondent à un ordre.
-
-Par exemple, en mathématique l'opération de multiplication a priorité sur l'addition `3 + 5*6 = 33`.
+Comme en mathématique, les opérateurs utilisé en programmation, répondent à un ordre appelé la précédence.
 
 En programmation, la priorité se fait selon l'ordre suivant :
 
+* opérateur loqique
+	* `!`
 * opérateur mathématique
 	* `*`, `/`
 	* `+`, `-`
@@ -87,6 +107,8 @@ En programmation, la priorité se fait selon l'ordre suivant :
 	* `&&`
 	* `||`
 
+A l'intérieur de chaque catégorie, il a encore une hirarchie interne. Par example, l'opération de multiplication a priorité sur l'addition `3 + 5*6 = 33`.
+
 Pour une liste exhaustive, consulter cette [page](https://en.wikipedia.org/wiki/Order_of_operations).
 
 
@@ -94,9 +116,7 @@ Pour une liste exhaustive, consulter cette [page](https://en.wikipedia.org/wiki/
 var age = 10;
 var isWoman = false;
 var isOld = false;
-if( age+9 >= 20 && !isWoman || isOld ){ // false
-	// do something
-}
+var booleanExample = age+9 >= 20 && !isWoman || isOld; // false
 ```
 
 Cela équivaut au code suivant. On a évidemment pas besoin des parenthèses, vu la précédence :
@@ -105,15 +125,12 @@ Cela équivaut au code suivant. On a évidemment pas besoin des parenthèses, vu
 var age = 10;
 var isWoman = false;
 var isOld = false;
-if( ((((age+9) >= 20) && (!isWoman) ) || isOld ){ // false
-	// do something
-}
+var booleanExample = (((age+9) >= 20) && (!isWoman)) || isOld; // false
 ```
 
 # Récapitulation
-Le OU logique et le ET logique permet de construire une expresssion booléene composée de plusieurs autres expressions booléenes. Le NOT logique, soit la négation, **renverse** une valeur d'une expresssion booléene.
+Les **opérateurs** obéissent à un ordre, appelée la **précédence**. Dans une instruction qui comporte plusieurs opérateurs de catégéories différentes, on peut classer par ordre d'importance : les opérateurs **arithmétique**, **relationnel** et finalement **logique**. La seule exception et le `!` qui est la priorité sur tous.
 
-Les opérateurs obéissent à un ordre, appelée la précédence, d'une manière générale arithmétique, relationnel et logique (sauf exception) .
-A l'intérieur de chacune d'elle, il y a encore une hiérarchie propre, par exemple en mathématique la multiplication passe avant l'addition. Le ET logique à la priorité sur le OU logique en logique.
+A l'intérieur de chacune d'elle, il y a encore une hiérarchie propre, par exemple, en arithmétique, la multiplication passe avant l'addition. La prioriété interne des opérateurs arithmétiques vient en fait des règles de l'arithmétique. Autre exempl, en logique, le `&&` à la priorité sur le `||`.
 
-Il est conseillé d'utiliser `===` en lieu de `==` ainsi que `!==` sur `!=`.
+Il est conseillé d'utiliser `===` ainsi qe `!==` qui tiennent compte du type en plus de la valeur, contrairement à `==` et `!=` qui tiennent compte que de la valeur uniquement.
