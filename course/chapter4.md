@@ -2,7 +2,7 @@
 
 Nous avons vu préalablement qu'une variable a un **type** et qu'en fonction de ce type, on peut faire différentes **opérations** sur celle-ci.
 
-Nous allons d'abord les différents opérateurs en catégorie, et après voir comment les règles de prioriété sont définies.
+Nous allons d'abord classer les différents opérateurs en catégorie, et après voir comment les règles de prioriété sont définies.
 
 # Opérateurs relationnels
 * `>` plus grand que
@@ -46,48 +46,46 @@ Nous allons d'abord les différents opérateurs en catégorie, et après voir co
 
 
 # Opérateurs logiques
-OU : `||`,  vrai dès qu'une des opérandes est vraie
+OU : `||`,  vrai dès qu'une des opérandes est vraie.
 
 ```js
-var age = 40;
 var isWoman = false;
-var isOver25OrWoman = age > 25 || isWoman; // true
+var age = 40;
+var isWomanOrIsOver25 = isWoman || age > 25; // true
 ```
 
-ET : `&&`, vraie quand toutes les opérantes sont vraies
+ET : `&&`, vraie quand toutes les opérandes sont vraies.
 
 ```js
-var age = 40;
 var isWoman = false;
-var isOver25OrWoman = age > 25 && isWoman; // false
+var age = 40;
+var isWomanAndIsOver25 = isWoman && age > 25; // false
 ```
 
-NOT : `!`, renverse la valeur booléene
+NOT : `!`, renverse la valeur booléene.
 
 ```js
-var age = 40;
 var isWoman = false;
-if( age >= 20 && !isWoman ){ // true
-	console.log("Is a woman and is 20 years old and more.");
-}
+var age = 40;
+var isManAndIsOver25 = !isWoman && age > 25; // true
 ```
 
-## Précédence
+# Précédence
 Comme en mathématique, les opérateurs mathématiques, relationnels et logiques répondent à un ordre.
 
 Par exemple, en mathématique l'opération de multiplication a priorité sur l'addition `3 + 5*6 = 33`.
 
 En programmation, la priorité se fait selon l'ordre suivant :
 
-opérateur mathématique
-	*, /
-	+, -
-opérateur relationnel
-	< , <=, >, >=
-	==, !=
-opérateur logique
-	&&
-	||
+* opérateur mathématique
+	* `*`, `/`
+	* `+`, `-`
+* opérateur relationnel
+	* `<` , `<=`, `>`, `>=`
+	* `==`, `!=`
+* opérateur logique
+	* `&&`
+	* `||`
 
 Pour une liste exhaustive, consulter cette [page](https://en.wikipedia.org/wiki/Order_of_operations).
 
@@ -112,7 +110,7 @@ if( ((((age+9) >= 20) && (!isWoman) ) || isOld ){ // false
 }
 ```
 
-## Récapitulation
+# Récapitulation
 Le OU logique et le ET logique permet de construire une expresssion booléene composée de plusieurs autres expressions booléenes. Le NOT logique, soit la négation, **renverse** une valeur d'une expresssion booléene.
 
 Les opérateurs obéissent à un ordre, appelée la précédence, d'une manière générale arithmétique, relationnel et logique (sauf exception) .
