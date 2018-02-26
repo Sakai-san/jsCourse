@@ -39,4 +39,4 @@ Dans le second exemple, la condition dans le `if` n'est pas remplie. On poursuit
 
 
 ## Récapitulation
-La condition dans un `if` est une **expression booléene**. Cela signifie que cette expression est soit vraie (`true`) soit fausse (`false`). Si l'expression est vraie alors le code compris à l'intérieur du `if` sera exécuté. Si l'expression est fausse on peut éventuellement (pas obligatoire) prévoir un traitement pour cette possibilité à l'intérieur d'un `else`.
+La condition dans le `if` ainsi que le `else if` est une **expression booléene**. Cela signifie que cette expression est soit vraie (`true`) soit fausse (`false`). Si l'expression est vraie alors le code compris dans la condition sera exécuté. Si l'expression est fausse on peut éventuellement (pas obligatoire) prévoir un traitement pour cette possibilité à l'intérieur d'un `else`.
