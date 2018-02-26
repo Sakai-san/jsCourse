@@ -1,19 +1,26 @@
 # Chapitre 7 : Fonction
 
-La fonction en programmtion a un but similaire à la fonction en mathématique.
+La fonction en programmtion est un concept très proche de la fonction en mathématique : on donne des **inputs**, la fonction fait un **traitement** dépendant de ceux-xi et finalement donne un **résultat**.
 
-Sur la base des inputs qui lui sont donné, la fonction opère un traitement, et finalement donne un résultat.
+Une fonction isole une portion de code, permettant de pouvoir **réutiliser** ou **partager** ce code.
 
-Une fonction isole une portion de code, permettant de pouvoir réutiliser ce si le cas se présente plusieurs fois dans le programme ou si un déveloper veut partager son code.
+## Définition d'une fonction
 
-## Output and Input
+Définissons une fonction qui calcule l'age d'une personne. Or, pour cela, on aura besoin de la date de naissance de la personne. Cette information est l'input ou le **paramètre** de la fonction.
 
-On peut groupe le code dans une fonction.
+```js
+function getAge(birthDate){
+    var now = new Date();
+    return now.getFullYear() - new Date(birthDate).getFullYear();
+}
 
+```
+Ce qui caractérise la fonction ci-dessus :
+1. Elle a un **nom** : `getAge`
+2. Elle prend un un **paramètre** : `birthDate`.
+3. Elle **retourne** un `nombre`, à savoir le traitement qu'on attend d'elle, le calcul de l'âge d'une personne.
 
-Proch du concept de fonction en mathémaique.
-
-## Corps de la fonction
+Les instructions qui sont entre les acolade `{}` font partie de ce qu'on appelle le *corps* de la fonction.
 
 ## Portée
 Les variables déclarées dans le corps de la fonction ne sont pas accessible à l'extérieur de celle-ci.
@@ -21,6 +28,7 @@ On dit qu'elle sont des **variables locales**, car leur **portée** (scope) est 
 
 
 ## Définition d'une fonction
+
 
 ## Appel de fonction
 
