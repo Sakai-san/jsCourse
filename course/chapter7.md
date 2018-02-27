@@ -24,10 +24,6 @@ Ce qui caractérise la fonction ci-dessus :
 
 Les instructions qui sont entre les accolades `{}` font partie de ce qu'on appelle le **corps** de la fonction.
 
-## Portée
-Les variables déclarées dans le corps de la fonction ne sont pas accessible à l'extérieur de celle-ci.
-On dit qu'elle sont des **variables locales**, car leur **portée** (scope) est limitée à la fonction.
-
 
 ## Appel de fonction
 Une fois que la fonction a été définie, on veut utilier cette dernière avec des vraies données.
@@ -41,12 +37,32 @@ console.log( tomaAge ); // 39
 
 Les  (ou , selon) permettent donc d’isoler le code sans perturber son exécution :
 
+
 ## Fonction anonyme
 
 
+## Portée
+Les variables déclarées dans le corps de la fonction ne sont pas accessible à l'extérieur de celle-ci.
+On dit qu'elle sont des **variables locales**, car leur **portée** (scope) est limitée à la fonction.
+
+En revanche les variables déclarées en dehors de la fonction sont accessibles à l'intérieur. On les appelle **variables globales**.
+
+```js
+var now = new Date();
+
+function getAge(birthDate){
+    var currentYear = now.getFullYear(); // currentYear is a local variable and now a global variable
+    return currentYear - new Date(birthDate).getFullYear();
+}
+console.log(currentYear); // error
+```
+
 ## Récapitulation
+
+Une fonction est une formule générale qui résoud un problème spécifique. Le résultat dépend des **paramètres** passés à la fonction. Une fois le traitement fait, la fonction retourne un **résultat**. La plupart des fonctions retourne un résultat, mais ce n'est pas obligatoire.
+
 Lorsqu'une portion de code fait un traitement qui a une portée assez générale, ce code peut être isolé dans une fonction.
 
 L'avantage d'isoler ce traitement dans une fonction est d'avoir un seul endroit dans le programme qui fait un traitement dédié. Ceci qui favorise la réutilisation et donc facilite maintenance du programme.
 
-La définition et l'appel de fonction sont deux choses différentes. Dans la définition, doivent être écrites toutes les étapes qui menèent au résultat (algorithme), alors que l'appel de fonction, on veut utiliser la fonction avec des **vraies données**.
+La définition et l'appel de fonction sont deux choses différentes. Dans la définition, doivent être écrites toutes les étapes qui menènt au résultat (algorithme), alors que l'appel de fonction, on veut utiliser la fonction avec des **vraies données**.
