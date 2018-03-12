@@ -15,7 +15,6 @@ function getAge(birthDate){
     var now = new Date();
     return now.getFullYear() - new Date(birthDate).getFullYear();
 }
-
 ```
 Ce qui caractérise la fonction ci-dessus :
 1. Elle a un **nom** : `getAge`
@@ -33,12 +32,23 @@ var tomaAge = getAge('1979-04-22');
 console.log( tomaAge ); // 39
 ```
 
-## fonctions anonymes auto-exécutantes (IIFE)
+## Fonction anonyme
+Une fonction anonyme est une fonction qui n'a pas d'identifiant, donc pas de nom.
+
+
+```js
+var getAge = function(birthDate){
+    var now = new Date();
+    return now.getFullYear() - new Date(birthDate).getFullYear();
+};
+console.log( getAge('1979-04-22') ); // 39
+```
+
+Dans le code ci-dessus, une **fonction anonyme** est assignée à la variable `getAge`. Ensuite, on appelle la fonction en utilisant la variable directement. Les fonctions anonymes sont souvent utilisées dans les callbacks. Nous en parlerons dans un chapitre dédié.
+
+## Fonctions anonymes auto-exécutantes (IIFE)
 
 Les  (ou , selon) permettent donc d’isoler le code sans perturber son exécution :
-
-
-## Fonction anonyme
 
 
 ## Portée

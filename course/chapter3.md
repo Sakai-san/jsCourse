@@ -12,7 +12,6 @@ var firstName = 'thomas'; // declaration and assignation
 var lastName = 'Sakai';
 var fullName = firstName + ' ' + lastName;  // declaration and assignation using existent variables
 console.log(fullName); // thomas sakai
-
 ```
 
 Dans le petit script ci-haut 4 variables ont été **déclarées**. La variable appelée `age` cotient la valeur `10`. Le symbole `=` signifie **assignation**.
@@ -22,7 +21,7 @@ La variable `age` a d'abord été déclarée. Ensuite `10` a été assigné à c
 La variable `fullName` utilise les variables déclarées précédemment. Dans la dernière ligne on a appelé la fonction `console.log()` pour afficher la valeur de la variable `fullName`.
 
 ## Type de données
-Les variables ont un type, que l'on appelle **type de données**. En JS, il en existe sept `number`, `string`, `boolean`, `null`, `undefined`, `object` et `symbol`.
+Les variables ont un type, que l'on appelle **type de données**. En JS, il en existe huit `number`, `string`, `boolean`, `null`, `undefined`, `object`, `function` et `symbol`.
 
 On peut connaître le type d'une variable avec l'opérateur ` typeof`.
 
