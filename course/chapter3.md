@@ -21,7 +21,7 @@ La variable `age` a d'abord été déclarée. Ensuite `10` a été assigné à c
 La variable `fullName` utilise les variables déclarées précédemment. Dans la dernière ligne on a appelé la fonction `console.log()` pour afficher la valeur de la variable `fullName`.
 
 ## Type de données
-Les variables ont un type, que l'on appelle **type de données**. En JS, il en existe huit `number`, `string`, `boolean`, `null`, `undefined`, `object`, `function` et `symbol`.
+Les variables ont un type, que l'on appelle **type de données**. En JS, il en existe sept `number`, `string`, `boolean`, `undefined`, `object`, `function` et `symbol`.
 
 On peut connaître le type d'une variable avec l'opérateur ` typeof`.
 
@@ -55,7 +55,7 @@ Dans, certains cas JS **convertit** le type d'une variable. Dans l'exemple ci-de
 ## Système d'exploitation
 Le **système d'exploitation** de l'ordinateur gère les applications en cours d'exécution (appelé processus). Il leur alloue un certain temps d'exécution, qu'on appelle le quantum. Il décide quel programme va pouvoir être exécuté et donc avoir accès au processeur (processus élu) grâce à un algorithme mis en oeuvre par l'ordonnanceur (scheduler).
 
-Les variables qu'un programme déclare sont stockées dans la **mémoire vive** (RAM) de l'ordinateur. C'est le système d'exploitation également qui gère l'allocation de la mémoire pour chaque application. Si l'ordinateur n'a momentanément plus de place disponible en RAM, le système d'exploitation crée un espace sur le disque dur, appelé **mémoire virtuelle** (lent en lecture).
+Les variables qu'un programme sont stockées dans la **mémoire vive** (RAM) de l'ordinateur. C'est le système d'exploitation également qui gère l'allocation de la mémoire pour chaque application. Si l'ordinateur n'a momentanément plus de place disponible en RAM, le système d'exploitation crée un espace sur le disque dur, appelé **mémoire virtuelle** (lent en lecture).
 
 Le système d'exploitation fait le lien entre le matériel (hardware) et les applications lancées sur l'ordinateur.
 
@@ -66,4 +66,4 @@ Selon le type de la variable, la valeur doit respecter un certain **format**. Pa
 
 Le type d'une variable détermine également quelles **opérations** on peut faire avec celle-ci.
 
-La déclaration d'une variable et l'assignation sont deux instructions différentes. Il est une bonne pratique de faire ces deux opérations simultanément.
+La déclaration d'une variable et l'assignation sont deux instructions différentes. Il est une bonne pratique de faire ces deux instructions simultanément.

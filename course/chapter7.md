@@ -44,12 +44,7 @@ var getAge = function(birthDate){
 console.log( getAge('1979-04-22') ); // 39
 ```
 
-Dans le code ci-dessus, une **fonction anonyme** est assignée à la variable `getAge`. Ensuite, on appelle la fonction en utilisant la variable directement. Les fonctions anonymes sont souvent utilisées dans les callbacks. Nous en parlerons dans un chapitre dédié.
-
-## Fonctions anonymes auto-exécutantes (IIFE)
-
-Les  (ou , selon) permettent donc d’isoler le code sans perturber son exécution :
-
+Dans le code ci-dessus, une **fonction anonyme** est définie et assignée à la variable `getAge`. Ensuite, on appelle la fonction en utilisant la variable directement. Les fonctions anonymes sont souvent utilisées dans les callbacks. Nous en parlerons dans un chapitre dédié.
 
 ## Portée
 Les variables déclarées dans le corps de la fonction ne sont pas accessible à l'extérieur de celle-ci.
@@ -66,6 +61,28 @@ function getAge(birthDate){
 }
 console.log(currentYear); // error
 ```
+
+## Fonction anonyme auto-exécutantes ([IIFE](https://en.wikipedia.org/wiki/Immediately-invoked_function_expression))
+
+Il s'agit dans ce cas d'une fonction anonyme que l'on appelle tout de suite.
+
+
+```js
+var age = (function(birthDate){
+    var now = new Date();
+    return now.getFullYear() - new Date(birthDate).getFullYear();
+})('1979-04-22');
+console.log( age ); // 39
+```
+
+On utilise souvent les IIFE pour pouvoir utiliser une variable gloable avec un identifiant plus court avec une portée limitée à l'intérieur de la fonction.
+
+```js
+(function(%){
+    %(".myClass").css('color', 'red');
+})(jQuery);
+```
+
 
 ## Récapitulation
 
