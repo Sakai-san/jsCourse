@@ -2,7 +2,7 @@
 
 On utilise les boucles, lorsqu'on veut faire répéter une instruction plusieurs fois.
 
-## Concept
+## Boucle for
 
 ```js
 for(var i=0; i < 5; i++){
@@ -25,8 +25,16 @@ Ce code logg 5 fois le message `Hello world` dans la console. En plus l'itérati
 `Hello world 5!`
 
 
-## Recapitulation
-Nous allons voir plus tard d'autres boucles.
+## Elements
+Les instructions du `for` qui sont à l'intérieur des `{}` constitue le corps.
 
-Une version qui généralise la boucle `for` est la boucle `while`. Celle-ci est utilisé dans des cas assez spécifiques (p.ex. jeux), et n'est pas abordée dans le cours.
+La boucle `for` comprend **trois instructions** : l'**initialisation** : `var i=0`, la **condition** : `i < 5` et l'**incrémentation** (exécuté après le corps du `for`) : `i++`.
+
+Le coprs du for est exécuté si la condition est vraie.
+
+
+## Recapitulation
+Il existe plusieurs sortes de boucles en JS.
+
+Une version qui généralise la boucle `for` est la boucle `while`. Celle-ci est utilisé dans des cas assez spécifiques (p.ex. jeux), et ne sera pas abordée dans le cours.
 
