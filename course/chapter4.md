@@ -102,7 +102,7 @@ En programmation, la priorité se fait selon l'ordre suivant :
 	* `+`, `-`
 * opérateur relationnel
 	* `<` , `<=`, `>`, `>=`
-	* `==`, `!=`
+	* `==`, `!=`, `===`, `!==`
 * opérateur logique
 	* `&&`
 	* `||`
