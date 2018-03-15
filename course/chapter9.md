@@ -1,4 +1,4 @@
-# Chapitre 9 : Tableau
+# Chapitre 9 : Tableau (array)
 
 ## Concept
 Un tableau est une structure de données qui permet de stocker plusieurs variables.
@@ -36,5 +36,21 @@ for( var i=0; i < grades.length; i++){
 console.log(bestGrade); // 5
 ```
 
+## Functions natives (built-in function)
+Les tableau en JS possèdent possèdent des functions qui sont offertes par le lanagues, tel que `push`, `concat`, etc.
+
+Nous allons voir les functions filter, reduce, map qu'on utilise très souvent lorsqu'on veut parcourir un tableau.
+
 ## Recapitulation
+Le type de talbeau en JS est object. En effet `typeof([1, 2])` retourne `object`.
+
+Par convention, on nomme souvent les taleaux au pluriel, tel que `grades`. Ainsi l'on sait qu'on est en présence d'un tableau.
+
 Les tableaux s'utilient souvent avec des boucles afin de pouvoir itérer (parcourir) sur ceux-ci.
+
+function perform( numbers, function ){
+    var numbersTransformed = []
+    for( var i=0; i < numbers; i++ ){
+        numbersTransformed.push( function.call( numbers[i] ) );
+    }
+}
