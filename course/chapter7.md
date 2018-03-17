@@ -86,7 +86,7 @@ On utilise souvent les IIFE pour pouvoir utiliser une variable gloable avec un i
 
 ## Récapitulation
 
-Une fonction est une formule générale qui résoud un problème spécifique. Le résultat dépend des **paramètres** passés à la fonction. Une fois le traitement fait, la fonction retourne un **résultat**. La plupart des fonctions retourne un résultat, mais ce n'est pas obligatoire.
+Une fonction est une formule générale qui résoud un problème spécifique. Le résultat dépend des **paramètres** passés à la fonction. Les paramètres pevent être une variable ou une fonction, qu'on appelle dans ce cas **callback**. Une fois le traitement fait, la fonction retourne un **résultat**. La plupart des fonctions retourne un résultat, mais ce n'est pas obligatoire.
 
 Lorsqu'une portion de code fait un traitement qui a une portée assez générale, ce code peut être isolé dans une fonction.
 
