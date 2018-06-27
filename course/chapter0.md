@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-JavaScript est un language de programmation crée en 1995. Initialement crée pour faire de petite interaction avec l'utilisateur d'un client web, communément appelé navigateur, il est devenu un language généraliste. [Stack Overflow](https://insights.stackoverflow.com/survey/2017) le classait comme le lanague le plus populaire en 2017.
+JavaScript est un language de programmation crée en 1995. Initialement crée pour faire de petite interaction avec l'utilisateur d'un client web, communément appelé navigateur, il est devenu un language généraliste. [Githut](http://githut.info/), [Stack Overflow](https://insights.stackoverflow.com/survey/2017) le classait comme le lanague le plus populaire en 2017.
 
 Ce cours traite les concepts de base ainsi que des concepts plus spécifiques tel que le prototype, le callback, le hoisting, le spread, le destructuring, les closures, etc.
 
