@@ -27,7 +27,7 @@ Créons un objet qui contient ladite fonction.
 
 ```js
 var student = {
-  studentsCount: 0;
+  studentsCount: 0,
   getBestGrade: function(){ return Math.max( ...this.grades);}
 }
 
@@ -36,7 +36,8 @@ var tomaStudent = {
   last: "Sakai",
   grades: [4.5, 5, 4]
 };
-tomaStudent.__proto__ = student; // don't do that, just for the example
+//Object.setPrototypeOf(tomaStudent, student)
+// tomaStudent.__proto__ = student; // don't do that, just for the example
 tomaStudent.__proto__.studentsCount = tomaStudent.__proto__.studentsCount+1;
 
 var masaruStudent = {
@@ -44,6 +45,8 @@ var masaruStudent = {
   last: "Segawa",
   grades: [3.5, 4, 4]
 };
+
+
 masaruStudent.__proto__ = student; // don't do that, just for the example
 tomaStudent.__proto__.studentsCount = tomaStudent.__proto__.studentsCount+1;
 
@@ -77,3 +80,7 @@ console.log(tomaStudent.__proto__.studentsCount); // 2
 console.log(masaruStudent.__proto__.studentsCount); // 2
 
 ```
+
+
+__proto__ pour les objects
+prototype pour les constructueur
